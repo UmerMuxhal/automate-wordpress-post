@@ -1,1 +1,1 @@
-# automate-wordpress
+# Automate-WordPress
