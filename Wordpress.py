@@ -18,9 +18,8 @@ class Wordpress:
     url = ''
     url_login = ''
     user_agent = ''
-    sleep_time = 2
 
-    def __init__(self, url, url_login, chrome_driver_path, user_agent=False):
+    def __init__(self, url, url_login, chrome_driver_path, sleep_time=2, user_agent=False):
         self.url = url
         self.url_login = url_login
         self.chrome_options = Options()
@@ -28,6 +27,7 @@ class Wordpress:
             self.user_agent_generator()
             self.chrome_options.add_argument(f'user-agent={self.user_agent}')
         self.browser = webdriver.Chrome(executable_path=chrome_driver_path, chrome_options=self.chrome_options)
+        self.sleep_time = sleep_time
 
     def chrome_options(self, window_size=None, gpu=False, user_agent=True, info_bars=False, extensions=False,
                        notification=False):
