@@ -1,10 +1,12 @@
 # Automate-WordPress
 
-Wordpress is a Python library for automating simple WordPress tasks.
+Automate-WordPress is a Python package for automating WordPress posts.
+
+**Note:** Tested on WordPress version 5.4
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install Automate-WordPress.
 
 ```bash
 pip install Wordpress
@@ -13,9 +15,9 @@ pip install Wordpress
 ## Usage
 
 ```python
-import Wordpress
+from wordpress import Wordpress
 
-Wordpress() # returns 'instance of your website'
+wp = Wordpress() # returns 'instance of your website'
 ```
 
 ## Contributing
