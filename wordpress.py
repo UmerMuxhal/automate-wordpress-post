@@ -6,6 +6,7 @@ import pandas as pd
 from time import sleep
 from datetime import date
 from bs4 import BeautifulSoup
+from numpy import ufunc
 from selenium import webdriver
 from lxml.html import fromstring
 from selenium.webdriver import ActionChains
@@ -71,10 +72,10 @@ class Wordpress:
         self.error += "ERROR: " + error + "\r\n"
 
     def get_errors(self):
-        return self.error
+        return "Errors: \n" + self.error
 
     def get_completed(self):
-        return self.success
+        return "Completed Tasks: \n" + self.success
 
     def check_exists_by_id(self, element_id):
         try:
@@ -92,16 +93,18 @@ class Wordpress:
 
     def send_backspace_by_xpath(self, xpath, times):
         for i in range(1, times):
-            self.browser.find_element_by_xpath(xpath).send_keys(Keys.BACK_SPACE)
+            self.send_keys_exists_by_xpath(xpath, Keys.BACK_SPACE)
 
     def send_keys_in_browser(self, msg):
         actions = ActionChains(self.browser)
         actions.send_keys(msg)
         actions.perform()
 
-    def send_keys_exists_by_xpath(self, xpath, keys, error=None, success=None):
+    def send_keys_exists_by_id(self, element_id, keys, error=None, success=None, wait=False):
         try:
-            self.browser.find_element_by_xpath(xpath).send_keys(keys)
+            self.browser.find_element_by_id(element_id).send_keys(keys)
+            if wait:
+                sleep(self.sleep_time)
         except NoSuchElementException:
             if error:
                 self.error += "ERROR: " + error + "\r\n"
@@ -110,17 +113,38 @@ class Wordpress:
             self.success += "SUCCESS: " + success + "\r\n"
         return True
 
-    def click_exists_by_xpath(self, xpath, error=None, success=None):
+    def send_keys_exists_by_xpath(self, xpath, keys, error=None, success=None, wait=False):
         try:
-            self.browser.find_element_by_xpath(xpath).click()
-        except (selenium_exception.ElementNotInteractableException, selenium_exception.NoSuchElementException):
+            self.browser.find_element_by_xpath(xpath).send_keys(keys)
+            if wait:
+                sleep(self.sleep_time)
+        except NoSuchElementException:
             if error:
                 self.error += "ERROR: " + error + "\r\n"
+            return False
+        if success:
+            self.success += "SUCCESS: " + success + "\r\n"
+        return True
+
+    def click_exists_by_xpath(self, xpath, error=None, success=None, wait=False):
+        try:
+            self.browser.find_element_by_xpath(xpath).click()
+            if wait:
+                sleep(self.sleep_time)
+        except selenium_exception.NoSuchElementException:
+            if error:
+                self.error += "ERROR: " + error + " [Element Not Found]\r\n"
+            return False
+        except selenium_exception.ElementNotInteractableException:
+            if error:
+                self.error += "ERROR: " + error + " [Element Not Interactable]\r\n"
             return False
         except (selenium_exception.WebDriverException, selenium_exception.ElementClickInterceptedException):
             try:
                 btn = self.browser.find_element_by_xpath(xpath)
                 self.browser.execute_script("arguments[0].click();", btn)
+                if wait:
+                    sleep(self.sleep_time)
             except selenium_exception:
                 if error:
                     self.error += "ERROR: " + error + "\r\n"
@@ -147,18 +171,35 @@ class Wordpress:
         if self.check_exists_by_id("post-title-0"):
             self.browser.find_element_by_id("post-title-0").send_keys(title)
         else:
-            print("FAILURE: Unable to type post title!")
+            self.set_error("Unable to type post title!")
+
+    # After post published
+    def post_url(self, url):
+        self.post_document_setting_open()
+        xpath_u = '//label[text()="URL Slug"]/following-sibling::input[@type="text"]'
+        if not self.check_exists_by_xpath(xpath_u):
+            # Expand Heading Settings
+            err = 'Unable to expand Permalink'
+            self.click_exists_by_xpath('//button[@type="button" and text()="Permalink"]', err, wait=True)
+
+        err = "Unable to type post url"
+        self.send_keys_exists_by_xpath(xpath_u, url, err, wait=True)
 
     def post_content_use_default_editor(self, xpath='//button[text()="Use Default Editor"]'):
         err = 'Unable to use default editor'
         self.click_exists_by_xpath(xpath, err)
         sleep(self.sleep_time)
 
-    def post_content_block_add(self, block_name):
-        # if not isinstance(str, type(block_name)):
-        #     self.set_error('Block name is not a String')
-        #     return False
+    def post_content_block_setting_open(self):
+        xpath = '//button[@type="button" and @aria-label="Block (selected)"]'
+        if self.check_exists_by_xpath(xpath):
+            return True
 
+        xpath = '//button[@type="button" and @aria-label="Block"]'
+        err = "Unable to open Block setting"
+        self.click_exists_by_xpath(xpath, err, wait=True)
+
+    def post_content_block_add(self, block_name):
         blocks = ['heading', 'paragraph', 'list', 'image']
         if block_name.lower() not in blocks:
             self.set_error('Enter a valid block name')
@@ -224,7 +265,6 @@ class Wordpress:
             self.click_exists_by_xpath(xpath_text, err)
 
     def post_content_block_setting_color(self, text_color, bg_color=None):
-        # xpath_color = '//span[text()="Text Color"]/parent::div/parent::legend/following-sibling::div//button[text()="Custom color" and @type="button" and @aria-label="Custom color picker"]'
         xpath_color = '(//button[text()="Custom color" and @type="button" and @aria-label="Custom color picker"])[1]'
         if not self.check_exists_by_xpath(xpath_color):
             # Expand Color Settings
@@ -236,20 +276,17 @@ class Wordpress:
         if self.click_exists_by_xpath(xpath_color, err):
             xpath_color = '//label[text()="Color value in hexadecimal"]/following-sibling::input[@type="text"]'
             sleep(self.sleep_time)
-            for i in range(0, 7):
-                self.browser.find_element_by_xpath(xpath_color).send_keys(Keys.BACK_SPACE)
+            self.send_backspace_by_xpath(xpath_color, 8)
             err = "Unable to type text color"
             self.send_keys_exists_by_xpath(xpath_color, text_color, err)
 
         if bg_color:
-            # xpath_color = '//span[text()="Background Color"]/parent::div/parent::legend/following-sibling::div//button[@type="button" and @aria-label="Custom color picker" and text()="Custom color"]'
             xpath_color = '(//button[@type="button" and @aria-label="Custom color picker" and text()="Custom color"])[2]'
             err = "Unable to set background color"
             if self.click_exists_by_xpath(xpath_color, err):
                 xpath_color = '//label[text()="Color value in hexadecimal"]/following-sibling::input[@type="text"]'
                 sleep(self.sleep_time)
-                for i in range(0, 7):
-                    self.browser.find_element_by_xpath(xpath_color).send_keys(Keys.BACK_SPACE)
+                self.send_backspace_by_xpath(xpath_color, 8)
                 err = "Unable to type background color"
                 self.send_keys_exists_by_xpath(xpath_color, bg_color, err)
 
@@ -309,6 +346,15 @@ class Wordpress:
                 xpath_pass = '//input[@type="text" and @placeholder="Use a secure password"]'
                 err = 'Unable to type password(Status & Visibility)!'
 
+    def post_document_setting_open(self):
+        xpath = '//button[@type="button" and @aria-label="Document (selected)"]'
+        if self.check_exists_by_xpath(xpath):
+            return True
+
+        xpath = '//button[@type="button" and @aria-label="Document"]'
+        err = "Unable to open Document setting"
+        self.click_exists_by_xpath(xpath, err, wait=True)
+
     def post_status(self, visibility='public', password=None, stick_top=False, pending_review=False):
         element_discus = '//span[text()="Visibility"]'
         if not self.check_exists_by_xpath(element_discus):
@@ -324,7 +370,7 @@ class Wordpress:
 
         # Check pending review
         if pending_review:
-            element_discus = '//label[text()="Pending Review"]/preceding-sibling::span/input[@type="checkbox"]'
+            element_discus = '//label[text()="Pending review"]/preceding-sibling::span/input[@type="checkbox"]'
             err = 'Unable to interact with Pending Review(Status & Visibility)!'
             self.click_exists_by_xpath(element_discus, err)
 
@@ -345,11 +391,22 @@ class Wordpress:
                     alert_obj = self.browser.switch_to.alert
                     alert_obj.accept()
                     self.browser.switch_to.default_content()
+                    sleep(self.sleep_time)
                 elif password and visibility.lower() == 'password':
                     self.click_exists_by_xpath('//input[@type="radio" and @value="password"]')
                     xpath_pass = '//input[@type="text" and @placeholder="Use a secure password"]'
                     err = 'Unable to type password(Status & Visibility)!'
                     self.send_keys_exists_by_xpath(xpath_pass, password, err)
+                    sleep(self.sleep_time)
+
+    # After post published
+    def post_format(self, formatting='standard'):
+        self.post_document_setting_open()
+        format_list = ['standard', 'gallery', 'link', 'quote', 'video', 'audio']
+        if formatting.lower() in format_list:
+            xpath_ = '//label[text()="Post Format"]/following-sibling::div//select/option[@value="' + formatting + '"]'
+            err = "Unable to select post format"
+            self.click_exists_by_xpath(xpath_, err, wait=True)
 
     def post_category(self, category):
         err = 'Unable to expand Categories Panel(Categories)!'
@@ -360,14 +417,19 @@ class Wordpress:
         check_cat = "//label[text()='" + category + "']"
         if not self.check_exists_by_xpath(check_cat):
             # Add if category does not exist
-            self.click_exists_by_xpath('//button[text()="Add New Category"]')
+            err = "Unable to click Add New Category 1"
+            self.click_exists_by_xpath('//button[text()="Add New Category"]', err)
 
-            self.browser.find_element_by_xpath(
-                "//*[@id='editor-post-taxonomies__hierarchical-terms-input-0']").send_keys(category)
-            self.browser.find_element_by_xpath('//button[@type="submit" and text()="Add New Category"]').click()
+            err = "Unable to type Category name"
+            self.send_keys_exists_by_xpath("//*[@id='editor-post-taxonomies__hierarchical-terms-input-0']", category,
+                                           err)
+
+            err = "Unable to click Add New Category 2"
+            self.click_exists_by_xpath('//button[@type="submit" and text()="Add New Category"]', err)
         else:
             # Select category
-            self.browser.find_element_by_xpath(check_cat).click()
+            err = "Unable to Select category"
+            self.click_exists_by_xpath(check_cat, err)
 
     def post_tag(self, tag):
         check_tag = '//label[text()="Add New Tag"]/following-sibling::div/child::input'
@@ -383,18 +445,23 @@ class Wordpress:
         featured_img = '//button[text()="Set featured image"]'
         if not self.check_exists_by_xpath(featured_img):
             # Expand Featured Image
-            self.browser.find_element_by_xpath('//button[text()="Featured Image"]').click()
+            err = "Unable to Expand Featured Image"
+            self.click_exists_by_xpath('//button[text()="Featured image"]', err)
 
-        self.browser.find_element_by_xpath('//button[text()="Set featured image"]').click()
+        err = "Unable to click Set featured image"
+        self.click_exists_by_xpath('//button[text()="Set featured image"]', err)
 
         sleep(self.sleep_time)
-        self.browser.find_element_by_id('media-search-input').send_keys(image_name)
+        err = "Unable to type image name"
+        self.send_keys_exists_by_id('media-search-input', image_name, err)
 
         sleep(self.sleep_time + 3)
-        self.browser.find_element_by_xpath('//li[@role="checkbox"]').click()
+        err = "Unable to click searched image name"
+        self.click_exists_by_xpath('(//li[@role="checkbox"])[1]', err)
 
-        self.browser.find_element_by_xpath(
-            '//button[contains(@class, "media-button-select") and text()="Set featured image"]').click()
+        err = "Unable to finish featured image selection"
+        self.click_exists_by_xpath('//button[contains(@class, "media-button-select") and text()="Set featured image"]',
+                                   err)
 
     def post_excerpt(self, excerpt):
         check_excerpt = '//label[text()="Write an excerpt (optional)"]/following-sibling::textarea'
@@ -406,18 +473,65 @@ class Wordpress:
         self.browser.find_element_by_xpath(check_excerpt).send_keys(excerpt)
 
     def post_discussion(self, comments=True, traceback=True):
-        element_discus = '//label[text()="Allow Comments"]'
+        element_discus = '//label[text()="Allow comments"]'
         if not self.check_exists_by_xpath(element_discus):
-            # Expand Excerpt
-            self.browser.find_element_by_xpath('//button[text()="Discussion"]').click()
+            # Expand Discussion
+            err = "Unable to Expand Discussion"
+            self.click_exists_by_xpath('//button[text()="Discussion"]', err)
 
         # Uncheck comments
         if not comments:
-            self.browser.find_element_by_xpath(element_discus).click()
+            err = "Unable to Allow pingbacks & trackbacks"
+            self.click_exists_by_xpath(element_discus, err)
         # Uncheck traceback
         if not traceback:
-            element_discus = '//label[text()="Allow Pingbacks & Trackbacks"]'
-            self.browser.find_element_by_xpath(element_discus).click()
+            element_discus = '//label[text()="Allow pingbacks & trackbacks"]'
+            err = "Unable to Allow pingbacks & trackbacks"
+            self.click_exists_by_xpath(element_discus, err)
+
+    def post_save_draft(self):
+        xpath_save = '//button[text()="Publish…" and @aria-disabled="true"]'
+        if self.check_exists_by_xpath(xpath_save):
+            sleep(self.sleep_time)
+        xpath_save = '//button[text()="Save Draft"]'
+        if not self.check_exists_by_xpath(xpath_save):
+            xpath_save = '//button[text()="Save as Pending"]'
+            err = "Unable to click Save as Pending Button"
+            self.click_exists_by_xpath(xpath_save, err, wait=True)
+            sleep(self.sleep_time)
+        else:
+            err = "Unable to click Save Draft Button"
+            if self.click_exists_by_xpath(xpath_save, err, wait=True):
+                sleep(self.sleep_time)
+
+    def post_switch_to_draft(self):
+        xpath_d = '//button[text()="Switch to draft"]'
+        err = "Unable to click Switch to Draft Button"
+        if self.click_exists_by_xpath(xpath_d, err, wait=True):
+            alert_obj = self.browser.switch_to.alert
+            alert_obj.accept()
+            self.browser.switch_to.default_content()
+            sleep(self.sleep_time)
+
+    def post_publish(self):
+        xpath_p = '//button[text()="Publish…" and @aria-disabled="true"]'
+        if self.check_exists_by_xpath(xpath_p):
+            sleep(self.sleep_time)
+        xpath_p = '//button[text()="Publish…"]'
+        err = "Unable to click Publish… Button (1)"
+        if self.click_exists_by_xpath(xpath_p, err, wait=True):
+            xpath_p = '//button[text()="Publish"]'
+            err = "Unable to click Publish Button (2)"
+            if self.click_exists_by_xpath(xpath_p, err, wait=True):
+                err = "Unable to close panel after Publish"
+                xpath_p = '//button[@aria-label="Close panel" and @type="button"]'
+                self.click_exists_by_xpath(xpath_p, err, wait=True)
+
+    def post_update(self):
+        xpath_u = '//button[text()="Update"]'
+        err = "Unable to click Update Button"
+        if self.click_exists_by_xpath(xpath_u, err, wait=True):
+            sleep(self.sleep_time)
 
     def post_new(self, title, category=None, tag=None, image_name=None, excerpt=None):
         self.browser.get(self.url + "/wp-admin/post-new.php")
