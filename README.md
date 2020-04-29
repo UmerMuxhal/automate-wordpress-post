@@ -4,6 +4,8 @@ Automate-WordPress is a Python package for automating WordPress posts.
 
 **Note:** Tested on WordPress version 5.4
 
+## Prerequisites
+
 ## Installation
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install Automate-WordPress.

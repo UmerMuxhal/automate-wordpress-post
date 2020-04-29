@@ -1,12 +1,17 @@
 import os
+import sys
 import time
+import codecs
 import requests
+import pyautogui
+import pyperclip
 import subprocess
 import pandas as pd
+import mammoth as d2h
 from time import sleep
+from numpy import ufunc
 from datetime import date
 from bs4 import BeautifulSoup
-from numpy import ufunc
 from selenium import webdriver
 from lxml.html import fromstring
 from selenium.webdriver import ActionChains
@@ -19,18 +24,19 @@ from random_user_agent.params import SoftwareName, OperatingSystem
 
 
 class Wordpress:
-    url = ''
-    url_login = ''
     user_agent = ''
     chrome_options = ''
+    pdf = ''
     success = ''
     error = ''
+    messages = ''
     sleep_time_page_load = 5
 
     def __init__(self, url, url_login, chrome_driver_path, sleep_time=2, user_agent=False):
         self.url = url
         self.url_login = url_login
         self.chrome_options = Options()
+        self.chrome_driver_path = chrome_driver_path
         if user_agent:
             self.user_agent_generator()
             self.chrome_options.add_argument(f'user-agent={self.user_agent}')
@@ -91,23 +97,50 @@ class Wordpress:
             return False
         return True
 
-    def send_backspace_by_xpath(self, xpath, times):
-        for i in range(1, times):
+    def send_keys_select_all(self, xpath=None, element_id=None, wait=False):
+        if xpath:
+            self.send_keys_exists_by_xpath(xpath, Keys.CONTROL + "a")
+        elif element_id:
+            self.send_keys_exists_by_id(element_id, Keys.CONTROL + "a")
+        if wait:
+            sleep(self.sleep_time)
+
+    def send_backspace_by_xpath(self, xpath, times, wait=False):
+        for i in range(0, times):
             self.send_keys_exists_by_xpath(xpath, Keys.BACK_SPACE)
+        if wait:
+            sleep(self.sleep_time)
+
+    def paste_in_browser(self):
+        action = ActionChains(self.browser)
+        action.key_down(Keys.CONTROL)
+        action.send_keys('v')
+        action.key_up(Keys.CONTROL)
+        action.perform()
 
     def send_keys_in_browser(self, msg):
         actions = ActionChains(self.browser)
         actions.send_keys(msg)
         actions.perform()
 
-    def send_keys_exists_by_id(self, element_id, keys, error=None, success=None, wait=False):
+    def send_keys_exists_by_id(self, element_id, keys, error=None, success=None, wait=False, key_wait=None):
         try:
-            self.browser.find_element_by_id(element_id).send_keys(keys)
+            if not key_wait:
+                self.browser.find_element_by_id(element_id).send_keys(keys)
+            else:
+                for i in range(0, len(keys)):
+                    self.browser.find_element_by_id(element_id).send_keys(keys[i])
+                    sleep(key_wait)
+
             if wait:
                 sleep(self.sleep_time)
-        except NoSuchElementException:
+        except selenium_exception.NoSuchElementException:
             if error:
-                self.error += "ERROR: " + error + "\r\n"
+                self.error += "ERROR: " + error + " [Element Not Found]\r\n"
+            return False
+        except selenium_exception.ElementNotInteractableException:
+            if error:
+                self.error += "ERROR: " + error + " [Element Not Interactable]\r\n"
             return False
         if success:
             self.success += "SUCCESS: " + success + "\r\n"
@@ -118,9 +151,13 @@ class Wordpress:
             self.browser.find_element_by_xpath(xpath).send_keys(keys)
             if wait:
                 sleep(self.sleep_time)
-        except NoSuchElementException:
+        except selenium_exception.NoSuchElementException:
             if error:
-                self.error += "ERROR: " + error + "\r\n"
+                self.error += "ERROR: " + error + " [Element Not Found]\r\n"
+            return False
+        except selenium_exception.ElementNotInteractableException:
+            if error:
+                self.error += "ERROR: " + error + " [Element Not Interactable]\r\n"
             return False
         if success:
             self.success += "SUCCESS: " + success + "\r\n"
@@ -152,6 +189,23 @@ class Wordpress:
         if success:
             self.success += "SUCCESS: " + success + "\r\n"
         return True
+
+    def click_exists_by_xpath_elements(self, xpath, wait=False):
+        elms = self.browser.find_elements_by_xpath(xpath)
+        for elm in elms:
+            try:
+                elm.click()
+            except selenium_exception.NoSuchElementException:
+                continue
+            except selenium_exception.ElementNotInteractableException:
+                continue
+            except (selenium_exception.WebDriverException, selenium_exception.ElementClickInterceptedException):
+                try:
+                    self.browser.execute_script("arguments[0].click();", elm)
+                except selenium_exception:
+                    continue
+        if wait:
+            sleep(self.sleep_time)
 
     def wp_login(self, email, password):
         self.browser.get(self.url_login)
@@ -200,7 +254,14 @@ class Wordpress:
         self.click_exists_by_xpath(xpath, err, wait=True)
 
     def post_content_block_add(self, block_name):
-        blocks = ['heading', 'paragraph', 'list', 'image']
+        blocks = {
+            'heading': 'Heading',
+            'paragraph': 'Paragraph',
+            'list': 'List',
+            'image': 'Image',
+            'html': 'Custom HTML'
+        }
+
         if block_name.lower() not in blocks:
             self.set_error('Enter a valid block name')
             return False
@@ -208,12 +269,26 @@ class Wordpress:
         err = 'Unable to add block :' + block_name
         cmp = block_name + ' Added'
         check_add = '//button[@type="button" and @aria-label="Add block"]'
-        self.click_exists_by_xpath(check_add)
-        self.send_keys_exists_by_xpath('//input[@type="search" and @placeholder="Search for a block"]', block_name)
-        sleep(self.sleep_time)
-        self.click_exists_by_xpath('//span[text()="' + block_name.capitalize() + '"]/parent::button', err, cmp)
-        sleep(self.sleep_time)
+        if self.click_exists_by_xpath(check_add, err):
+            check_add = '//input[@type="search" and @placeholder="Search for a block"]'
+            if self.send_keys_exists_by_xpath(check_add, block_name, wait=True):
+                check_add = '//span[text()="' + blocks[block_name] + '"]/parent::button'
+                if self.click_exists_by_xpath(check_add, err, cmp, True):
+                    return True
 
+    # General Block Setting
+    def post_content_block_setting_general(self, html=False):
+        if html:
+            xpath_a = '//button[text()="Edit as HTML" and @type="button"]'
+            if not self.check_exists_by_xpath(xpath_a):
+                # Open General Settings Menu
+                xpath_e = '//button[@type="button" and @aria-label="More options"]'
+                err = "Unable to open General Settings Menu"
+                self.click_exists_by_xpath(xpath_e, err, wait=True)
+            err = "Unable to click Edit as html"
+            self.click_exists_by_xpath(xpath_a, err, wait=True)
+
+    # Heading Block Setting
     def post_content_block_setting_heading(self, style):
         head = {
             'h1': 'Heading 1',
@@ -264,13 +339,32 @@ class Wordpress:
             err = 'Unable to use Drop Cap'
             self.click_exists_by_xpath(xpath_text, err)
 
+    # Text Block Setting
+    def post_content_block_setting_text_align(self, align='left'):
+        list_align = [
+            'left',
+            'center',
+            'right'
+        ]
+        if align.lower() in list_align:
+            self.click_exists_by_xpath('//span[text()="Color settings"]/parent::button[@type="button"]', wait=True)
+            xpath_a = '//button[@type="button" and text()="Align text ' + align.lower() + '"]'
+            if not self.check_exists_by_xpath(xpath_a):
+                # Open Align Menu
+                xpath_e = '//button[@type="button" and @aria-label="Change text alignment"]'
+                err = "Unable to open Text Align Menu"
+                self.click_exists_by_xpath(xpath_e, err, wait=True)
+            err = "Unable to align text " + align
+            self.click_exists_by_xpath(xpath_a, err, wait=True)
+        else:
+            self.set_error("Invalid text alignment")
+
     def post_content_block_setting_color(self, text_color, bg_color=None):
         xpath_color = '(//button[text()="Custom color" and @type="button" and @aria-label="Custom color picker"])[1]'
         if not self.check_exists_by_xpath(xpath_color):
             # Expand Color Settings
             err = "Unable to expand Color Settings"
-            self.click_exists_by_xpath('//span[text()="Color settings"]/parent::button[@type="button"]', err)
-            sleep(self.sleep_time)
+            self.click_exists_by_xpath('//span[text()="Color settings"]/parent::button[@type="button"]', err, wait=True)
 
         err = "Unable to set text color"
         if self.click_exists_by_xpath(xpath_color, err):
@@ -290,26 +384,216 @@ class Wordpress:
                 err = "Unable to type background color"
                 self.send_keys_exists_by_xpath(xpath_color, bg_color, err)
 
-    def post_content_block_heading(self, heading, style='default', text_color=None):
-        self.post_content_block_add('heading')
-        self.send_keys_in_browser(heading)
-        if style != 'default':
-            self.post_content_block_setting_heading(style)
+    # Image Block Setting
+    def post_content_block_setting_image_style(self, round_shape=False):
+        xpath_s = '//div[@role="button" and @aria-label="Default"]'
+        if not self.check_exists_by_xpath(xpath_s):
+            # Expand Styles Settings
+            err = "Unable to expand Styles Settings"
+            self.click_exists_by_xpath('//button[text()="Styles" and @type="button"]', err, wait=True)
+        if not round_shape:
+            err = "Unable to set Default Style"
+            self.click_exists_by_xpath(xpath_s, err, wait=True)
+        else:
+            xpath_s = '//div[@role="button" and @aria-label="Rounded"]'
+            err = "Unable to set Round Style"
+            self.click_exists_by_xpath(xpath_s, err, wait=True)
 
-        if text_color:
-            self.post_content_block_setting_color(text_color)
+    # Image Block Setting
+    def post_content_block_setting_image(self, alt_text=None, size=None, width=None, height=None, percentage=None):
+        xpath_s = '//label[text()="Alt text (alternative text)"]/following-sibling::textarea'
+        if not self.check_exists_by_xpath(xpath_s):
+            # Expand Styles Settings
+            err = "Unable to expand Image Settings"
+            self.click_exists_by_xpath('//button[text()="Image settings" and @type="button"]', err, wait=True)
 
-    def post_content_block_paragraph(self, paragraph, size=None, custom_size=None, drop_cap=False, text_color=None,
-                                     bg_color=None):
-        self.post_content_block_add('paragraph')
-        self.send_keys_in_browser(paragraph)
+        if alt_text:
+            err = "Unable to type alt text"
+            self.send_keys_exists_by_xpath(xpath_s, alt_text, err, wait=True)
 
-        if size or custom_size or drop_cap:
-            self.post_content_block_setting_text(size, custom_size, drop_cap)
+        if size:
+            s_list = [
+                "thumbnail",
+                "medium",
+                "large",
+                "full",
+            ]
+            if size.lower() in s_list:
+                xpath_s = '//label[text()="Image size"]/following-sibling::select/option[@value="' + size.lower() + '"]'
+                err = "Unable to set size (option not available)"
+                self.click_exists_by_xpath(xpath_s, err, wait=True)
 
-        if text_color or bg_color:
-            self.post_content_block_setting_color(text_color, bg_color)
+        if width:
+            xpath_s = '//label[text()="Width"]/following-sibling::input[@type="number"]'
+            err = "Unable to set width"
+            self.send_keys_select_all(xpath_s)
+            self.send_keys_exists_by_xpath(xpath_s, width, err, wait=True)
 
+        if height:
+            xpath_s = '//label[text()="Height"]/following-sibling::input[@type="number"]'
+            err = "Unable to set height"
+            self.send_keys_select_all(xpath_s)
+            self.send_keys_exists_by_xpath(xpath_s, height, err, wait=True)
+
+        if percentage:
+            p_list = {
+                25: '25%',
+                50: '50%',
+                75: '75%',
+                100: '100%',
+            }
+            if percentage in p_list:
+                xpath_s = '//button[contains(text(), "' + str(percentage) + '")]'
+                err = "Unable to set Percentage [xpath]: " + xpath_s
+                self.click_exists_by_xpath(xpath_s, err, wait=True)
+
+    # Image Block Setting
+    def post_content_block_setting_image_align(self, align='left'):
+        list_align = [
+            'left',
+            'center',
+            'right'
+        ]
+        if align.lower() in list_align:
+            xpath_a = '//button[@type="button" and text()="Align ' + align.lower() + '"]'
+            if not self.check_exists_by_xpath(xpath_a):
+                # Open Align Menu
+                xpath_e = '//button[@type="button" and @aria-label="Change alignment"]'
+                err = "Unable to open Align Menu"
+                self.click_exists_by_xpath(xpath_e, err, wait=True)
+            err = "Unable to align image " + align
+            self.click_exists_by_xpath(xpath_a, err, wait=True)
+        else:
+            self.set_error("Invalid image alignment")
+
+    # List Block Setting
+    def post_content_block_setting_ordered_list(self, start=None, reverse=False):
+        xpath_o = '//label[text()="Start value"]/following-sibling::input[@type="number"]'
+        if not self.check_exists_by_xpath(xpath_o):
+            # Expand Ordered list Settings
+            err = "Unable to expand Styles Settings"
+            self.click_exists_by_xpath('//button[text()="Ordered list settings" and @type="button"]', err, wait=True)
+        if start:
+            err = "Unable to set Start value"
+            self.send_keys_exists_by_xpath(xpath_o, start, err, wait=True)
+        if reverse:
+            xpath_o = '//label[text()="Reverse list numbering"]'
+            err = 'Unable to reverse list order'
+            self.click_exists_by_xpath(xpath_o, err, wait=True)
+
+    def post_content_block_heading(self, heading, style='default', align='left', text_color=None, html=False):
+        if self.post_content_block_add('heading'):
+            self.send_keys_in_browser(heading)
+            if align != "left":
+                self.post_content_block_setting_text_align(align)
+            if html:
+                self.post_content_block_setting_general(html)
+            if style != 'default':
+                self.post_content_block_setting_heading(style)
+
+            if text_color:
+                self.post_content_block_setting_color(text_color)
+
+    def post_content_block_paragraph(self, paragraph, align='left', size=None, custom_size=None, drop_cap=False,
+                                     text_color=None, bg_color=None, html=False):
+        if self.post_content_block_add('paragraph'):
+            self.send_keys_in_browser(paragraph)
+            if align != "left":
+                self.post_content_block_setting_text_align(align)
+
+            if html:
+                self.post_content_block_setting_general(html)
+
+            if size or custom_size or drop_cap:
+                self.post_content_block_setting_text(size, custom_size, drop_cap)
+
+            if text_color or bg_color:
+                self.post_content_block_setting_color(text_color, bg_color)
+
+    def post_content_block_image(self, image_name=None, caption=None, image_url=None, align='left', round_shape=None,
+                                 alt_text=None, size=None, width=None, height=None, percentage=None, html=False):
+        check = False
+        if self.post_content_block_add('image'):
+            if image_name:
+                err = "Unable to click Media Library Button"
+                if self.click_exists_by_xpath('//button[text()="Media Library"]', err, wait=True):
+                    if self.__media_search_and_select(image_name) is True:
+                        check = True
+
+            if image_url:
+                err = "Unable to click Insert from URL Button"
+                if self.click_exists_by_xpath('//button[text()="Insert from URL"]', err, wait=True):
+                    self.send_keys_in_browser(image_url)
+                    err = "Unable to click Apply Button"
+                    if self.click_exists_by_xpath('//button[@type="submit" and @aria-label="Apply"]', err, wait=True):
+                        size = None
+                        check = True
+
+            if check:
+                if align != "left":
+                    self.post_content_block_setting_image_align(align)
+
+                if html:
+                    self.post_content_block_setting_general(html)
+
+                if caption:
+                    xpath = '//figcaption[@role="textbox" and text()=""]'
+                    err = "Unable to type caption"
+                    if self.send_keys_exists_by_xpath(xpath, caption, err, wait=True):
+                        if not percentage and not width and not height:
+                            percentage = 100
+
+                self.post_content_block_setting_image_style(round_shape)
+                self.post_content_block_setting_image(alt_text, size, width, height, percentage)
+
+    def post_content_block_list(self, list_text, ordered=False, start=None, reverse=False, separator='.'):
+        if self.post_content_block_add('list'):
+            if ordered:
+                err = "Unable to Order list"
+                xpath = '//button[@type="button" and @aria-label="Convert to ordered list"]'
+                self.click_exists_by_xpath(xpath, err, wait=True)
+
+            list_text = list_text.split(separator)
+            del list_text[len(list_text) - 1]
+            for i in range(0, len(list_text)):
+                if list_text[i]:
+                    if list_text[i][0] == " ":
+                        list_text[i] = list_text[i].replace(" ", "", 1)
+                self.send_keys_in_browser(list_text[i] + separator)
+                if i == len(list_text) - 1:
+                    break
+                self.send_keys_in_browser(Keys.RETURN)
+
+            if ordered and (start or reverse):
+                self.post_content_block_setting_ordered_list(start, reverse)
+
+    def post_content_block_html(self, html=None):
+        self.post_content_block_add('html')
+        if html:
+            self.send_keys_in_browser(html)
+
+    def post_content_from_file(self, file_path='', animation=False):
+        list_ext = [
+            'docx',
+            'html'
+        ]
+        ext = file_path.split('.')
+        if ext[-1].lower() in list_ext:
+            self.post_content_block_add('html')
+            if ext[-1].lower() == 'docx':
+                html = self.docx_to_html(file_path)
+            else:
+                html = self.read_html(file_path)
+            if not animation:
+                pyperclip.copy(html)
+                sleep(self.sleep_time)
+                self.paste_in_browser()
+            else:
+                self.send_keys_in_browser(html)
+        else:
+            self.set_error("Invalid File Type")
+
+    # TODO:
     def post_content(self, data_dictionary):
         element_discus = '//span[text()="Visibility"]'
         if not self.check_exists_by_xpath(element_discus):
@@ -435,11 +719,43 @@ class Wordpress:
         check_tag = '//label[text()="Add New Tag"]/following-sibling::div/child::input'
         if not self.check_exists_by_xpath(check_tag):
             # Expand Tags
-            self.browser.find_element_by_xpath('//button[text()="Tags"]').click()
+            err = "Unable to Expand Tags"
+            self.click_exists_by_xpath('//button[text()="Tags"]', err, wait=True)
 
         # Add Tag
         tag_input = self.browser.find_element_by_xpath(check_tag)
         tag_input.send_keys(tag + Keys.RETURN)
+
+    def __media_search_and_select(self, image_name, image_type="Select"):
+        err = "Unable to type image name"
+        self.send_keys_select_all(None, 'media-search-input')
+        self.send_keys_exists_by_id('media-search-input', image_name, err, wait=True)
+
+        sleep(self.sleep_time)
+        err = "No image found"
+        if not self.click_exists_by_xpath('(//li[@role="checkbox"])[1]', err):
+            # xpath = '(//span[contains(@class, "media-modal-icon")]/parent::button[contains(@class, "media-modal-close")])[3]'
+            xpath = '//span[contains(@class, "media-modal-icon")]/parent::button[contains(@class, "media-modal-close")]'
+            err = "Unable to close Media Library"
+            self.click_exists_by_xpath_elements(xpath, True)
+            err = "Unable to click Media Library Button Again"
+            if self.click_exists_by_xpath('//button[text()="Media Library"]', err, wait=True):
+                if not self.click_exists_by_xpath('(//li[@role="checkbox"])[1]', err):
+                    xpath = '(//span[contains(@class, "media-modal-icon")]/parent::button[contains(@class, "media-modal-close")])[3]'
+                    xpath = '//span[contains(@class, "media-modal-icon")]/parent::button[contains(@class, "media-modal-close")]'
+                    err = "Unable to close Media Library"
+                    self.click_exists_by_xpath_elements(xpath, True)
+                else:
+                    err = "Unable to finish image selection"
+                    if self.click_exists_by_xpath(
+                            '//button[contains(@class, "media-button-select") and text()="' + image_type + '"]', err):
+                        return True
+
+        else:
+            err = "Unable to finish image selection"
+            if self.click_exists_by_xpath(
+                    '//button[contains(@class, "media-button-select") and text()="' + image_type + '"]', err):
+                return True
 
     def post_image(self, image_name):
         featured_img = '//button[text()="Set featured image"]'
@@ -449,25 +765,27 @@ class Wordpress:
             self.click_exists_by_xpath('//button[text()="Featured image"]', err)
 
         err = "Unable to click Set featured image"
-        self.click_exists_by_xpath('//button[text()="Set featured image"]', err)
+        self.click_exists_by_xpath('//button[text()="Set featured image"]', err, wait=True)
 
-        sleep(self.sleep_time)
-        err = "Unable to type image name"
-        self.send_keys_exists_by_id('media-search-input', image_name, err)
+        self.__media_search_and_select(image_name, "Set featured image")
 
-        sleep(self.sleep_time + 3)
-        err = "Unable to click searched image name"
-        self.click_exists_by_xpath('(//li[@role="checkbox"])[1]', err)
-
-        err = "Unable to finish featured image selection"
-        self.click_exists_by_xpath('//button[contains(@class, "media-button-select") and text()="Set featured image"]',
-                                   err)
+        # err = "Unable to type image name"
+        # self.send_keys_exists_by_id('media-search-input', image_name, err)
+        #
+        # sleep(self.sleep_time + 3)
+        # err = "Unable to click searched image name"
+        # self.click_exists_by_xpath('(//li[@role="checkbox"])[1]', err)
+        #
+        # err = "Unable to finish featured image selection"
+        # self.click_exists_by_xpath('//button[contains(@class, "media-button-select") and text()="Set featured image"]',
+        #                            err)
 
     def post_excerpt(self, excerpt):
         check_excerpt = '//label[text()="Write an excerpt (optional)"]/following-sibling::textarea'
         if not self.check_exists_by_xpath(check_excerpt):
             # Expand Excerpt
-            self.browser.find_element_by_xpath('//button[text()="Excerpt"]').click()
+            err = "Unable to Expand Excerpt Setting"
+            self.click_exists_by_xpath('//button[text()="Excerpt"]', err, wait=True)
 
         # Add Excerpt
         self.browser.find_element_by_xpath(check_excerpt).send_keys(excerpt)
@@ -507,6 +825,7 @@ class Wordpress:
     def post_switch_to_draft(self):
         xpath_d = '//button[text()="Switch to draft"]'
         err = "Unable to click Switch to Draft Button"
+        sleep(self.sleep_time)
         if self.click_exists_by_xpath(xpath_d, err, wait=True):
             alert_obj = self.browser.switch_to.alert
             alert_obj.accept()
@@ -533,9 +852,62 @@ class Wordpress:
         if self.click_exists_by_xpath(xpath_u, err, wait=True):
             sleep(self.sleep_time)
 
-    def post_new(self, title, category=None, tag=None, image_name=None, excerpt=None):
+    def read_html(self, html_path, full=False):
+        f = codecs.open(html_path, 'r')
+        html = f.read()
+        soup = BeautifulSoup(html, 'html.parser')
+        if not full:
+            return soup.body.prettify()
+        else:
+            return soup.prettify()
+
+    def docx_to_html(self, docx_path):
+        with open(docx_path, "rb") as docx_file:
+            result = d2h.convert_to_html(docx_file)
+            html = result.value
+            self.messages = result.messages
+        return html
+
+    # Junk
+    def post_from_pdf(self, pdf_path):
+        # self.send_keys_in_browser(Keys.CONTROL + 't')
+        # ActionChains(self.browser).send_keys(Keys.COMMAND, "t").perform()
+        # self.pdf = self.browser = webdriver.Chrome(executable_path=self.chrome_driver_path,
+        #                                            chrome_options=self.chrome_options)
+        browser = self.browser.window_handles[0]
+        pyautogui.hotkey('ctrl', 't')
+        sleep(self.sleep_time)
+        pdf = self.browser.window_handles[1]
+        self.browser.switch_to.window(pdf)
+        self.browser.get(pdf_path)
+        # self.browser.get('file:///' + pdf_path)
+        # self.send_keys_in_browser(Keys.CONTROL + 'a')
+        # ActionChains(self.pdf.find_element_by_tag_name('body')).send_keys(Keys.CONTROL, "a").perform()
+        pyautogui.click(clicks=3)
+        sleep(self.sleep_time)
+        pyautogui.hotkey('ctrl', 'a')
+        # self.send_keys_in_browser(Keys.CONTROL + 'c')
+        sleep(self.sleep_time)
+        # ActionChains(self.pdf).send_keys(Keys.CONTROL, "c").perform()
+        pyautogui.hotkey('ctrl', 'c')
+        sleep(self.sleep_time)
+        # self.send_keys_in_browser(Keys.CONTROL + 'w')
+        # self.pdf.close()
+        # ActionChains(self.pdf).send_keys(Keys.CONTROL, "w").perform()
+        pyautogui.hotkey('ctrl', 'w')
+        self.browser.switch_to.window(browser)
+        sleep(self.sleep_time)
+        self.post_content_block_paragraph('')
+        pyautogui.hotkey('ctrl', 'v')
+
+    def post_new(self, title, category=None, tag=None, image_name=None, excerpt=None, docx_path=None):
         self.browser.get(self.url + "/wp-admin/post-new.php")
         sleep(self.sleep_time_page_load)
+
+        xpath = '//button[@type="button" and @aria-label="Close dialog"]'
+        if self.check_exists_by_xpath(xpath):
+            err = "Unable to close tutorial pop up"
+            self.click_exists_by_xpath(xpath, err)
 
         self.post_content_use_default_editor()
 
@@ -557,3 +929,7 @@ class Wordpress:
         if excerpt:
             sleep(self.sleep_time)
             self.post_excerpt(excerpt)
+
+        if docx_path:
+            sleep(self.sleep_time)
+            self.post_content_block_html(None, docx_path)
