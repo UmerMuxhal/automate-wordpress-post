@@ -23,22 +23,40 @@ from selenium.common.exceptions import NoSuchElementException
 from random_user_agent.params import SoftwareName, OperatingSystem
 
 
-class Wordpress:
-    user_agent = ''
-    chrome_options = ''
-    pdf = ''
+class WordPress:
+    # chrome_options = ''
+    # pdf = ''
     success = ''
     error = ''
     messages = ''
     sleep_time_page_load = 5
 
-    def __init__(self, url, url_login, chrome_driver_path, sleep_time=2, user_agent=False):
-        self.url = url
-        self.url_login = url_login
+    def __init__(self, site_url, login_url, chrome_driver_path, sleep_time=2, user_agent=False):
+        """Constructor.
+        Creates a new instance of chrome for a WordPress site
+
+        :type site_url: str
+        :type login_url: str
+        :type chrome_driver_path: str
+        :type sleep_time: int
+        :type user_agent: bool
+        :param site_url: Home address of WordPress site.
+        :param login_url: Login address of WordPress site.
+        :param chrome_driver_path: Path of chrome webdriver for selenium
+        :param sleep_time: Wait time (seconds) between execution of different tasks (default is 2)
+        :param user_agent: Use random User-Agent for chrome (default is False)
+
+        Example
+        ----
+        wp = WordPress('mysite.com', 'mysite.com/wp-admin', 'path-to-chromedriver', 3, True)
+        """
+
+        self.site_url = site_url
+        self.login_url = login_url
         self.chrome_options = Options()
         self.chrome_driver_path = chrome_driver_path
         if user_agent:
-            self.user_agent_generator()
+            self.user_agent = self.user_agent_generator()
             self.chrome_options.add_argument(f'user-agent={self.user_agent}')
         self.browser = webdriver.Chrome(executable_path=chrome_driver_path, chrome_options=self.chrome_options)
         self.sleep_time = sleep_time
@@ -66,24 +84,70 @@ class Wordpress:
         software_names = [SoftwareName.CHROME.value]
         operating_systems = [OperatingSystem.WINDOWS.value, OperatingSystem.LINUX.value]
         user_agent_rotate = UserAgent(software_names=software_names, operating_systems=operating_systems, limit=100)
-        self.user_agent = user_agent_rotate.get_random_user_agent()
+        return user_agent_rotate.get_random_user_agent()
 
     def maximize_window(self):
+        """ Maximize Chrome window.
+
+        Example
+        ----
+        wp.maximize_window()
+        """
+
         self.browser.maximize_window()
 
     def close(self):
+        """ Close Chrome window.
+
+        Example
+        ----
+        wp.close()
+        """
+
         self.browser.close()
 
     def set_error(self, error):
         self.error += "ERROR: " + error + "\r\n"
 
+    @property
     def get_errors(self):
+        """ Returns a string with failed tasks
+
+        :rtype: str
+
+        Example
+        ----
+        wp.get_errors()
+        """
+
         return "Errors: \n" + self.error
 
+    @property
     def get_completed(self):
+        """ Returns a string with completed tasks
+
+        :rtype: str
+
+        Example
+        ----
+        wp.get_completed()
+        """
+
         return "Completed Tasks: \n" + self.success
 
     def check_exists_by_id(self, element_id):
+        """ Check if an element exists on page for the given html id
+
+        :type element_id: str
+        :rtype: bool
+        :param element_id: id attribute of html element
+        :returns: True if an element exists on page for the given html id, else False
+
+        Example
+        ----
+        wp.check_exists_by_id('username')
+        """
+
         try:
             self.browser.find_element_by_id(element_id)
         except NoSuchElementException:
@@ -91,6 +155,18 @@ class Wordpress:
         return True
 
     def check_exists_by_xpath(self, xpath):
+        """ Check if an element exists on page for the given html xpath
+
+        :type xpath: str
+        :rtype: bool
+        :param xpath: xpath of html element
+        :returns: True if an element exists on page for the given html xpath, else False
+
+        Example
+        ----
+        wp.check_exists_by_xpath('//input[@name="user"]')
+        """
+
         try:
             self.browser.find_element_by_xpath(xpath)
         except NoSuchElementException:
@@ -98,38 +174,125 @@ class Wordpress:
         return True
 
     def send_keys_select_all(self, xpath=None, element_id=None, wait=False):
-        if xpath:
-            self.send_keys_exists_by_xpath(xpath, Keys.CONTROL + "a")
-        elif element_id:
-            self.send_keys_exists_by_id(element_id, Keys.CONTROL + "a")
-        if wait:
-            sleep(self.sleep_time)
+        """ Send key combination Ctrl+A to select all text in html element either by xpath or id
+
+        :type xpath: str
+        :type element_id: str
+        :type wait: bool
+        :param xpath: xpath of html element
+        :param element_id: id attribute of html element
+        :param wait: After sending keys, wait for time(if sleep_time set in constructor else 2 seconds)
+
+        Example
+        ----
+        # Send keys by html xpath
+        wp.send_keys_select_all('//input[@name="user"]')
+
+        # Send keys by html id attribute
+        wp.send_keys_select_all(None,'username')
+
+        # Wait after sending keys
+        wp.send_keys_select_all('//input[@name="user"]', None, True)
+
+        """
+
+        try:
+            if xpath:
+                self.send_text_exists_by_xpath(xpath, Keys.CONTROL + "a")
+            elif element_id:
+                self.send_text_exists_by_id(element_id, Keys.CONTROL + "a")
+            if wait:
+                sleep(self.sleep_time)
+        except selenium_exception.NoSuchElementException:
+            if xpath:
+                self.error += "ERROR: Xpath: " + xpath + " [Element Not Found]\r\n"
+            else:
+                self.error += "ERROR: Id: " + element_id + " [Element Not Found]\r\n"
 
     def send_backspace_by_xpath(self, xpath, times, wait=False):
-        for i in range(0, times):
-            self.send_keys_exists_by_xpath(xpath, Keys.BACK_SPACE)
-        if wait:
-            sleep(self.sleep_time)
+        """ Send backspace key for given number of times in html element by xpath
+
+        :type xpath: str
+        :type times: int
+        :type wait: bool
+        :param xpath: xpath of html element
+        :param times: number of times backspace should be sent
+        :param wait: After sending key/s, wait for time(if sleep_time set in constructor else 2 seconds)
+
+        Example
+        ----
+        # Send backspace 10 times in html element by xpath and wait
+        wp.send_backspace_by_xpath('//input[@name="user"]', 10, True)
+
+        """
+
+        try:
+            for i in range(0, times):
+                self.send_text_exists_by_xpath(xpath, Keys.BACK_SPACE)
+            if wait:
+                sleep(self.sleep_time)
+        except selenium_exception.NoSuchElementException:
+            self.error += "ERROR: Xpath: " + xpath + " [Element Not Found]\r\n"
 
     def paste_in_browser(self):
+        """ Paste content from clipboard in active html element in browser
+
+        Example
+        ----
+        wp.paste_in_browser()
+
+        """
+
         action = ActionChains(self.browser)
         action.key_down(Keys.CONTROL)
         action.send_keys('v')
         action.key_up(Keys.CONTROL)
         action.perform()
 
-    def send_keys_in_browser(self, msg):
+    def send_text_in_browser(self, text):
+        """ Type given text in active html element in browser
+
+        :type text: str
+        :param text: Text to be typed
+
+        Example
+        ----
+        wp.send_text_in_browser("Hello World!")
+
+        """
+
         actions = ActionChains(self.browser)
-        actions.send_keys(msg)
+        actions.send_keys(text)
         actions.perform()
 
-    def send_keys_exists_by_id(self, element_id, keys, error=None, success=None, wait=False, key_wait=None):
+    def send_text_exists_by_id(self, element_id, text, error=None, success=None, wait=False, key_wait=None):
+        """ Type text in html element by id, if it exists
+
+        :type element_id: str
+        :type text: str
+        :type error: str
+        :type success: str
+        :type wait: bool
+        :type key_wait: int
+        :param element_id: id attribute of html element
+        :param text: text to be typed
+        :param error: error note in case of failure (Optional)
+        :param success: success note in case of completion (Optional)
+        :param wait: After typing, wait for time(if sleep_time set in constructor else 2 seconds) (Optional)
+        :param key_wait: After each character, wait for time(in seconds) (Optional)
+
+        Example
+        ----
+        wp.send_text_exists_by_id('username', 'Admin')
+
+        """
+
         try:
             if not key_wait:
-                self.browser.find_element_by_id(element_id).send_keys(keys)
+                self.browser.find_element_by_id(element_id).send_keys(text)
             else:
-                for i in range(0, len(keys)):
-                    self.browser.find_element_by_id(element_id).send_keys(keys[i])
+                for i in range(0, len(text)):
+                    self.browser.find_element_by_id(element_id).send_keys(text[i])
                     sleep(key_wait)
 
             if wait:
@@ -146,9 +309,28 @@ class Wordpress:
             self.success += "SUCCESS: " + success + "\r\n"
         return True
 
-    def send_keys_exists_by_xpath(self, xpath, keys, error=None, success=None, wait=False):
+    def send_text_exists_by_xpath(self, xpath, text, error=None, success=None, wait=False):
+        """ Type text in html element by xpath, if it exists
+
+        :type xpath: str
+        :type text: str or int
+        :type error: str
+        :type success: str
+        :type wait: bool
+        :param xpath: xpath of html element
+        :param text: text to be typed
+        :param error: error note in case of failure (Optional)
+        :param success: success note in case of completion (Optional)
+        :param wait: After typing, wait for time(if sleep_time set in constructor else 2 seconds) (Optional)
+
+        Example
+        ----
+        wp.send_text_exists_by_xpath('//input[@name="username"]', 'Admin')
+
+        """
+
         try:
-            self.browser.find_element_by_xpath(xpath).send_keys(keys)
+            self.browser.find_element_by_xpath(xpath).send_keys(text)
             if wait:
                 sleep(self.sleep_time)
         except selenium_exception.NoSuchElementException:
@@ -164,6 +346,23 @@ class Wordpress:
         return True
 
     def click_exists_by_xpath(self, xpath, error=None, success=None, wait=False):
+        """ Click html element by xpath, if it exists
+
+        :type xpath: str
+        :type error: str
+        :type success: str
+        :type wait: bool
+        :param xpath: xpath of html element
+        :param error: error note in case of failure (Optional)
+        :param success: success note in case of completion (Optional)
+        :param wait: After click, wait for time(if sleep_time set in constructor else 2 seconds) (Optional)
+
+        Example
+        ----
+        wp.click_exists_by_xpath('//input[@name="login"]')
+
+        """
+
         try:
             self.browser.find_element_by_xpath(xpath).click()
             if wait:
@@ -191,6 +390,19 @@ class Wordpress:
         return True
 
     def click_exists_by_xpath_elements(self, xpath, wait=False):
+        """ Click html elements by xpath, if they exist
+
+        :type xpath: str
+        :type wait: bool
+        :param xpath: xpath of html elements
+        :param wait: After click on all elements, wait for time(if sleep_time set in constructor else 2 seconds) (Optional)
+
+        Example
+        ----
+        wp.click_exists_by_xpath_elements('//input[@type="button"]')
+
+        """
+
         elms = self.browser.find_elements_by_xpath(xpath)
         for elm in elms:
             try:
@@ -208,20 +420,44 @@ class Wordpress:
             sleep(self.sleep_time)
 
     def wp_login(self, email, password):
-        self.browser.get(self.url_login)
+        """ Login to WordPress site
 
+        :type email: str
+        :type password: str
+        :param email: email or username of WordPress User
+        :param password: password of WordPress User
+
+        Example
+        ----
+        wp.wp_login('email', 'password')
+
+        """
+
+        self.browser.get(self.login_url)
         sleep(self.sleep_time)
         self.browser.find_element_by_id('user_login').send_keys(email)
-
         sleep(self.sleep_time)
         self.browser.find_element_by_id('user_pass').send_keys(password)
-
         self.browser.find_element_by_id('wp-submit').click()
 
     def open_page_posts(self):
-        self.browser.get(self.url + "/wp-admin/edit.php")
+        """ Open All Posts Page
+        """
+
+        self.browser.get(self.site_url + "/wp-admin/edit.php")
 
     def post_title(self, title):
+        """ Set Post Title
+
+        :type title: str
+        :param title: title of the post
+
+        Example
+        ----
+        wp.post_title("Post Title")
+
+        """
+
         if self.check_exists_by_id("post-title-0"):
             self.browser.find_element_by_id("post-title-0").send_keys(title)
         else:
@@ -229,22 +465,47 @@ class Wordpress:
 
     # After post published
     def post_url(self, url):
+        """ Set Post Url
+
+        :type url: str
+        :param url: title of the post
+
+        Example
+        ----
+        wp.post_url("url")
+
+        """
+
         self.post_document_setting_open()
         xpath_u = '//label[text()="URL Slug"]/following-sibling::input[@type="text"]'
         if not self.check_exists_by_xpath(xpath_u):
             # Expand Heading Settings
             err = 'Unable to expand Permalink'
             self.click_exists_by_xpath('//button[@type="button" and text()="Permalink"]', err, wait=True)
-
         err = "Unable to type post url"
-        self.send_keys_exists_by_xpath(xpath_u, url, err, wait=True)
+        self.send_text_exists_by_xpath(xpath_u, url, err, wait=True)
 
     def post_content_use_default_editor(self, xpath='//button[text()="Use Default Editor"]'):
+        """ Set Post Url
+
+        :type xpath: str
+        :param xpath: xpath of the use default editor button (optional)
+
+        Example
+        ----
+        wp.post_content_use_default_editor()
+
+        """
+
         err = 'Unable to use default editor'
         self.click_exists_by_xpath(xpath, err)
         sleep(self.sleep_time)
 
     def post_content_block_setting_open(self):
+        """ Switch to BLOCK SETTING Panel on the right
+
+        """
+
         xpath = '//button[@type="button" and @aria-label="Block (selected)"]'
         if self.check_exists_by_xpath(xpath):
             return True
@@ -254,6 +515,31 @@ class Wordpress:
         self.click_exists_by_xpath(xpath, err, wait=True)
 
     def post_content_block_add(self, block_name):
+        """ Add a block in the editor
+        Available blocks are: Heading, Paragraph, List, Image, Custom HTML
+
+        :type block_name: str
+        :param block_name: block name to be added (case insensitive) ['heading', 'paragraph', 'list', 'image', 'html']
+
+        Example
+        ----
+        # For Heading:
+        wp.post_content_block_add("heading")
+
+        # For Paragraph:
+        wp.post_content_block_add("paragraph")
+
+        # For List:
+        wp.post_content_block_add("list")
+
+        # For Image:
+        wp.post_content_block_add("image")
+
+        # For Custom HTML:
+        wp.post_content_block_add("html")
+
+        """
+
         blocks = {
             'heading': 'Heading',
             'paragraph': 'Paragraph',
@@ -261,23 +547,32 @@ class Wordpress:
             'image': 'Image',
             'html': 'Custom HTML'
         }
-
         if block_name.lower() not in blocks:
             self.set_error('Enter a valid block name')
             return False
-
         err = 'Unable to add block :' + block_name
         cmp = block_name + ' Added'
         check_add = '//button[@type="button" and @aria-label="Add block"]'
         if self.click_exists_by_xpath(check_add, err):
             check_add = '//input[@type="search" and @placeholder="Search for a block"]'
-            if self.send_keys_exists_by_xpath(check_add, block_name, wait=True):
+            if self.send_text_exists_by_xpath(check_add, block_name, wait=True):
                 check_add = '//span[text()="' + blocks[block_name] + '"]/parent::button'
                 if self.click_exists_by_xpath(check_add, err, cmp, True):
                     return True
 
-    # General Block Setting
-    def post_content_block_setting_general(self, html=False):
+    # Block edit as html
+    def post_content_block_edit_as_html(self, html=False):
+        """ Click on Edit as HTML Button of Editor Block
+
+        :type html: bool
+        :param html: True if editor block is to be edited as custom html
+
+        Example
+        ----
+        wp.post_content_block_edit_as_html(True)
+
+        """
+
         if html:
             xpath_a = '//button[text()="Edit as HTML" and @type="button"]'
             if not self.check_exists_by_xpath(xpath_a):
@@ -290,6 +585,18 @@ class Wordpress:
 
     # Heading Block Setting
     def post_content_block_setting_heading(self, style):
+        """ Select Heading style
+        Available styles are: h1, h2, h3, h4, h5, h6
+
+        :type style: str
+        :param style: Style of heading tag. Allowed: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']
+
+        Example
+        ----
+        wp.post_content_block_setting_heading('h1')
+
+        """
+
         head = {
             'h1': 'Heading 1',
             'h2': 'Heading 2',
@@ -298,17 +605,42 @@ class Wordpress:
             'h5': 'Heading 5',
             'h6': 'Heading 6'
         }
-        check_h = '//button[@type="button" and @aria-label="' + head[style] + '"]'
-        if not self.check_exists_by_xpath(check_h):
-            # Expand Heading Settings
-            err = 'Unable to expand Heading Settings'
-            self.click_exists_by_xpath('//button[@type="button" and text()="Heading Settings"]', err)
-            sleep(self.sleep_time)
+        if style.lower() in head:
+            check_h = '//button[@type="button" and @aria-label="' + head[style] + '"]'
+            if not self.check_exists_by_xpath(check_h):
+                # Expand Heading Settings
+                err = 'Unable to expand Heading Settings'
+                self.click_exists_by_xpath('//button[@type="button" and text()="Heading Settings"]', err)
+                sleep(self.sleep_time)
 
-        err = 'Invalid Heading style: [' + style + ']'
-        self.click_exists_by_xpath(check_h, err)
+            err = 'Invalid Heading style: [' + style + ']'
+            self.click_exists_by_xpath(check_h, err)
 
+    # Text Block Setting
     def post_content_block_setting_text(self, size=None, custom_size=None, drop_cap=False):
+        """ Set Paragraph block settings
+
+        :type size: str
+        :type custom_size: int
+        :type drop_cap: bool
+        :param size: choose font size from sizes available in the editor:
+        ['default', 'small', 'normal', 'medium', 'large', 'huge'] (optional)
+        :param custom_size: font size (optional)
+        :param drop_cap: Set first character of paragraph to capital (optional)
+
+        Example
+        ----
+        # Using editor's font size
+        wp.post_content_block_setting_text("normal")
+
+        # Using custom font size
+        wp.post_content_block_setting_text(None, 54)
+
+        # Set First character capital of Text
+        wp.post_content_block_setting_text("small", None, True)
+
+        """
+
         xpath_text = '//label[text()="Custom"]/following-sibling::input[@type="number"]'
         if not self.check_exists_by_xpath(xpath_text):
             # Expand Text Settings
@@ -316,7 +648,7 @@ class Wordpress:
             sleep(self.sleep_time)
 
         if custom_size:
-            self.send_keys_exists_by_xpath(xpath_text, custom_size)
+            self.send_text_exists_by_xpath(xpath_text, custom_size)
 
         if size:
             size_list = {
@@ -329,7 +661,7 @@ class Wordpress:
             }
             if size.lower() in size_list:
                 err = 'Unable to choose text size: ' + size
-                self.send_keys_exists_by_xpath(xpath_text, size_list[size], err)
+                self.send_text_exists_by_xpath(xpath_text, size_list[size], err)
                 sleep(self.sleep_time)
             else:
                 self.set_error('Invalid text size: ' + size)
@@ -340,7 +672,19 @@ class Wordpress:
             self.click_exists_by_xpath(xpath_text, err)
 
     # Text Block Setting
-    def post_content_block_setting_text_align(self, align='left'):
+    def post_content_block_setting_text_align(self, align="left"):
+        """ Select text alignment
+        Available alignments are: left, center, right
+
+        :type align: str
+        :param align: text alignment (default="left"). Allowed: ['left', 'center', 'right']
+
+        Example
+        ----
+        wp.post_content_block_setting_text_align("left")
+
+        """
+
         list_align = [
             'left',
             'center',
@@ -359,7 +703,21 @@ class Wordpress:
         else:
             self.set_error("Invalid text alignment")
 
+    # Color Block Setting
     def post_content_block_setting_color(self, text_color, bg_color=None):
+        """ Set color of text and background
+
+        :type text_color: str
+        :type bg_color: str
+        :param text_color: hex color code
+        :param bg_color: hex color code (optional)
+
+        Example
+        ----
+        wp.post_content_block_setting_color('#1bbafe', '#ffffff')
+
+        """
+
         xpath_color = '(//button[text()="Custom color" and @type="button" and @aria-label="Custom color picker"])[1]'
         if not self.check_exists_by_xpath(xpath_color):
             # Expand Color Settings
@@ -372,7 +730,7 @@ class Wordpress:
             sleep(self.sleep_time)
             self.send_backspace_by_xpath(xpath_color, 8)
             err = "Unable to type text color"
-            self.send_keys_exists_by_xpath(xpath_color, text_color, err)
+            self.send_text_exists_by_xpath(xpath_color, text_color, err)
 
         if bg_color:
             xpath_color = '(//button[@type="button" and @aria-label="Custom color picker" and text()="Custom color"])[2]'
@@ -382,10 +740,21 @@ class Wordpress:
                 sleep(self.sleep_time)
                 self.send_backspace_by_xpath(xpath_color, 8)
                 err = "Unable to type background color"
-                self.send_keys_exists_by_xpath(xpath_color, bg_color, err)
+                self.send_text_exists_by_xpath(xpath_color, bg_color, err)
 
     # Image Block Setting
     def post_content_block_setting_image_style(self, round_shape=False):
+        """ Set Image Border's style
+
+        :type round_shape: bool
+        :param round_shape: True, to set round borders. (default=False)
+
+        Example
+        ----
+        wp.post_content_block_setting_image_style(True)
+
+        """
+
         xpath_s = '//div[@role="button" and @aria-label="Default"]'
         if not self.check_exists_by_xpath(xpath_s):
             # Expand Styles Settings
@@ -401,6 +770,24 @@ class Wordpress:
 
     # Image Block Setting
     def post_content_block_setting_image(self, alt_text=None, size=None, width=None, height=None, percentage=None):
+        """ Set image block style
+
+        :type alt_text: str
+        :type size: str
+        :type width: int
+        :type height: int
+        :type percentage: int
+        :param alt_text: Alt text for image (optional)
+        :param size: Select size of Image from editor. Allowed: ['thumbnail', 'medium', 'large', 'full'] (optional)
+        :param width: Width of image (optional)
+        :param height: Height of image (optional)
+        :param percentage: Percentage of image. Allowed: [25, 50, 75, 100] (optional)
+
+        Example
+        ----
+        wp.post_content_block_setting_image("Image 1", "full", 500, 500, 75%)
+
+        """
         xpath_s = '//label[text()="Alt text (alternative text)"]/following-sibling::textarea'
         if not self.check_exists_by_xpath(xpath_s):
             # Expand Styles Settings
@@ -409,7 +796,7 @@ class Wordpress:
 
         if alt_text:
             err = "Unable to type alt text"
-            self.send_keys_exists_by_xpath(xpath_s, alt_text, err, wait=True)
+            self.send_text_exists_by_xpath(xpath_s, alt_text, err, wait=True)
 
         if size:
             s_list = [
@@ -427,13 +814,13 @@ class Wordpress:
             xpath_s = '//label[text()="Width"]/following-sibling::input[@type="number"]'
             err = "Unable to set width"
             self.send_keys_select_all(xpath_s)
-            self.send_keys_exists_by_xpath(xpath_s, width, err, wait=True)
+            self.send_text_exists_by_xpath(xpath_s, width, err, wait=True)
 
         if height:
             xpath_s = '//label[text()="Height"]/following-sibling::input[@type="number"]'
             err = "Unable to set height"
             self.send_keys_select_all(xpath_s)
-            self.send_keys_exists_by_xpath(xpath_s, height, err, wait=True)
+            self.send_text_exists_by_xpath(xpath_s, height, err, wait=True)
 
         if percentage:
             p_list = {
@@ -449,6 +836,18 @@ class Wordpress:
 
     # Image Block Setting
     def post_content_block_setting_image_align(self, align='left'):
+        """ Select image alignment
+        Available alignments are: left, center, right
+
+        :type align: str
+        :param align: image alignment (default="left"). Allowed: ['left', 'center', 'right']
+
+        Example
+        ----
+        wp.post_content_block_setting_image_align("center")
+
+        """
+
         list_align = [
             'left',
             'center',
@@ -468,6 +867,18 @@ class Wordpress:
 
     # List Block Setting
     def post_content_block_setting_ordered_list(self, start=None, reverse=False):
+        """ Customize List block style
+
+        :type start: int
+        :type reverse: bool
+        :param start: Number from where to start the list. (optional)
+        :param reverse: Reverse the numbering of list. (optional)
+
+        Example
+        ----
+        wp.post_content_block_setting_ordered_list(10, True)
+
+        """
         xpath_o = '//label[text()="Start value"]/following-sibling::input[@type="number"]'
         if not self.check_exists_by_xpath(xpath_o):
             # Expand Ordered list Settings
@@ -475,34 +886,77 @@ class Wordpress:
             self.click_exists_by_xpath('//button[text()="Ordered list settings" and @type="button"]', err, wait=True)
         if start:
             err = "Unable to set Start value"
-            self.send_keys_exists_by_xpath(xpath_o, start, err, wait=True)
+            self.send_text_exists_by_xpath(xpath_o, start, err, wait=True)
         if reverse:
             xpath_o = '//label[text()="Reverse list numbering"]'
             err = 'Unable to reverse list order'
             self.click_exists_by_xpath(xpath_o, err, wait=True)
 
-    def post_content_block_heading(self, heading, style='default', align='left', text_color=None, html=False):
+    def post_content_block_heading(self, heading, style='default', align='left', text_color=None):
+        """ Add heading block and customize it
+
+        :type heading: str
+        :type style: str
+        :type align: str
+        :type text_color: str
+        :param heading: Heading text
+        :param style: Style of heading tag. Allowed: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']
+        :param align: Heading alignment (default="left"). Allowed: ['left', 'center', 'right'] (optional)
+        :param text_color: hex color code for heading's text color. (optional)
+
+        Example
+        ----
+        # Simple
+        wp.post_content_block_heading("Heading 1")
+
+        # Customized
+        wp.post_content_block_heading("Heading 1", 'h1', 'center', '#1bbafe')
+
+        """
+
         if self.post_content_block_add('heading'):
-            self.send_keys_in_browser(heading)
+            self.send_text_in_browser(heading)
             if align != "left":
                 self.post_content_block_setting_text_align(align)
-            if html:
-                self.post_content_block_setting_general(html)
             if style != 'default':
                 self.post_content_block_setting_heading(style)
-
             if text_color:
                 self.post_content_block_setting_color(text_color)
 
     def post_content_block_paragraph(self, paragraph, align='left', size=None, custom_size=None, drop_cap=False,
-                                     text_color=None, bg_color=None, html=False):
+                                     text_color=None, bg_color=None):
+        """ Add paragraph block and customize it
+
+        :type paragraph: str
+        :type align: str
+        :type size: str
+        :type custom_size: int
+        :type drop_cap: bool
+        :type text_color: str
+        :type bg_color: str
+        :param paragraph: Paragraph text
+        :param align: Paragraph alignment (default="left"). Allowed: ['left', 'center', 'right'] (optional)
+        :param size: choose font size from sizes available in the editor:
+        ['default', 'small', 'normal', 'medium', 'large', 'huge'] (optional)
+        :param custom_size: font size (optional)
+        :param drop_cap: Set first character of paragraph to capital (optional)
+        :param text_color: hex color code for paragraph's text color. (optional)
+        :param bg_color: hex color code for paragraph's background color. (optional)
+
+        Example
+        ----
+        # Simple
+        wp.post_content_block_paragraph("This is a paragraph.")
+
+        # Customized
+        wp.post_content_block_paragraph("This is a paragraph.", "center", "normal", None, True, "#1bbafe", "#ffffff")
+
+        """
+
         if self.post_content_block_add('paragraph'):
-            self.send_keys_in_browser(paragraph)
+            self.send_text_in_browser(paragraph)
             if align != "left":
                 self.post_content_block_setting_text_align(align)
-
-            if html:
-                self.post_content_block_setting_general(html)
 
             if size or custom_size or drop_cap:
                 self.post_content_block_setting_text(size, custom_size, drop_cap)
@@ -511,7 +965,44 @@ class Wordpress:
                 self.post_content_block_setting_color(text_color, bg_color)
 
     def post_content_block_image(self, image_name=None, caption=None, image_url=None, align='left', round_shape=None,
-                                 alt_text=None, size=None, width=None, height=None, percentage=None, html=False):
+                                 alt_text=None, size=None, width=None, height=None, percentage=None):
+        """ Add image block and customize it
+
+        :type image_name: str
+        :type caption: str
+        :type image_url: str
+        :type align: str
+        :type round_shape: bool
+        :type alt_text: str
+        :type size: str
+        :type width: int
+        :type height: int
+        :type percentage: int
+        :param image_name: Image name in media library (optional)
+        {Image must be in media of WordPress site, for this to work}
+        :param caption: Caption for Image (optional)
+        :param image_url: Image url (optional)
+        :param align: image alignment (default="left"). Allowed: ['left', 'center', 'right']
+        :param round_shape: True, to set round borders. (default=False)
+        :param alt_text: Alt text for image (optional)
+        :param size: Select size of Image from editor. Allowed: ['thumbnail', 'medium', 'large', 'full'] (optional)
+        :param width: Width of image (optional)
+        :param height: Height of image (optional)
+        :param percentage: Percentage of image. Allowed: [25, 50, 75, 100] (optional)
+
+        Example
+        ----
+        # Simple
+
+        wp.post_content_block_image("ImageName")
+        wp.post_content_block_image(None, None, "https://www.example.com/image")
+
+        # Customized
+
+        wp.post_content_block_image("ImageName", "caption", None, "center", True, "alt-text", "thumbnail", 500, 500, 75)
+
+        """
+
         check = False
         if self.post_content_block_add('image'):
             if image_name:
@@ -523,7 +1014,7 @@ class Wordpress:
             if image_url:
                 err = "Unable to click Insert from URL Button"
                 if self.click_exists_by_xpath('//button[text()="Insert from URL"]', err, wait=True):
-                    self.send_keys_in_browser(image_url)
+                    self.send_text_in_browser(image_url)
                     err = "Unable to click Apply Button"
                     if self.click_exists_by_xpath('//button[@type="submit" and @aria-label="Apply"]', err, wait=True):
                         size = None
@@ -533,13 +1024,10 @@ class Wordpress:
                 if align != "left":
                     self.post_content_block_setting_image_align(align)
 
-                if html:
-                    self.post_content_block_setting_general(html)
-
                 if caption:
                     xpath = '//figcaption[@role="textbox" and text()=""]'
                     err = "Unable to type caption"
-                    if self.send_keys_exists_by_xpath(xpath, caption, err, wait=True):
+                    if self.send_text_exists_by_xpath(xpath, caption, err, wait=True):
                         if not percentage and not width and not height:
                             percentage = 100
 
@@ -547,6 +1035,33 @@ class Wordpress:
                 self.post_content_block_setting_image(alt_text, size, width, height, percentage)
 
     def post_content_block_list(self, list_text, ordered=False, start=None, reverse=False, separator='.'):
+        """ Add list block and customize it
+
+        :type list_text: str
+        :type ordered: bool
+        :type start: int
+        :type reverse: bool
+        :type separator: str
+        :param list_text: List
+        :param ordered: True, for numbering. (optional)
+        :param start: Number from where to start the list. (optional)
+        :param reverse: Reverse the numbering of list. (optional)
+        :param separator: Separator before new item in the list. (default=".")
+        Example: "Line 1. Line 2" -- Here "." is the separator between list items.
+
+        Example
+        ----
+        # Un-ordered List
+        wp.post_content_block_list("Line 1. Line 2")
+
+        # Ordered List
+        wp.post_content_block_list("Line 1. Line 2", True, 50, True)
+
+        # Using separator
+        wp.post_content_block_list("Line 1, Line 2", True, 50, True, ",")
+
+        """
+
         if self.post_content_block_add('list'):
             if ordered:
                 err = "Unable to Order list"
@@ -559,20 +1074,47 @@ class Wordpress:
                 if list_text[i]:
                     if list_text[i][0] == " ":
                         list_text[i] = list_text[i].replace(" ", "", 1)
-                self.send_keys_in_browser(list_text[i] + separator)
+                self.send_text_in_browser(list_text[i] + separator)
                 if i == len(list_text) - 1:
                     break
-                self.send_keys_in_browser(Keys.RETURN)
+                self.send_text_in_browser(Keys.RETURN)
 
             if ordered and (start or reverse):
                 self.post_content_block_setting_ordered_list(start, reverse)
 
-    def post_content_block_html(self, html=None):
-        self.post_content_block_add('html')
-        if html:
-            self.send_keys_in_browser(html)
+    def post_content_block_html(self, html):
+        """ Add html block
 
-    def post_content_from_file(self, file_path='', animation=False):
+        :type html: str
+        :param html: html code for html block
+
+        Example
+        ----
+        wp.post_content_block_html("<div><h5>Heading</h5></div>")
+
+        """
+
+        self.post_content_block_add('html')
+        self.send_text_in_browser(html)
+
+    def post_content_from_file(self, file_path='', typing_effect=False):
+        """
+
+        :type file_path: str
+        :type typing_effect: bool
+        :param file_path: path to docx or html file on computer
+        :param typing_effect: True if keyboard typing effect is required. (optional) (default=False)
+
+        Example
+        ----
+        # Docx file
+        wp.post_content_from_file("C\\Path\\To\\File.docx")
+
+        # Html file with typing effect
+        wp.post_content_from_file("C\\Path\\To\\File.html", True)
+
+        """
+
         list_ext = [
             'docx',
             'html'
@@ -584,12 +1126,12 @@ class Wordpress:
                 html = self.docx_to_html(file_path)
             else:
                 html = self.read_html(file_path)
-            if not animation:
+            if not typing_effect:
                 pyperclip.copy(html)
                 sleep(self.sleep_time)
                 self.paste_in_browser()
             else:
-                self.send_keys_in_browser(html)
+                self.send_text_in_browser(html)
         else:
             self.set_error("Invalid File Type")
 
@@ -631,6 +1173,10 @@ class Wordpress:
                 err = 'Unable to type password(Status & Visibility)!'
 
     def post_document_setting_open(self):
+        """ Switch to DOCUMENT SETTING Panel on the right
+
+        """
+
         xpath = '//button[@type="button" and @aria-label="Document (selected)"]'
         if self.check_exists_by_xpath(xpath):
             return True
@@ -640,6 +1186,18 @@ class Wordpress:
         self.click_exists_by_xpath(xpath, err, wait=True)
 
     def post_status(self, visibility='public', password=None, stick_top=False, pending_review=False):
+        """ Configure Post Status Settings
+
+        :type visibility: str
+        :type password: str
+        :type stick_top: bool
+        :type pending_review: bool
+        :param visibility: Visibility of Post. Allowed: ['public', 'private, 'password'] (optional)
+        :param password: Password for post if visibility set to password protected.
+        :param stick_top: True to stick post on top on the blog page. (optional)
+        :param pending_review: True to add post in pending
+        """
+
         element_discus = '//span[text()="Visibility"]'
         if not self.check_exists_by_xpath(element_discus):
             # Expand Excerpt
@@ -680,11 +1238,17 @@ class Wordpress:
                     self.click_exists_by_xpath('//input[@type="radio" and @value="password"]')
                     xpath_pass = '//input[@type="text" and @placeholder="Use a secure password"]'
                     err = 'Unable to type password(Status & Visibility)!'
-                    self.send_keys_exists_by_xpath(xpath_pass, password, err)
+                    self.send_text_exists_by_xpath(xpath_pass, password, err)
                     sleep(self.sleep_time)
 
     # After post published
     def post_format(self, formatting='standard'):
+        """ Set Post Format
+
+        :type formatting: str
+        :param formatting: Post display format. Allowed: ['standard', 'gallery', 'link', 'quote', 'video', 'audio']
+        """
+
         self.post_document_setting_open()
         format_list = ['standard', 'gallery', 'link', 'quote', 'video', 'audio']
         if formatting.lower() in format_list:
@@ -693,6 +1257,12 @@ class Wordpress:
             self.click_exists_by_xpath(xpath_, err, wait=True)
 
     def post_category(self, category):
+        """ Set post category name
+
+        :type category: str
+        :param category: Post category name
+        """
+
         err = 'Unable to expand Categories Panel(Categories)!'
         if self.click_exists_by_xpath('//button[text()="Categories"]', err):
             # Expand Categories
@@ -705,7 +1275,7 @@ class Wordpress:
             self.click_exists_by_xpath('//button[text()="Add New Category"]', err)
 
             err = "Unable to type Category name"
-            self.send_keys_exists_by_xpath("//*[@id='editor-post-taxonomies__hierarchical-terms-input-0']", category,
+            self.send_text_exists_by_xpath("//*[@id='editor-post-taxonomies__hierarchical-terms-input-0']", category,
                                            err)
 
             err = "Unable to click Add New Category 2"
@@ -716,6 +1286,12 @@ class Wordpress:
             self.click_exists_by_xpath(check_cat, err)
 
     def post_tag(self, tag):
+        """ Set post tag
+
+        :type tag: str
+        :param tag:
+        """
+
         check_tag = '//label[text()="Add New Tag"]/following-sibling::div/child::input'
         if not self.check_exists_by_xpath(check_tag):
             # Expand Tags
@@ -727,9 +1303,17 @@ class Wordpress:
         tag_input.send_keys(tag + Keys.RETURN)
 
     def __media_search_and_select(self, image_name, image_type="Select"):
+        """ Search and select image from media library of WordPress site
+
+        :type image_name: str
+        :type image_type: str
+        :param image_name: Name of the Image in media library
+        :param image_type: Select or Set featured image
+        """
+
         err = "Unable to type image name"
         self.send_keys_select_all(None, 'media-search-input')
-        self.send_keys_exists_by_id('media-search-input', image_name, err, wait=True)
+        self.send_text_exists_by_id('media-search-input', image_name, err, wait=True)
 
         sleep(self.sleep_time)
         err = "No image found"
@@ -758,6 +1342,12 @@ class Wordpress:
                 return True
 
     def post_image(self, image_name):
+        """ Set Featured Image for Post
+
+        :type image_name: str
+        :param image_name: Name of the Image in media library.
+        """
+
         featured_img = '//button[text()="Set featured image"]'
         if not self.check_exists_by_xpath(featured_img):
             # Expand Featured Image
@@ -766,21 +1356,15 @@ class Wordpress:
 
         err = "Unable to click Set featured image"
         self.click_exists_by_xpath('//button[text()="Set featured image"]', err, wait=True)
-
         self.__media_search_and_select(image_name, "Set featured image")
 
-        # err = "Unable to type image name"
-        # self.send_keys_exists_by_id('media-search-input', image_name, err)
-        #
-        # sleep(self.sleep_time + 3)
-        # err = "Unable to click searched image name"
-        # self.click_exists_by_xpath('(//li[@role="checkbox"])[1]', err)
-        #
-        # err = "Unable to finish featured image selection"
-        # self.click_exists_by_xpath('//button[contains(@class, "media-button-select") and text()="Set featured image"]',
-        #                            err)
-
     def post_excerpt(self, excerpt):
+        """ Set Post excerpt
+
+        :type excerpt: str
+        :param excerpt: post excerpt
+        """
+
         check_excerpt = '//label[text()="Write an excerpt (optional)"]/following-sibling::textarea'
         if not self.check_exists_by_xpath(check_excerpt):
             # Expand Excerpt
@@ -791,6 +1375,14 @@ class Wordpress:
         self.browser.find_element_by_xpath(check_excerpt).send_keys(excerpt)
 
     def post_discussion(self, comments=True, traceback=True):
+        """ Configure Discussion settings for post
+
+        :type comments: bool
+        :type traceback: bool
+        :param comments: False to Disable comments on post
+        :param traceback: False to Disable pingbacks & trackbacks
+        """
+
         element_discus = '//label[text()="Allow comments"]'
         if not self.check_exists_by_xpath(element_discus):
             # Expand Discussion
@@ -799,15 +1391,18 @@ class Wordpress:
 
         # Uncheck comments
         if not comments:
-            err = "Unable to Allow pingbacks & trackbacks"
+            err = "Unable to Disable comments"
             self.click_exists_by_xpath(element_discus, err)
         # Uncheck traceback
         if not traceback:
             element_discus = '//label[text()="Allow pingbacks & trackbacks"]'
-            err = "Unable to Allow pingbacks & trackbacks"
+            err = "Unable to Disable pingbacks & trackbacks"
             self.click_exists_by_xpath(element_discus, err)
 
     def post_save_draft(self):
+        """ Save Post as Draft
+        """
+
         xpath_save = '//button[text()="Publish…" and @aria-disabled="true"]'
         if self.check_exists_by_xpath(xpath_save):
             sleep(self.sleep_time)
@@ -823,6 +1418,9 @@ class Wordpress:
                 sleep(self.sleep_time)
 
     def post_switch_to_draft(self):
+        """ Switch Post from Published to Draft
+        """
+
         xpath_d = '//button[text()="Switch to draft"]'
         err = "Unable to click Switch to Draft Button"
         sleep(self.sleep_time)
@@ -833,6 +1431,9 @@ class Wordpress:
             sleep(self.sleep_time)
 
     def post_publish(self):
+        """ Publish Post
+        """
+
         xpath_p = '//button[text()="Publish…" and @aria-disabled="true"]'
         if self.check_exists_by_xpath(xpath_p):
             sleep(self.sleep_time)
@@ -847,12 +1448,23 @@ class Wordpress:
                 self.click_exists_by_xpath(xpath_p, err, wait=True)
 
     def post_update(self):
+        """ Update Post
+        """
+
         xpath_u = '//button[text()="Update"]'
         err = "Unable to click Update Button"
         if self.click_exists_by_xpath(xpath_u, err, wait=True):
             sleep(self.sleep_time)
 
     def read_html(self, html_path, full=False):
+        """ Read html file and return the code
+
+        :type html_path: str
+        :type full: bool
+        :param html_path: html file path
+        :param full: True to get full code, otherwise code in body tag. (optional)
+        :return: html code of the file
+        """
         f = codecs.open(html_path, 'r')
         html = f.read()
         soup = BeautifulSoup(html, 'html.parser')
@@ -862,6 +1474,11 @@ class Wordpress:
             return soup.prettify()
 
     def docx_to_html(self, docx_path):
+        """ Convert docx file to html code
+
+        :param docx_path: Path of docx file
+        :return: html code
+        """
         with open(docx_path, "rb") as docx_file:
             result = d2h.convert_to_html(docx_file)
             html = result.value
@@ -901,7 +1518,7 @@ class Wordpress:
         pyautogui.hotkey('ctrl', 'v')
 
     def post_new(self, title, category=None, tag=None, image_name=None, excerpt=None, docx_path=None):
-        self.browser.get(self.url + "/wp-admin/post-new.php")
+        self.browser.get(self.site_url + "/wp-admin/post-new.php")
         sleep(self.sleep_time_page_load)
 
         xpath = '//button[@type="button" and @aria-label="Close dialog"]'
