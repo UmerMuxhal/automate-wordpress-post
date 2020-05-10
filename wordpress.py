@@ -1,39 +1,33 @@
-import os
-import sys
-import time
 import codecs
-import requests
-import pyautogui
-import pyperclip
-import subprocess
-import pandas as pd
-import mammoth as d2h
 from time import sleep
-from numpy import ufunc
-from datetime import date
-from bs4 import BeautifulSoup
-from selenium import webdriver
-from lxml.html import fromstring
-from selenium.webdriver import ActionChains
-from selenium.webdriver.common.keys import Keys
-from random_user_agent.user_agent import UserAgent
-from selenium.webdriver.chrome.options import Options
+import mammoth as d2h
+import pyperclip
 import selenium.common.exceptions as selenium_exception
-from selenium.common.exceptions import NoSuchElementException
+from bs4 import BeautifulSoup
 from random_user_agent.params import SoftwareName, OperatingSystem
+from random_user_agent.user_agent import UserAgent
+from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver import ActionChains
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.keys import Keys
 
 
 class WordPress:
-    # chrome_options = ''
-    # pdf = ''
+    """ This class opens a chrome window and use it for automating post on a WordPress site.
+    Automate WordPress Block Editor. Blocks that can be used are: Heading, Paragraph, Image, List and Custom HTML.
+    Each block can be customized.
+    Add post using docx file or html file.
+
+    """
+
     success = ''
     error = ''
     messages = ''
     sleep_time_page_load = 5
 
     def __init__(self, site_url, login_url, chrome_driver_path, sleep_time=2, user_agent=False):
-        """Constructor.
-        Creates a new instance of chrome for a WordPress site
+        """Creates a new instance of chrome for a WordPress site
 
         :type site_url: str
         :type login_url: str
@@ -176,7 +170,7 @@ class WordPress:
     def send_keys_select_all(self, xpath=None, element_id=None, wait=False):
         """ Send key combination Ctrl+A to select all text in html element either by xpath or id
 
-        :type xpath: str
+        :type xpath: str or None
         :type element_id: str
         :type wait: bool
         :param xpath: xpath of html element
@@ -373,7 +367,7 @@ class WordPress:
             return False
         except selenium_exception.ElementNotInteractableException:
             if error:
-                self.error += "ERROR: " + error + " [Element Not Interactable]\r\n"
+                self.error += "ERROR: " + error + " [Element Not Intractable]\r\n"
             return False
         except (selenium_exception.WebDriverException, selenium_exception.ElementClickInterceptedException):
             try:
@@ -395,7 +389,8 @@ class WordPress:
         :type xpath: str
         :type wait: bool
         :param xpath: xpath of html elements
-        :param wait: After click on all elements, wait for time(if sleep_time set in constructor else 2 seconds) (Optional)
+        :param wait: After click on all elements, wait for time(if sleep_time set in constructor else 2 seconds)
+        (Optional)
 
         Example
         ----
@@ -967,6 +962,7 @@ class WordPress:
     def post_content_block_image(self, image_name=None, caption=None, image_url=None, align='left', round_shape=None,
                                  alt_text=None, size=None, width=None, height=None, percentage=None):
         """ Add image block and customize it
+        For Image block image should be in media library or use url.
 
         :type image_name: str
         :type caption: str
@@ -978,7 +974,7 @@ class WordPress:
         :type width: int
         :type height: int
         :type percentage: int
-        :param image_name: Image name in media library (optional)
+        :param image_name: Image name in media library. (Full image name is not necessary) (optional)
         {Image must be in media of WordPress site, for this to work}
         :param caption: Caption for Image (optional)
         :param image_url: Image url (optional)
@@ -1135,43 +1131,6 @@ class WordPress:
         else:
             self.set_error("Invalid File Type")
 
-    # TODO:
-    def post_content(self, data_dictionary):
-        element_discus = '//span[text()="Visibility"]'
-        if not self.check_exists_by_xpath(element_discus):
-            # Expand Excerpt
-            self.browser.find_element_by_xpath('//button[text()="Status & Visibility"]').click()
-            sleep(self.sleep_time)
-
-            element_discus = '//label[text()="Stick to the top of the blog"]/preceding-sibling::span/input[@type="checkbox"]'
-            err = 'Unable to interact with Stick on Top of the blog(Status & Visibility)!'
-            self.click_exists_by_xpath(element_discus, err)
-
-            element_discus = '//label[text()="Pending Review"]/preceding-sibling::span/input[@type="checkbox"]'
-            err = 'Unable to interact with Pending Review(Status & Visibility)!'
-            self.click_exists_by_xpath(element_discus, err)
-
-            check = True
-            err = 'Unable to interact with Visibility(Status & Visibility)!'
-            if not self.click_exists_by_xpath('//button[text()="Public"]'):
-                if not self.click_exists_by_xpath('//button[text()="Private"]'):
-                    check = self.click_exists_by_xpath('//button[text()="Password Protected"]', err)
-
-            if check:
-                sleep(self.sleep_time)
-
-                self.click_exists_by_xpath('//input[@type="radio" and @value="public"]')
-
-                self.click_exists_by_xpath('//input[@type="radio" and @value="private"]')
-                sleep(self.sleep_time)
-                alert_obj = self.browser.switch_to.alert
-                alert_obj.accept()
-                self.browser.switch_to.default_content()
-
-                self.click_exists_by_xpath('//input[@type="radio" and @value="password"]')
-                xpath_pass = '//input[@type="text" and @placeholder="Use a secure password"]'
-                err = 'Unable to type password(Status & Visibility)!'
-
     def post_document_setting_open(self):
         """ Switch to DOCUMENT SETTING Panel on the right
 
@@ -1289,7 +1248,7 @@ class WordPress:
         """ Set post tag
 
         :type tag: str
-        :param tag:
+        :param tag: tag of the post
         """
 
         check_tag = '//label[text()="Add New Tag"]/following-sibling::div/child::input'
@@ -1362,7 +1321,7 @@ class WordPress:
         """ Set Post excerpt
 
         :type excerpt: str
-        :param excerpt: post excerpt
+        :param excerpt: excerpt of the post
         """
 
         check_excerpt = '//label[text()="Write an excerpt (optional)"]/following-sibling::textarea'
@@ -1456,7 +1415,8 @@ class WordPress:
         if self.click_exists_by_xpath(xpath_u, err, wait=True):
             sleep(self.sleep_time)
 
-    def read_html(self, html_path, full=False):
+    @staticmethod
+    def read_html(html_path, full=False):
         """ Read html file and return the code
 
         :type html_path: str
@@ -1485,39 +1445,28 @@ class WordPress:
             self.messages = result.messages
         return html
 
-    # Junk
-    def post_from_pdf(self, pdf_path):
-        # self.send_keys_in_browser(Keys.CONTROL + 't')
-        # ActionChains(self.browser).send_keys(Keys.COMMAND, "t").perform()
-        # self.pdf = self.browser = webdriver.Chrome(executable_path=self.chrome_driver_path,
-        #                                            chrome_options=self.chrome_options)
-        browser = self.browser.window_handles[0]
-        pyautogui.hotkey('ctrl', 't')
-        sleep(self.sleep_time)
-        pdf = self.browser.window_handles[1]
-        self.browser.switch_to.window(pdf)
-        self.browser.get(pdf_path)
-        # self.browser.get('file:///' + pdf_path)
-        # self.send_keys_in_browser(Keys.CONTROL + 'a')
-        # ActionChains(self.pdf.find_element_by_tag_name('body')).send_keys(Keys.CONTROL, "a").perform()
-        pyautogui.click(clicks=3)
-        sleep(self.sleep_time)
-        pyautogui.hotkey('ctrl', 'a')
-        # self.send_keys_in_browser(Keys.CONTROL + 'c')
-        sleep(self.sleep_time)
-        # ActionChains(self.pdf).send_keys(Keys.CONTROL, "c").perform()
-        pyautogui.hotkey('ctrl', 'c')
-        sleep(self.sleep_time)
-        # self.send_keys_in_browser(Keys.CONTROL + 'w')
-        # self.pdf.close()
-        # ActionChains(self.pdf).send_keys(Keys.CONTROL, "w").perform()
-        pyautogui.hotkey('ctrl', 'w')
-        self.browser.switch_to.window(browser)
-        sleep(self.sleep_time)
-        self.post_content_block_paragraph('')
-        pyautogui.hotkey('ctrl', 'v')
+    def post_new(self, title, category=None, tag=None, featured_image=None, excerpt=None, docx_path=None):
+        """ Add new post in WordPress site
 
-    def post_new(self, title, category=None, tag=None, image_name=None, excerpt=None, docx_path=None):
+        :type title: str
+        :type category: str
+        :type tag: str
+        :type featured_image: str
+        :type excerpt: str
+        :type docx_path: str
+        :param title: title of the post.
+        :param category:  category name of the post. (optional)
+        :param tag: tag of the post. (optional)
+        :param featured_image: name of the Image in media library to set as featured image. (optional)
+        :param excerpt: excerpt of the post. (optional)
+        :param docx_path: path of docx file. (optional)
+
+        Example
+        ----
+        wp.post_new("Post Title", "Technology", "tech", "")
+
+        """
+
         self.browser.get(self.site_url + "/wp-admin/post-new.php")
         sleep(self.sleep_time_page_load)
 
@@ -1539,9 +1488,9 @@ class WordPress:
             sleep(self.sleep_time)
             self.post_tag(tag)
 
-        if image_name:
+        if featured_image:
             sleep(self.sleep_time)
-            self.post_image(image_name)
+            self.post_image(featured_image)
 
         if excerpt:
             sleep(self.sleep_time)
@@ -1549,4 +1498,5 @@ class WordPress:
 
         if docx_path:
             sleep(self.sleep_time)
-            self.post_content_block_html(None, docx_path)
+            html = self.docx_to_html(docx_path)
+            self.post_content_block_html(html)
