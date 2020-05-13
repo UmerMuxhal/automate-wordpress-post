@@ -11,27 +11,30 @@ Add post using docx file or html file.
 ## Prerequisites
 Required python modules ad libraries are: 
 
-bs4
+beautifulsoup4==4.9.0
 
-time
+bs4==0.0.1
 
-codecs
+cobble==0.1.3
 
-mammoth
+mammoth==1.4.10
 
-selenium
+pyperclip==1.8.0
 
-pyperclip
+random-user-agent==1.0.1
 
-random_user_agent
+selenium==3.141.0
+
+soupsieve==2.0
+
+urllib3==1.25.9
 
 ## Installation
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install Automate-WordPress.
 
 ```bash
-pip install -r requirements.txt
-pip install WordPress
+pip install automateWordPressPost
 ```
 
 ## Usage

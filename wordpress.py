@@ -129,7 +129,7 @@ class WordPress:
 
         return "Completed Tasks: \n" + self.success
 
-    def check_exists_by_id(self, element_id):
+    def __check_exists_by_id(self, element_id):
         """ Check if an element exists on page for the given html id
 
         :type element_id: str
@@ -148,7 +148,7 @@ class WordPress:
             return False
         return True
 
-    def check_exists_by_xpath(self, xpath):
+    def __check_exists_by_xpath(self, xpath):
         """ Check if an element exists on page for the given html xpath
 
         :type xpath: str
@@ -453,7 +453,7 @@ class WordPress:
 
         """
 
-        if self.check_exists_by_id("post-title-0"):
+        if self.__check_exists_by_id("post-title-0"):
             self.browser.find_element_by_id("post-title-0").send_keys(title)
         else:
             self.set_error("Unable to type post title!")
@@ -473,7 +473,7 @@ class WordPress:
 
         self.post_document_setting_open()
         xpath_u = '//label[text()="URL Slug"]/following-sibling::input[@type="text"]'
-        if not self.check_exists_by_xpath(xpath_u):
+        if not self.__check_exists_by_xpath(xpath_u):
             # Expand Heading Settings
             err = 'Unable to expand Permalink'
             self.click_exists_by_xpath('//button[@type="button" and text()="Permalink"]', err, wait=True)
@@ -502,7 +502,7 @@ class WordPress:
         """
 
         xpath = '//button[@type="button" and @aria-label="Block (selected)"]'
-        if self.check_exists_by_xpath(xpath):
+        if self.__check_exists_by_xpath(xpath):
             return True
 
         xpath = '//button[@type="button" and @aria-label="Block"]'
@@ -570,7 +570,7 @@ class WordPress:
 
         if html:
             xpath_a = '//button[text()="Edit as HTML" and @type="button"]'
-            if not self.check_exists_by_xpath(xpath_a):
+            if not self.__check_exists_by_xpath(xpath_a):
                 # Open General Settings Menu
                 xpath_e = '//button[@type="button" and @aria-label="More options"]'
                 err = "Unable to open General Settings Menu"
@@ -602,7 +602,7 @@ class WordPress:
         }
         if style.lower() in head:
             check_h = '//button[@type="button" and @aria-label="' + head[style] + '"]'
-            if not self.check_exists_by_xpath(check_h):
+            if not self.__check_exists_by_xpath(check_h):
                 # Expand Heading Settings
                 err = 'Unable to expand Heading Settings'
                 self.click_exists_by_xpath('//button[@type="button" and text()="Heading Settings"]', err)
@@ -637,7 +637,7 @@ class WordPress:
         """
 
         xpath_text = '//label[text()="Custom"]/following-sibling::input[@type="number"]'
-        if not self.check_exists_by_xpath(xpath_text):
+        if not self.__check_exists_by_xpath(xpath_text):
             # Expand Text Settings
             self.click_exists_by_xpath('//button[text()="Text Settings" and @type="button"]')
             sleep(self.sleep_time)
@@ -688,7 +688,7 @@ class WordPress:
         if align.lower() in list_align:
             self.click_exists_by_xpath('//span[text()="Color settings"]/parent::button[@type="button"]', wait=True)
             xpath_a = '//button[@type="button" and text()="Align text ' + align.lower() + '"]'
-            if not self.check_exists_by_xpath(xpath_a):
+            if not self.__check_exists_by_xpath(xpath_a):
                 # Open Align Menu
                 xpath_e = '//button[@type="button" and @aria-label="Change text alignment"]'
                 err = "Unable to open Text Align Menu"
@@ -714,7 +714,7 @@ class WordPress:
         """
 
         xpath_color = '(//button[text()="Custom color" and @type="button" and @aria-label="Custom color picker"])[1]'
-        if not self.check_exists_by_xpath(xpath_color):
+        if not self.__check_exists_by_xpath(xpath_color):
             # Expand Color Settings
             err = "Unable to expand Color Settings"
             self.click_exists_by_xpath('//span[text()="Color settings"]/parent::button[@type="button"]', err, wait=True)
@@ -751,7 +751,7 @@ class WordPress:
         """
 
         xpath_s = '//div[@role="button" and @aria-label="Default"]'
-        if not self.check_exists_by_xpath(xpath_s):
+        if not self.__check_exists_by_xpath(xpath_s):
             # Expand Styles Settings
             err = "Unable to expand Styles Settings"
             self.click_exists_by_xpath('//button[text()="Styles" and @type="button"]', err, wait=True)
@@ -784,7 +784,7 @@ class WordPress:
 
         """
         xpath_s = '//label[text()="Alt text (alternative text)"]/following-sibling::textarea'
-        if not self.check_exists_by_xpath(xpath_s):
+        if not self.__check_exists_by_xpath(xpath_s):
             # Expand Styles Settings
             err = "Unable to expand Image Settings"
             self.click_exists_by_xpath('//button[text()="Image settings" and @type="button"]', err, wait=True)
@@ -850,7 +850,7 @@ class WordPress:
         ]
         if align.lower() in list_align:
             xpath_a = '//button[@type="button" and text()="Align ' + align.lower() + '"]'
-            if not self.check_exists_by_xpath(xpath_a):
+            if not self.__check_exists_by_xpath(xpath_a):
                 # Open Align Menu
                 xpath_e = '//button[@type="button" and @aria-label="Change alignment"]'
                 err = "Unable to open Align Menu"
@@ -875,7 +875,7 @@ class WordPress:
 
         """
         xpath_o = '//label[text()="Start value"]/following-sibling::input[@type="number"]'
-        if not self.check_exists_by_xpath(xpath_o):
+        if not self.__check_exists_by_xpath(xpath_o):
             # Expand Ordered list Settings
             err = "Unable to expand Styles Settings"
             self.click_exists_by_xpath('//button[text()="Ordered list settings" and @type="button"]', err, wait=True)
@@ -1137,7 +1137,7 @@ class WordPress:
         """
 
         xpath = '//button[@type="button" and @aria-label="Document (selected)"]'
-        if self.check_exists_by_xpath(xpath):
+        if self.__check_exists_by_xpath(xpath):
             return True
 
         xpath = '//button[@type="button" and @aria-label="Document"]'
@@ -1158,7 +1158,7 @@ class WordPress:
         """
 
         element_discus = '//span[text()="Visibility"]'
-        if not self.check_exists_by_xpath(element_discus):
+        if not self.__check_exists_by_xpath(element_discus):
             # Expand Excerpt
             self.browser.find_element_by_xpath('//button[text()="Status & Visibility"]').click()
             sleep(self.sleep_time)
@@ -1228,7 +1228,7 @@ class WordPress:
             sleep(self.sleep_time)
 
         check_cat = "//label[text()='" + category + "']"
-        if not self.check_exists_by_xpath(check_cat):
+        if not self.__check_exists_by_xpath(check_cat):
             # Add if category does not exist
             err = "Unable to click Add New Category 1"
             self.click_exists_by_xpath('//button[text()="Add New Category"]', err)
@@ -1252,7 +1252,7 @@ class WordPress:
         """
 
         check_tag = '//label[text()="Add New Tag"]/following-sibling::div/child::input'
-        if not self.check_exists_by_xpath(check_tag):
+        if not self.__check_exists_by_xpath(check_tag):
             # Expand Tags
             err = "Unable to Expand Tags"
             self.click_exists_by_xpath('//button[text()="Tags"]', err, wait=True)
@@ -1308,7 +1308,7 @@ class WordPress:
         """
 
         featured_img = '//button[text()="Set featured image"]'
-        if not self.check_exists_by_xpath(featured_img):
+        if not self.__check_exists_by_xpath(featured_img):
             # Expand Featured Image
             err = "Unable to Expand Featured Image"
             self.click_exists_by_xpath('//button[text()="Featured image"]', err)
@@ -1325,7 +1325,7 @@ class WordPress:
         """
 
         check_excerpt = '//label[text()="Write an excerpt (optional)"]/following-sibling::textarea'
-        if not self.check_exists_by_xpath(check_excerpt):
+        if not self.__check_exists_by_xpath(check_excerpt):
             # Expand Excerpt
             err = "Unable to Expand Excerpt Setting"
             self.click_exists_by_xpath('//button[text()="Excerpt"]', err, wait=True)
@@ -1343,7 +1343,7 @@ class WordPress:
         """
 
         element_discus = '//label[text()="Allow comments"]'
-        if not self.check_exists_by_xpath(element_discus):
+        if not self.__check_exists_by_xpath(element_discus):
             # Expand Discussion
             err = "Unable to Expand Discussion"
             self.click_exists_by_xpath('//button[text()="Discussion"]', err)
@@ -1363,10 +1363,10 @@ class WordPress:
         """
 
         xpath_save = '//button[text()="Publish…" and @aria-disabled="true"]'
-        if self.check_exists_by_xpath(xpath_save):
+        if self.__check_exists_by_xpath(xpath_save):
             sleep(self.sleep_time)
         xpath_save = '//button[text()="Save Draft"]'
-        if not self.check_exists_by_xpath(xpath_save):
+        if not self.__check_exists_by_xpath(xpath_save):
             xpath_save = '//button[text()="Save as Pending"]'
             err = "Unable to click Save as Pending Button"
             self.click_exists_by_xpath(xpath_save, err, wait=True)
@@ -1394,7 +1394,7 @@ class WordPress:
         """
 
         xpath_p = '//button[text()="Publish…" and @aria-disabled="true"]'
-        if self.check_exists_by_xpath(xpath_p):
+        if self.__check_exists_by_xpath(xpath_p):
             sleep(self.sleep_time)
         xpath_p = '//button[text()="Publish…"]'
         err = "Unable to click Publish… Button (1)"
@@ -1471,7 +1471,7 @@ class WordPress:
         sleep(self.sleep_time_page_load)
 
         xpath = '//button[@type="button" and @aria-label="Close dialog"]'
-        if self.check_exists_by_xpath(xpath):
+        if self.__check_exists_by_xpath(xpath):
             err = "Unable to close tutorial pop up"
             self.click_exists_by_xpath(xpath, err)
 
