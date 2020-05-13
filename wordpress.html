@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.1" />
+<title>automateWordPressPost.wordpress API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>automateWordPressPost.wordpress</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="automateWordPressPost.wordpress.WordPress"><code class="flex name class">
+<span>class <span class="ident">WordPress</span></span>
+<span>(</span><span>site_url, login_url, chrome_driver_path, sleep_time=2, user_agent=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This class opens a chrome window and use it for automating post on a WordPress site.
+Automate WordPress Block Editor. Blocks that can be used are: Heading, Paragraph, Image, List and Custom HTML.
+Each block can be customized.
+Add post using docx file or html file.</p>
+<p>Creates a new instance of chrome for a WordPress site</p>
+<p>:type site_url: str</p>
+<p>:type login_url: str</p>
+<p>:type chrome_driver_path: str</p>
+<p>:type sleep_time: int</p>
+<p>:type user_agent: bool</p>
+<p>:param site_url: Home address of WordPress site.</p>
+<p>:param login_url: Login address of WordPress site.</p>
+<p>:param chrome_driver_path: Path of chrome webdriver for selenium</p>
+<p>:param sleep_time: Wait time (seconds) between execution of different tasks (default is 2)</p>
+<p>:param user_agent: Use random User-Agent for chrome (default is False)</p>
+<h2 id="example">Example</h2>
+<p>wp = WordPress('mysite.com', 'mysite.com/wp-admin', 'path-to-chromedriver', 3, True)</p></div>
+<h3>Class variables</h3>
+<dl>
+<dt id="automateWordPressPost.wordpress.WordPress.error"><code class="name">var <span class="ident">error</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.messages"><code class="name">var <span class="ident">messages</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.sleep_time_page_load"><code class="name">var <span class="ident">sleep_time_page_load</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.success"><code class="name">var <span class="ident">success</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Static methods</h3>
+<dl>
+<dt id="automateWordPressPost.wordpress.WordPress.read_html"><code class="name flex">
+<span>def <span class="ident">read_html</span></span>(<span>html_path, full=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Read html file and return the code</p>
+<p>:type html_path: str</p>
+<p>:type full: bool</p>
+<p>:param html_path: html file path</p>
+<p>:param full: True to get full code, otherwise code in body tag. (optional)</p>
+<p>:return: html code of the file</p></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="automateWordPressPost.wordpress.WordPress.get_completed"><code class="name">var <span class="ident">get_completed</span></code></dt>
+<dd>
+<div class="desc"><p>Returns a string with completed tasks</p>
+<p>:rtype: str</p>
+<h2 id="example">Example</h2>
+<p>wp.get_completed()</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.get_errors"><code class="name">var <span class="ident">get_errors</span></code></dt>
+<dd>
+<div class="desc"><p>Returns a string with failed tasks</p>
+<p>:rtype: str</p>
+<h2 id="example">Example</h2>
+<p>wp.get_errors()</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="automateWordPressPost.wordpress.WordPress.chrome_options_edit"><code class="name flex">
+<span>def <span class="ident">chrome_options_edit</span></span>(<span>self, window_size=None, gpu=False, user_agent=True, info_bars=False, extensions=False, notification=False)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.click_exists_by_xpath"><code class="name flex">
+<span>def <span class="ident">click_exists_by_xpath</span></span>(<span>self, xpath, error=None, success=None, wait=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Click html element by xpath, if it exists</p>
+<p>:type xpath: str</p>
+<p>:type error: str</p>
+<p>:type success: str</p>
+<p>:type wait: bool</p>
+<p>:param xpath: xpath of html element</p>
+<p>:param error: error note in case of failure (Optional)</p>
+<p>:param success: success note in case of completion (Optional)</p>
+<p>:param wait: After click, wait for time(if sleep_time set in constructor else 2 seconds) (Optional)</p>
+<h2 id="example">Example</h2>
+<p>wp.click_exists_by_xpath('//input[@name="login"]')</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.click_exists_by_xpath_elements"><code class="name flex">
+<span>def <span class="ident">click_exists_by_xpath_elements</span></span>(<span>self, xpath, wait=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Click html elements by xpath, if they exist</p>
+<p>:type xpath: str</p>
+<p>:type wait: bool</p>
+<p>:param xpath: xpath of html elements</p>
+<p>:param wait: After click on all elements, wait for time(if sleep_time set in constructor else 2 seconds)
+(Optional)</p>
+<h2 id="example">Example</h2>
+<p>wp.click_exists_by_xpath_elements('//input[@type="button"]')</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.close"><code class="name flex">
+<span>def <span class="ident">close</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Close Chrome window.</p>
+<h2 id="example">Example</h2>
+<p>wp.close()</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.docx_to_html"><code class="name flex">
+<span>def <span class="ident">docx_to_html</span></span>(<span>self, docx_path)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Convert docx file to html code</p>
+<p>:param docx_path: Path of docx file</p>
+<p>:return: html code</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.maximize_window"><code class="name flex">
+<span>def <span class="ident">maximize_window</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Maximize Chrome window.</p>
+<h2 id="example">Example</h2>
+<p>wp.maximize_window()</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.open_page_posts"><code class="name flex">
+<span>def <span class="ident">open_page_posts</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Open All Posts Page</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.paste_in_browser"><code class="name flex">
+<span>def <span class="ident">paste_in_browser</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Paste content from clipboard in active html element in browser</p>
+<h2 id="example">Example</h2>
+<p>wp.paste_in_browser()</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_category"><code class="name flex">
+<span>def <span class="ident">post_category</span></span>(<span>self, category)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set post category name</p>
+<p>:type category: str</p>
+<p>:param category: Post category name</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_content_block_add"><code class="name flex">
+<span>def <span class="ident">post_content_block_add</span></span>(<span>self, block_name)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add a block in the editor
+Available blocks are: Heading, Paragraph, List, Image, Custom HTML</p>
+<p>:type block_name: str</p>
+<p>:param block_name: block name to be added (case insensitive) ['heading', 'paragraph', 'list', 'image', 'html']</p>
+<h2 id="example">Example</h2>
+<h1 id="for-heading">For Heading:</h1>
+<p>wp.post_content_block_add("heading")</p>
+<h1 id="for-paragraph">For Paragraph:</h1>
+<p>wp.post_content_block_add("paragraph")</p>
+<h1 id="for-list">For List:</h1>
+<p>wp.post_content_block_add("list")</p>
+<h1 id="for-image">For Image:</h1>
+<p>wp.post_content_block_add("image")</p>
+<h1 id="for-custom-html">For Custom HTML:</h1>
+<p>wp.post_content_block_add("html")</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_content_block_edit_as_html"><code class="name flex">
+<span>def <span class="ident">post_content_block_edit_as_html</span></span>(<span>self, html=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Click on Edit as HTML Button of Editor Block</p>
+<p>:type html: bool</p>
+<p>:param html: True if editor block is to be edited as custom html</p>
+<h2 id="example">Example</h2>
+<p>wp.post_content_block_edit_as_html(True)</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_content_block_heading"><code class="name flex">
+<span>def <span class="ident">post_content_block_heading</span></span>(<span>self, heading, style='default', align='left', text_color=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add heading block and customize it</p>
+<p>:type heading: str</p>
+<p>:type style: str</p>
+<p>:type align: str</p>
+<p>:type text_color: str</p>
+<p>:param heading: Heading text</p>
+<p>:param style: Style of heading tag. Allowed: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']</p>
+<p>:param align: Heading alignment (default="left"). Allowed: ['left', 'center', 'right'] (optional)</p>
+<p>:param text_color: hex color code for heading's text color. (optional)</p>
+<h2 id="example">Example</h2>
+<h1 id="simple">Simple</h1>
+<p>wp.post_content_block_heading("Heading 1")</p>
+<h1 id="customized">Customized</h1>
+<p>wp.post_content_block_heading("Heading 1", 'h1', 'center', '#1bbafe')</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_content_block_html"><code class="name flex">
+<span>def <span class="ident">post_content_block_html</span></span>(<span>self, html)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add html block</p>
+<p>:type html: str</p>
+<p>:param html: html code for html block</p>
+<h2 id="example">Example</h2>
+<p>wp.post_content_block_html("<div><h5>Heading</h5></div>")</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_content_block_image"><code class="name flex">
+<span>def <span class="ident">post_content_block_image</span></span>(<span>self, image_name=None, caption=None, image_url=None, align='left', round_shape=None, alt_text=None, size=None, width=None, height=None, percentage=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add image block and customize it
+For Image block image should be in media library or use url.</p>
+<p>:type image_name: str</p>
+<p>:type caption: str</p>
+<p>:type image_url: str</p>
+<p>:type align: str</p>
+<p>:type round_shape: bool</p>
+<p>:type alt_text: str</p>
+<p>:type size: str</p>
+<p>:type width: int</p>
+<p>:type height: int</p>
+<p>:type percentage: int</p>
+<p Image WordPress be for in media must of site_="site," this to work>:param image_name: Image name in media library. (Full image name is not necessary) (optional)</p>
+<p>:param caption: Caption for Image (optional)</p>
+<p>:param image_url: Image url (optional)</p>
+<p>:param align: image alignment (default="left"). Allowed: ['left', 'center', 'right']</p>
+<p>:param round_shape: True, to set round borders. (default=False)</p>
+<p>:param alt_text: Alt text for image (optional)</p>
+<p>:param size: Select size of Image from editor. Allowed: ['thumbnail', 'medium', 'large', 'full'] (optional)</p>
+<p>:param width: Width of image (optional)</p>
+<p>:param height: Height of image (optional)</p>
+<p>:param percentage: Percentage of image. Allowed: [25, 50, 75, 100] (optional)</p>
+<h2 id="example">Example</h2>
+<h1 id="simple">Simple</h1>
+<p>wp.post_content_block_image("ImageName")</p>
+<p>wp.post_content_block_image(None, None, "https://www.example.com/image")</p>
+<h1 id="customized">Customized</h1>
+<p>wp.post_content_block_image("ImageName", "caption", None, "center", True, "alt-text", "thumbnail", 500, 500, 75)</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_content_block_list"><code class="name flex">
+<span>def <span class="ident">post_content_block_list</span></span>(<span>self, list_text, ordered=False, start=None, reverse=False, separator='.')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add list block and customize it</p>
+<p>:type list_text: str</p>
+<p>:type ordered: bool</p>
+<p>:type start: int</p>
+<p>:type reverse: bool</p>
+<p>:type separator: str</p>
+<p>:param list_text: List</p>
+<p>:param ordered: True, for numbering. (optional)</p>
+<p>:param start: Number from where to start the list. (optional)</p>
+<p>:param reverse: Reverse the numbering of list. (optional)</p>
+<p>:param separator: Separator before new item in the list. (default=".")
+Example: "Line 1. Line 2" &ndash; Here "." is the separator between list items.</p>
+<h2 id="example">Example</h2>
+<h1 id="un-ordered-list">Un-ordered List</h1>
+<p>wp.post_content_block_list("Line 1. Line 2")</p>
+<h1 id="ordered-list">Ordered List</h1>
+<p>wp.post_content_block_list("Line 1. Line 2", True, 50, True)</p>
+<h1 id="using-separator">Using separator</h1>
+<p>wp.post_content_block_list("Line 1, Line 2", True, 50, True, ",")</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_content_block_paragraph"><code class="name flex">
+<span>def <span class="ident">post_content_block_paragraph</span></span>(<span>self, paragraph, align='left', size=None, custom_size=None, drop_cap=False, text_color=None, bg_color=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add paragraph block and customize it</p>
+<p>:type paragraph: str</p>
+<p>:type align: str</p>
+<p>:type size: str</p>
+<p>:type custom_size: int</p>
+<p>:type drop_cap: bool</p>
+<p>:type text_color: str</p>
+<p>:type bg_color: str</p>
+<p>:param paragraph: Paragraph text</p>
+<p>:param align: Paragraph alignment (default="left"). Allowed: ['left', 'center', 'right'] (optional)</p>
+<p>:param size: choose font size from sizes available in the editor:
+['default', 'small', 'normal', 'medium', 'large', 'huge'] (optional)</p>
+<p>:param custom_size: font size (optional)</p>
+<p>:param drop_cap: Set first character of paragraph to capital (optional)</p>
+<p>:param text_color: hex color code for paragraph's text color. (optional)</p>
+<p>:param bg_color: hex color code for paragraph's background color. (optional)</p>
+<h2 id="example">Example</h2>
+<h1 id="simple">Simple</h1>
+<p>wp.post_content_block_paragraph("This is a paragraph.")</p>
+<h1 id="customized">Customized</h1>
+<p>wp.post_content_block_paragraph("This is a paragraph.", "center", "normal", None, True, "#1bbafe", "#ffffff")</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_content_block_setting_color"><code class="name flex">
+<span>def <span class="ident">post_content_block_setting_color</span></span>(<span>self, text_color, bg_color=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set color of text and background</p>
+<p>:type text_color: str</p>
+<p>:type bg_color: str</p>
+<p>:param text_color: hex color code</p>
+<p>:param bg_color: hex color code (optional)</p>
+<h2 id="example">Example</h2>
+<p>wp.post_content_block_setting_color('#1bbafe', '#ffffff')</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_content_block_setting_heading"><code class="name flex">
+<span>def <span class="ident">post_content_block_setting_heading</span></span>(<span>self, style)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Select Heading style
+Available styles are: h1, h2, h3, h4, h5, h6</p>
+<p>:type style: str</p>
+<p>:param style: Style of heading tag. Allowed: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']</p>
+<h2 id="example">Example</h2>
+<p>wp.post_content_block_setting_heading('h1')</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_content_block_setting_image"><code class="name flex">
+<span>def <span class="ident">post_content_block_setting_image</span></span>(<span>self, alt_text=None, size=None, width=None, height=None, percentage=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set image block style</p>
+<p>:type alt_text: str</p>
+<p>:type size: str</p>
+<p>:type width: int</p>
+<p>:type height: int</p>
+<p>:type percentage: int</p>
+<p>:param alt_text: Alt text for image (optional)</p>
+<p>:param size: Select size of Image from editor. Allowed: ['thumbnail', 'medium', 'large', 'full'] (optional)</p>
+<p>:param width: Width of image (optional)</p>
+<p>:param height: Height of image (optional)</p>
+<p>:param percentage: Percentage of image. Allowed: [25, 50, 75, 100] (optional)</p>
+<h2 id="example">Example</h2>
+<p>wp.post_content_block_setting_image("Image 1", "full", 500, 500, 75%)</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_content_block_setting_image_align"><code class="name flex">
+<span>def <span class="ident">post_content_block_setting_image_align</span></span>(<span>self, align='left')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Select image alignment
+Available alignments are: left, center, right</p>
+<p>:type align: str</p>
+<p>:param align: image alignment (default="left"). Allowed: ['left', 'center', 'right']</p>
+<h2 id="example">Example</h2>
+<p>wp.post_content_block_setting_image_align("center")</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_content_block_setting_image_style"><code class="name flex">
+<span>def <span class="ident">post_content_block_setting_image_style</span></span>(<span>self, round_shape=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set Image Border's style</p>
+<p>:type round_shape: bool</p>
+<p>:param round_shape: True, to set round borders. (default=False)</p>
+<h2 id="example">Example</h2>
+<p>wp.post_content_block_setting_image_style(True)</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_content_block_setting_open"><code class="name flex">
+<span>def <span class="ident">post_content_block_setting_open</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Switch to BLOCK SETTING Panel on the right</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_content_block_setting_ordered_list"><code class="name flex">
+<span>def <span class="ident">post_content_block_setting_ordered_list</span></span>(<span>self, start=None, reverse=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Customize List block style</p>
+<p>:type start: int</p>
+<p>:type reverse: bool</p>
+<p>:param start: Number from where to start the list. (optional)</p>
+<p>:param reverse: Reverse the numbering of list. (optional)</p>
+<h2 id="example">Example</h2>
+<p>wp.post_content_block_setting_ordered_list(10, True)</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_content_block_setting_text"><code class="name flex">
+<span>def <span class="ident">post_content_block_setting_text</span></span>(<span>self, size=None, custom_size=None, drop_cap=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set Paragraph block settings</p>
+<p>:type size: str</p>
+<p>:type custom_size: int</p>
+<p>:type drop_cap: bool</p>
+<p>:param size: choose font size from sizes available in the editor:
+['default', 'small', 'normal', 'medium', 'large', 'huge'] (optional)</p>
+<p>:param custom_size: font size (optional)</p>
+<p>:param drop_cap: Set first character of paragraph to capital (optional)</p>
+<h2 id="example">Example</h2>
+<h1 id="using-editors-font-size">Using editor's font size</h1>
+<p>wp.post_content_block_setting_text("normal")</p>
+<h1 id="using-custom-font-size">Using custom font size</h1>
+<p>wp.post_content_block_setting_text(None, 54)</p>
+<h1 id="set-first-character-capital-of-text">Set First character capital of Text</h1>
+<p>wp.post_content_block_setting_text("small", None, True)</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_content_block_setting_text_align"><code class="name flex">
+<span>def <span class="ident">post_content_block_setting_text_align</span></span>(<span>self, align='left')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Select text alignment
+Available alignments are: left, center, right</p>
+<p>:type align: str</p>
+<p>:param align: text alignment (default="left"). Allowed: ['left', 'center', 'right']</p>
+<h2 id="example">Example</h2>
+<p>wp.post_content_block_setting_text_align("left")</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_content_from_file"><code class="name flex">
+<span>def <span class="ident">post_content_from_file</span></span>(<span>self, file_path='', typing_effect=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>:type file_path: str</p>
+<p>:type typing_effect: bool</p>
+<p>:param file_path: path to docx or html file on computer</p>
+<p>:param typing_effect: True if keyboard typing effect is required. (optional) (default=False)</p>
+<h2 id="example">Example</h2>
+<h1 id="docx-file">Docx file</h1>
+<p>wp.post_content_from_file("C\Path\To\File.docx")</p>
+<h1 id="html-file-with-typing-effect">Html file with typing effect</h1>
+<p>wp.post_content_from_file("C\Path\To\File.html", True)</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_content_use_default_editor"><code class="name flex">
+<span>def <span class="ident">post_content_use_default_editor</span></span>(<span>self, xpath='//button[text()="Use Default Editor"]')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set Post Url</p>
+<p>:type xpath: str</p>
+<p>:param xpath: xpath of the use default editor button (optional)</p>
+<h2 id="example">Example</h2>
+<p>wp.post_content_use_default_editor()</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_discussion"><code class="name flex">
+<span>def <span class="ident">post_discussion</span></span>(<span>self, comments=True, traceback=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Configure Discussion settings for post</p>
+<p>:type comments: bool</p>
+<p>:type traceback: bool</p>
+<p>:param comments: False to Disable comments on post</p>
+<p>:param traceback: False to Disable pingbacks &amp; trackbacks</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_document_setting_open"><code class="name flex">
+<span>def <span class="ident">post_document_setting_open</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Switch to DOCUMENT SETTING Panel on the right</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_excerpt"><code class="name flex">
+<span>def <span class="ident">post_excerpt</span></span>(<span>self, excerpt)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set Post excerpt</p>
+<p>:type excerpt: str</p>
+<p>:param excerpt: excerpt of the post</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_format"><code class="name flex">
+<span>def <span class="ident">post_format</span></span>(<span>self, formatting='standard')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set Post Format</p>
+<p>:type formatting: str</p>
+<p>:param formatting: Post display format. Allowed: ['standard', 'gallery', 'link', 'quote', 'video', 'audio']</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_image"><code class="name flex">
+<span>def <span class="ident">post_image</span></span>(<span>self, image_name)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set Featured Image for Post</p>
+<p>:type image_name: str</p>
+<p>:param image_name: Name of the Image in media library.</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_new"><code class="name flex">
+<span>def <span class="ident">post_new</span></span>(<span>self, title, category=None, tag=None, featured_image=None, excerpt=None, docx_path=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add new post in WordPress site</p>
+<p>:type title: str</p>
+<p>:type category: str</p>
+<p>:type tag: str</p>
+<p>:type featured_image: str</p>
+<p>:type excerpt: str</p>
+<p>:type docx_path: str</p>
+<p>:param title: title of the post.</p>
+<p>:param category:
+category name of the post. (optional)</p>
+<p>:param tag: tag of the post. (optional)</p>
+<p>:param featured_image: name of the Image in media library to set as featured image. (optional)</p>
+<p>:param excerpt: excerpt of the post. (optional)</p>
+<p>:param docx_path: path of docx file. (optional)</p>
+<h2 id="example">Example</h2>
+<p>wp.post_new("Post Title", "Technology", "tech", "")</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_publish"><code class="name flex">
+<span>def <span class="ident">post_publish</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Publish Post</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_save_draft"><code class="name flex">
+<span>def <span class="ident">post_save_draft</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Save Post as Draft</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_status"><code class="name flex">
+<span>def <span class="ident">post_status</span></span>(<span>self, visibility='public', password=None, stick_top=False, pending_review=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Configure Post Status Settings</p>
+<p>:type visibility: str</p>
+<p>:type password: str</p>
+<p>:type stick_top: bool</p>
+<p>:type pending_review: bool</p>
+<p>:param visibility: Visibility of Post. Allowed: ['public', 'private, 'password'] (optional)</p>
+<p>:param password: Password for post if visibility set to password protected.</p>
+<p>:param stick_top: True to stick post on top on the blog page. (optional)</p>
+<p>:param pending_review: True to add post in pending</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_switch_to_draft"><code class="name flex">
+<span>def <span class="ident">post_switch_to_draft</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Switch Post from Published to Draft</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_tag"><code class="name flex">
+<span>def <span class="ident">post_tag</span></span>(<span>self, tag)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set post tag</p>
+<p>:type tag: str</p>
+<p>:param tag: tag of the post</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_title"><code class="name flex">
+<span>def <span class="ident">post_title</span></span>(<span>self, title)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set Post Title</p>
+<p>:type title: str</p>
+<p>:param title: title of the post</p>
+<h2 id="example">Example</h2>
+<p>wp.post_title("Post Title")</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_update"><code class="name flex">
+<span>def <span class="ident">post_update</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Update Post</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.post_url"><code class="name flex">
+<span>def <span class="ident">post_url</span></span>(<span>self, url)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set Post Url</p>
+<p>:type url: str</p>
+<p>:param url: title of the post</p>
+<h2 id="example">Example</h2>
+<p>wp.post_url("url")</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.send_backspace_by_xpath"><code class="name flex">
+<span>def <span class="ident">send_backspace_by_xpath</span></span>(<span>self, xpath, times, wait=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Send backspace key for given number of times in html element by xpath</p>
+<p>:type xpath: str</p>
+<p>:type times: int</p>
+<p>:type wait: bool</p>
+<p>:param xpath: xpath of html element</p>
+<p>:param times: number of times backspace should be sent</p>
+<p>:param wait: After sending key/s, wait for time(if sleep_time set in constructor else 2 seconds)</p>
+<h2 id="example">Example</h2>
+<h1 id="send-backspace-10-times-in-html-element-by-xpath-and-wait">Send backspace 10 times in html element by xpath and wait</h1>
+<p>wp.send_backspace_by_xpath('//input[@name="user"]', 10, True)</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.send_keys_select_all"><code class="name flex">
+<span>def <span class="ident">send_keys_select_all</span></span>(<span>self, xpath=None, element_id=None, wait=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Send key combination Ctrl+A to select all text in html element either by xpath or id</p>
+<p>:type xpath: str or None</p>
+<p>:type element_id: str</p>
+<p>:type wait: bool</p>
+<p>:param xpath: xpath of html element</p>
+<p>:param element_id: id attribute of html element</p>
+<p>:param wait: After sending keys, wait for time(if sleep_time set in constructor else 2 seconds)</p>
+<h2 id="example">Example</h2>
+<h1 id="send-keys-by-html-xpath">Send keys by html xpath</h1>
+<p>wp.send_keys_select_all('//input[@name="user"]')</p>
+<h1 id="send-keys-by-html-id-attribute">Send keys by html id attribute</h1>
+<p>wp.send_keys_select_all(None,'username')</p>
+<h1 id="wait-after-sending-keys">Wait after sending keys</h1>
+<p>wp.send_keys_select_all('//input[@name="user"]', None, True)</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.send_text_exists_by_id"><code class="name flex">
+<span>def <span class="ident">send_text_exists_by_id</span></span>(<span>self, element_id, text, error=None, success=None, wait=False, key_wait=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Type text in html element by id, if it exists</p>
+<p>:type element_id: str</p>
+<p>:type text: str</p>
+<p>:type error: str</p>
+<p>:type success: str</p>
+<p>:type wait: bool</p>
+<p>:type key_wait: int</p>
+<p>:param element_id: id attribute of html element</p>
+<p>:param text: text to be typed</p>
+<p>:param error: error note in case of failure (Optional)</p>
+<p>:param success: success note in case of completion (Optional)</p>
+<p>:param wait: After typing, wait for time(if sleep_time set in constructor else 2 seconds) (Optional)</p>
+<p>:param key_wait: After each character, wait for time(in seconds) (Optional)</p>
+<h2 id="example">Example</h2>
+<p>wp.send_text_exists_by_id('username', 'Admin')</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.send_text_exists_by_xpath"><code class="name flex">
+<span>def <span class="ident">send_text_exists_by_xpath</span></span>(<span>self, xpath, text, error=None, success=None, wait=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Type text in html element by xpath, if it exists</p>
+<p>:type xpath: str</p>
+<p>:type text: str or int</p>
+<p>:type error: str</p>
+<p>:type success: str</p>
+<p>:type wait: bool</p>
+<p>:param xpath: xpath of html element</p>
+<p>:param text: text to be typed</p>
+<p>:param error: error note in case of failure (Optional)</p>
+<p>:param success: success note in case of completion (Optional)</p>
+<p>:param wait: After typing, wait for time(if sleep_time set in constructor else 2 seconds) (Optional)</p>
+<h2 id="example">Example</h2>
+<p>wp.send_text_exists_by_xpath('//input[@name="username"]', 'Admin')</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.send_text_in_browser"><code class="name flex">
+<span>def <span class="ident">send_text_in_browser</span></span>(<span>self, text)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Type given text in active html element in browser</p>
+<p>:type text: str</p>
+<p>:param text: Text to be typed</p>
+<h2 id="example">Example</h2>
+<p>wp.send_text_in_browser("Hello World!")</p></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.set_error"><code class="name flex">
+<span>def <span class="ident">set_error</span></span>(<span>self, error)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.user_agent_generator"><code class="name flex">
+<span>def <span class="ident">user_agent_generator</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="automateWordPressPost.wordpress.WordPress.wp_login"><code class="name flex">
+<span>def <span class="ident">wp_login</span></span>(<span>self, email, password)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Login to WordPress site</p>
+<p>:type email: str</p>
+<p>:type password: str</p>
+<p>:param email: email or username of WordPress User</p>
+<p>:param password: password of WordPress User</p>
+<h2 id="example">Example</h2>
+<p>wp.wp_login('email', 'password')</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="automateWordPressPost.wordpress.WordPress" href="#automateWordPressPost.wordpress.WordPress">WordPress</a></code></h4>
+<ul class="">
+<li><code><a title="automateWordPressPost.wordpress.WordPress.chrome_options_edit" href="#automateWordPressPost.wordpress.WordPress.chrome_options_edit">chrome_options_edit</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.click_exists_by_xpath" href="#automateWordPressPost.wordpress.WordPress.click_exists_by_xpath">click_exists_by_xpath</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.click_exists_by_xpath_elements" href="#automateWordPressPost.wordpress.WordPress.click_exists_by_xpath_elements">click_exists_by_xpath_elements</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.close" href="#automateWordPressPost.wordpress.WordPress.close">close</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.docx_to_html" href="#automateWordPressPost.wordpress.WordPress.docx_to_html">docx_to_html</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.error" href="#automateWordPressPost.wordpress.WordPress.error">error</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.get_completed" href="#automateWordPressPost.wordpress.WordPress.get_completed">get_completed</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.get_errors" href="#automateWordPressPost.wordpress.WordPress.get_errors">get_errors</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.maximize_window" href="#automateWordPressPost.wordpress.WordPress.maximize_window">maximize_window</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.messages" href="#automateWordPressPost.wordpress.WordPress.messages">messages</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.open_page_posts" href="#automateWordPressPost.wordpress.WordPress.open_page_posts">open_page_posts</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.paste_in_browser" href="#automateWordPressPost.wordpress.WordPress.paste_in_browser">paste_in_browser</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_category" href="#automateWordPressPost.wordpress.WordPress.post_category">post_category</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_content_block_add" href="#automateWordPressPost.wordpress.WordPress.post_content_block_add">post_content_block_add</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_content_block_edit_as_html" href="#automateWordPressPost.wordpress.WordPress.post_content_block_edit_as_html">post_content_block_edit_as_html</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_content_block_heading" href="#automateWordPressPost.wordpress.WordPress.post_content_block_heading">post_content_block_heading</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_content_block_html" href="#automateWordPressPost.wordpress.WordPress.post_content_block_html">post_content_block_html</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_content_block_image" href="#automateWordPressPost.wordpress.WordPress.post_content_block_image">post_content_block_image</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_content_block_list" href="#automateWordPressPost.wordpress.WordPress.post_content_block_list">post_content_block_list</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_content_block_paragraph" href="#automateWordPressPost.wordpress.WordPress.post_content_block_paragraph">post_content_block_paragraph</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_content_block_setting_color" href="#automateWordPressPost.wordpress.WordPress.post_content_block_setting_color">post_content_block_setting_color</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_content_block_setting_heading" href="#automateWordPressPost.wordpress.WordPress.post_content_block_setting_heading">post_content_block_setting_heading</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_content_block_setting_image" href="#automateWordPressPost.wordpress.WordPress.post_content_block_setting_image">post_content_block_setting_image</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_content_block_setting_image_align" href="#automateWordPressPost.wordpress.WordPress.post_content_block_setting_image_align">post_content_block_setting_image_align</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_content_block_setting_image_style" href="#automateWordPressPost.wordpress.WordPress.post_content_block_setting_image_style">post_content_block_setting_image_style</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_content_block_setting_open" href="#automateWordPressPost.wordpress.WordPress.post_content_block_setting_open">post_content_block_setting_open</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_content_block_setting_ordered_list" href="#automateWordPressPost.wordpress.WordPress.post_content_block_setting_ordered_list">post_content_block_setting_ordered_list</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_content_block_setting_text" href="#automateWordPressPost.wordpress.WordPress.post_content_block_setting_text">post_content_block_setting_text</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_content_block_setting_text_align" href="#automateWordPressPost.wordpress.WordPress.post_content_block_setting_text_align">post_content_block_setting_text_align</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_content_from_file" href="#automateWordPressPost.wordpress.WordPress.post_content_from_file">post_content_from_file</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_content_use_default_editor" href="#automateWordPressPost.wordpress.WordPress.post_content_use_default_editor">post_content_use_default_editor</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_discussion" href="#automateWordPressPost.wordpress.WordPress.post_discussion">post_discussion</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_document_setting_open" href="#automateWordPressPost.wordpress.WordPress.post_document_setting_open">post_document_setting_open</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_excerpt" href="#automateWordPressPost.wordpress.WordPress.post_excerpt">post_excerpt</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_format" href="#automateWordPressPost.wordpress.WordPress.post_format">post_format</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_image" href="#automateWordPressPost.wordpress.WordPress.post_image">post_image</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_new" href="#automateWordPressPost.wordpress.WordPress.post_new">post_new</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_publish" href="#automateWordPressPost.wordpress.WordPress.post_publish">post_publish</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_save_draft" href="#automateWordPressPost.wordpress.WordPress.post_save_draft">post_save_draft</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_status" href="#automateWordPressPost.wordpress.WordPress.post_status">post_status</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_switch_to_draft" href="#automateWordPressPost.wordpress.WordPress.post_switch_to_draft">post_switch_to_draft</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_tag" href="#automateWordPressPost.wordpress.WordPress.post_tag">post_tag</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_title" href="#automateWordPressPost.wordpress.WordPress.post_title">post_title</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_update" href="#automateWordPressPost.wordpress.WordPress.post_update">post_update</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.post_url" href="#automateWordPressPost.wordpress.WordPress.post_url">post_url</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.read_html" href="#automateWordPressPost.wordpress.WordPress.read_html">read_html</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.send_backspace_by_xpath" href="#automateWordPressPost.wordpress.WordPress.send_backspace_by_xpath">send_backspace_by_xpath</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.send_keys_select_all" href="#automateWordPressPost.wordpress.WordPress.send_keys_select_all">send_keys_select_all</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.send_text_exists_by_id" href="#automateWordPressPost.wordpress.WordPress.send_text_exists_by_id">send_text_exists_by_id</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.send_text_exists_by_xpath" href="#automateWordPressPost.wordpress.WordPress.send_text_exists_by_xpath">send_text_exists_by_xpath</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.send_text_in_browser" href="#automateWordPressPost.wordpress.WordPress.send_text_in_browser">send_text_in_browser</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.set_error" href="#automateWordPressPost.wordpress.WordPress.set_error">set_error</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.sleep_time_page_load" href="#automateWordPressPost.wordpress.WordPress.sleep_time_page_load">sleep_time_page_load</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.success" href="#automateWordPressPost.wordpress.WordPress.success">success</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.user_agent_generator" href="#automateWordPressPost.wordpress.WordPress.user_agent_generator">user_agent_generator</a></code></li>
+<li><code><a title="automateWordPressPost.wordpress.WordPress.wp_login" href="#automateWordPressPost.wordpress.WordPress.wp_login">wp_login</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.1</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>
