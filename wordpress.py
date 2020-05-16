@@ -50,7 +50,7 @@ class WordPress:
         self.chrome_options = Options()
         self.chrome_driver_path = chrome_driver_path
         if user_agent:
-            self.user_agent = self.user_agent_generator()
+            self.user_agent = self.__user_agent_generator()
             self.chrome_options.add_argument(f'user-agent={self.user_agent}')
         self.browser = webdriver.Chrome(executable_path=chrome_driver_path, chrome_options=self.chrome_options)
         self.sleep_time = sleep_time
@@ -62,7 +62,7 @@ class WordPress:
         if not gpu:
             self.chrome_options.add_argument('--disable-gpu')
         if user_agent:
-            self.user_agent_generator()
+            self.__user_agent_generator()
             self.chrome_options.add_argument(f'user-agent={self.user_agent}')
         if not info_bars:
             self.chrome_options.add_argument("--disable-infobars")
@@ -74,7 +74,7 @@ class WordPress:
             })
         self.browser = webdriver.Chrome(chrome_options=self.chrome_options)
 
-    def user_agent_generator(self):
+    def __user_agent_generator(self):
         software_names = [SoftwareName.CHROME.value]
         operating_systems = [OperatingSystem.WINDOWS.value, OperatingSystem.LINUX.value]
         user_agent_rotate = UserAgent(software_names=software_names, operating_systems=operating_systems, limit=100)
@@ -100,18 +100,19 @@ class WordPress:
 
         self.browser.close()
 
-    def set_error(self, error):
+    def __set_error(self, error):
         self.error += "ERROR: " + error + "\r\n"
 
     @property
     def get_errors(self):
-        """ Returns a string with failed tasks
+        """ Returns a string with failed tasks.
 
         :rtype: str
 
         Example
         ----
         wp.get_errors()
+
         """
 
         return "Errors: \n" + self.error
@@ -456,11 +457,12 @@ class WordPress:
         if self.__check_exists_by_id("post-title-0"):
             self.browser.find_element_by_id("post-title-0").send_keys(title)
         else:
-            self.set_error("Unable to type post title!")
+            self.__set_error("Unable to type post title!")
 
     # After post published
     def post_url(self, url):
-        """ Set Post Url
+        """ Set Post Url.
+        Applicable after publishing post.
 
         :type url: str
         :param url: title of the post
@@ -480,8 +482,9 @@ class WordPress:
         err = "Unable to type post url"
         self.send_text_exists_by_xpath(xpath_u, url, err, wait=True)
 
-    def post_content_use_default_editor(self, xpath='//button[text()="Use Default Editor"]'):
-        """ Set Post Url
+    def __post_content_use_default_editor(self, xpath='//button[text()="Use Default Editor"]'):
+        """ If the WordPress site has an active theme with page builder or a page builder plugin installed,
+        use this function to choose Block editor.
 
         :type xpath: str
         :param xpath: xpath of the use default editor button (optional)
@@ -497,7 +500,7 @@ class WordPress:
         sleep(self.sleep_time)
 
     def post_content_block_setting_open(self):
-        """ Switch to BLOCK SETTING Panel on the right
+        """ Open or switch to BLOCK SETTING Panel on the right.
 
         """
 
@@ -543,7 +546,7 @@ class WordPress:
             'html': 'Custom HTML'
         }
         if block_name.lower() not in blocks:
-            self.set_error('Enter a valid block name')
+            self.__set_error('Enter a valid block name')
             return False
         err = 'Unable to add block :' + block_name
         cmp = block_name + ' Added'
@@ -580,7 +583,7 @@ class WordPress:
 
     # Heading Block Setting
     def post_content_block_setting_heading(self, style):
-        """ Select Heading style
+        """ Select Heading style.
         Available styles are: h1, h2, h3, h4, h5, h6
 
         :type style: str
@@ -613,7 +616,7 @@ class WordPress:
 
     # Text Block Setting
     def post_content_block_setting_text(self, size=None, custom_size=None, drop_cap=False):
-        """ Set Paragraph block settings
+        """ Set Paragraph block settings.
 
         :type size: str
         :type custom_size: int
@@ -659,7 +662,7 @@ class WordPress:
                 self.send_text_exists_by_xpath(xpath_text, size_list[size], err)
                 sleep(self.sleep_time)
             else:
-                self.set_error('Invalid text size: ' + size)
+                self.__set_error('Invalid text size: ' + size)
 
         if drop_cap:
             xpath_text = '//p[text()="Toggle to show a large initial letter."]/preceding-sibling::div//input[@type="checkbox"]'
@@ -668,7 +671,7 @@ class WordPress:
 
     # Text Block Setting
     def post_content_block_setting_text_align(self, align="left"):
-        """ Select text alignment
+        """ Select text alignment.
         Available alignments are: left, center, right
 
         :type align: str
@@ -676,7 +679,7 @@ class WordPress:
 
         Example
         ----
-        wp.post_content_block_setting_text_align("left")
+        wp.post_content_block_setting_text_align("center")
 
         """
 
@@ -696,16 +699,16 @@ class WordPress:
             err = "Unable to align text " + align
             self.click_exists_by_xpath(xpath_a, err, wait=True)
         else:
-            self.set_error("Invalid text alignment")
+            self.__set_error("Invalid text alignment")
 
     # Color Block Setting
-    def post_content_block_setting_color(self, text_color, bg_color=None):
-        """ Set color of text and background
+    def post_content_block_setting_color(self, text_color=None, bg_color=None):
+        """ Set color of text and background.
 
         :type text_color: str
         :type bg_color: str
-        :param text_color: hex color code
-        :param bg_color: hex color code (optional)
+        :param text_color: hex color code. (optional)
+        :param bg_color: hex color code. (optional)
 
         Example
         ----
@@ -719,13 +722,14 @@ class WordPress:
             err = "Unable to expand Color Settings"
             self.click_exists_by_xpath('//span[text()="Color settings"]/parent::button[@type="button"]', err, wait=True)
 
-        err = "Unable to set text color"
-        if self.click_exists_by_xpath(xpath_color, err):
-            xpath_color = '//label[text()="Color value in hexadecimal"]/following-sibling::input[@type="text"]'
-            sleep(self.sleep_time)
-            self.send_backspace_by_xpath(xpath_color, 8)
-            err = "Unable to type text color"
-            self.send_text_exists_by_xpath(xpath_color, text_color, err)
+        if text_color:
+            err = "Unable to set text color"
+            if self.click_exists_by_xpath(xpath_color, err):
+                xpath_color = '//label[text()="Color value in hexadecimal"]/following-sibling::input[@type="text"]'
+                sleep(self.sleep_time)
+                self.send_backspace_by_xpath(xpath_color, 8)
+                err = "Unable to type text color"
+                self.send_text_exists_by_xpath(xpath_color, text_color, err)
 
         if bg_color:
             xpath_color = '(//button[@type="button" and @aria-label="Custom color picker" and text()="Custom color"])[2]'
@@ -738,15 +742,15 @@ class WordPress:
                 self.send_text_exists_by_xpath(xpath_color, bg_color, err)
 
     # Image Block Setting
-    def post_content_block_setting_image_style(self, round_shape=False):
-        """ Set Image Border's style
+    def post_content_block_setting_image_border(self, round_shape=False):
+        """ Set style for Image Border.
 
         :type round_shape: bool
         :param round_shape: True, to set round borders. (default=False)
 
         Example
         ----
-        wp.post_content_block_setting_image_style(True)
+        wp.post_content_block_setting_image_border(True)
 
         """
 
@@ -765,7 +769,7 @@ class WordPress:
 
     # Image Block Setting
     def post_content_block_setting_image(self, alt_text=None, size=None, width=None, height=None, percentage=None):
-        """ Set image block style
+        """ Set image block style.
 
         :type alt_text: str
         :type size: str
@@ -830,7 +834,7 @@ class WordPress:
                 self.click_exists_by_xpath(xpath_s, err, wait=True)
 
     # Image Block Setting
-    def post_content_block_setting_image_align(self, align='left'):
+    def post_content_block_setting_image_align(self, align="left"):
         """ Select image alignment
         Available alignments are: left, center, right
 
@@ -858,11 +862,11 @@ class WordPress:
             err = "Unable to align image " + align
             self.click_exists_by_xpath(xpath_a, err, wait=True)
         else:
-            self.set_error("Invalid image alignment")
+            self.__set_error("Invalid image alignment")
 
     # List Block Setting
     def post_content_block_setting_ordered_list(self, start=None, reverse=False):
-        """ Customize List block style
+        """ Customize List block style.
 
         :type start: int
         :type reverse: bool
@@ -888,7 +892,7 @@ class WordPress:
             self.click_exists_by_xpath(xpath_o, err, wait=True)
 
     def post_content_block_heading(self, heading, style='default', align='left', text_color=None):
-        """ Add heading block and customize it
+        """ Add heading block and customize it.
 
         :type heading: str
         :type style: str
@@ -920,15 +924,15 @@ class WordPress:
 
     def post_content_block_paragraph(self, paragraph, align='left', size=None, custom_size=None, drop_cap=False,
                                      text_color=None, bg_color=None):
-        """ Add paragraph block and customize it
+        """ Add paragraph block and customize it.
 
         :type paragraph: str
         :type align: str
-        :type size: str
-        :type custom_size: int
+        :type size: str or None
+        :type custom_size: int or None
         :type drop_cap: bool
-        :type text_color: str
-        :type bg_color: str
+        :type text_color: str or None
+        :type bg_color: str or None
         :param paragraph: Paragraph text
         :param align: Paragraph alignment (default="left"). Allowed: ['left', 'center', 'right'] (optional)
         :param size: choose font size from sizes available in the editor:
@@ -961,8 +965,8 @@ class WordPress:
 
     def post_content_block_image(self, image_name=None, caption=None, image_url=None, align='left', round_shape=None,
                                  alt_text=None, size=None, width=None, height=None, percentage=None):
-        """ Add image block and customize it
-        For Image block image should be in media library or use url.
+        """ Add image block and customize it.
+        For Image block, image can be added either from media library or by using url.
 
         :type image_name: str
         :type caption: str
@@ -1027,11 +1031,11 @@ class WordPress:
                         if not percentage and not width and not height:
                             percentage = 100
 
-                self.post_content_block_setting_image_style(round_shape)
+                self.post_content_block_setting_image_border(round_shape)
                 self.post_content_block_setting_image(alt_text, size, width, height, percentage)
 
     def post_content_block_list(self, list_text, ordered=False, start=None, reverse=False, separator='.'):
-        """ Add list block and customize it
+        """ Add list block and customize it.
 
         :type list_text: str
         :type ordered: bool
@@ -1079,7 +1083,7 @@ class WordPress:
                 self.post_content_block_setting_ordered_list(start, reverse)
 
     def post_content_block_html(self, html):
-        """ Add html block
+        """ Add html block.
 
         :type html: str
         :param html: html code for html block
@@ -1094,11 +1098,11 @@ class WordPress:
         self.send_text_in_browser(html)
 
     def post_content_from_file(self, file_path='', typing_effect=False):
-        """
+        """ Add a block using docx or html file.
 
         :type file_path: str
         :type typing_effect: bool
-        :param file_path: path to docx or html file on computer
+        :param file_path: path to docx or html file on computer.
         :param typing_effect: True if keyboard typing effect is required. (optional) (default=False)
 
         Example
@@ -1129,10 +1133,14 @@ class WordPress:
             else:
                 self.send_text_in_browser(html)
         else:
-            self.set_error("Invalid File Type")
+            self.__set_error("Invalid File Type")
 
     def post_document_setting_open(self):
-        """ Switch to DOCUMENT SETTING Panel on the right
+        """ Switch to DOCUMENT SETTING Panel on the right.
+
+        Example
+        ----
+        wp.post_document_setting_open()
 
         """
 
@@ -1155,6 +1163,20 @@ class WordPress:
         :param password: Password for post if visibility set to password protected.
         :param stick_top: True to stick post on top on the blog page. (optional)
         :param pending_review: True to add post in pending
+
+        Example
+        ----
+        Public post
+
+        wp.post_status('public', password=None, True, True)
+
+        Private post
+
+        wp.post_status('private')
+
+        Password protected post
+
+        wp.post_status('password', "your-password-here")
         """
 
         element_discus = '//span[text()="Visibility"]'
@@ -1202,10 +1224,15 @@ class WordPress:
 
     # After post published
     def post_format(self, formatting='standard'):
-        """ Set Post Format
+        """ Set Post Format.
 
         :type formatting: str
         :param formatting: Post display format. Allowed: ['standard', 'gallery', 'link', 'quote', 'video', 'audio']
+
+        ### Example
+        ----
+        wp.post_format('gallery')
+
         """
 
         self.post_document_setting_open()
@@ -1216,10 +1243,15 @@ class WordPress:
             self.click_exists_by_xpath(xpath_, err, wait=True)
 
     def post_category(self, category):
-        """ Set post category name
+        """ Choose category if category name exists otherwise create new category.
 
         :type category: str
         :param category: Post category name
+
+        Example
+        ----
+        wp.post_category("category-name")
+
         """
 
         err = 'Unable to expand Categories Panel(Categories)!'
@@ -1245,10 +1277,14 @@ class WordPress:
             self.click_exists_by_xpath(check_cat, err)
 
     def post_tag(self, tag):
-        """ Set post tag
+        """ Choose tag if tag name exists otherwise create new tag.
 
         :type tag: str
-        :param tag: tag of the post
+        :param tag: tag name of the post
+
+        Example
+        ----
+        wp.post_tag("tag-name")
         """
 
         check_tag = '//label[text()="Add New Tag"]/following-sibling::div/child::input'
@@ -1301,10 +1337,15 @@ class WordPress:
                 return True
 
     def post_image(self, image_name):
-        """ Set Featured Image for Post
+        """ Set Featured Image for Post from media library.
 
         :type image_name: str
         :param image_name: Name of the Image in media library.
+
+        Example
+        ----
+        wp.post_image("featured-image-name")
+
         """
 
         featured_img = '//button[text()="Set featured image"]'
@@ -1318,10 +1359,15 @@ class WordPress:
         self.__media_search_and_select(image_name, "Set featured image")
 
     def post_excerpt(self, excerpt):
-        """ Set Post excerpt
+        """ Set Post excerpt.
 
         :type excerpt: str
-        :param excerpt: excerpt of the post
+        :param excerpt: excerpt of the post.
+
+        Example
+        ----
+        wp.post_excerpt("excerpt-text")
+
         """
 
         check_excerpt = '//label[text()="Write an excerpt (optional)"]/following-sibling::textarea'
@@ -1334,12 +1380,17 @@ class WordPress:
         self.browser.find_element_by_xpath(check_excerpt).send_keys(excerpt)
 
     def post_discussion(self, comments=True, traceback=True):
-        """ Configure Discussion settings for post
+        """ Configure Discussion settings for post.
 
         :type comments: bool
         :type traceback: bool
-        :param comments: False to Disable comments on post
-        :param traceback: False to Disable pingbacks & trackbacks
+        :param comments: False to Disable comments on post.
+        :param traceback: False to Disable pingbacks & trackbacks.
+
+        Example
+        ----
+        wp.post_discussion(False, False)
+
         """
 
         element_discus = '//label[text()="Allow comments"]'
@@ -1359,7 +1410,12 @@ class WordPress:
             self.click_exists_by_xpath(element_discus, err)
 
     def post_save_draft(self):
-        """ Save Post as Draft
+        """ Save Post as Draft.
+
+        Example
+        ----
+        wp.post_save_draft()
+
         """
 
         xpath_save = '//button[text()="Publish…" and @aria-disabled="true"]'
@@ -1377,7 +1433,11 @@ class WordPress:
                 sleep(self.sleep_time)
 
     def post_switch_to_draft(self):
-        """ Switch Post from Published to Draft
+        """ Switch Post from Published to Draft.
+
+        Example
+        ----
+        wp.post_switch_to_draft()
         """
 
         xpath_d = '//button[text()="Switch to draft"]'
@@ -1390,7 +1450,12 @@ class WordPress:
             sleep(self.sleep_time)
 
     def post_publish(self):
-        """ Publish Post
+        """ Publish Post.
+
+        Example
+        ----
+        wp.post_publish()
+
         """
 
         xpath_p = '//button[text()="Publish…" and @aria-disabled="true"]'
@@ -1407,7 +1472,12 @@ class WordPress:
                 self.click_exists_by_xpath(xpath_p, err, wait=True)
 
     def post_update(self):
-        """ Update Post
+        """ Update Post.
+
+        Example
+        ----
+        wp.post_update()
+
         """
 
         xpath_u = '//button[text()="Update"]'
@@ -1417,14 +1487,21 @@ class WordPress:
 
     @staticmethod
     def read_html(html_path, full=False):
-        """ Read html file and return the code
+        """ Read html file and return the code.
 
         :type html_path: str
         :type full: bool
-        :param html_path: html file path
+        :param html_path: html file path.
         :param full: True to get full code, otherwise code in body tag. (optional)
-        :return: html code of the file
+        :rtype: str
+        :return: html code of the file.
+
+        Example
+        ----
+        wp.read_html("C\\Path\\To\\File.html")
+
         """
+
         f = codecs.open(html_path, 'r')
         html = f.read()
         soup = BeautifulSoup(html, 'html.parser')
@@ -1434,36 +1511,55 @@ class WordPress:
             return soup.prettify()
 
     def docx_to_html(self, docx_path):
-        """ Convert docx file to html code
+        """ Convert docx file to html code.
 
-        :param docx_path: Path of docx file
-        :return: html code
+        :type docx_path: str
+        :param docx_path: Path of docx file.
+        :rtype: str
+        :return: html code of the file.
+
+        Example
+        ----
+        wp.docx_to_html("C\\Path\\To\\File.docx")
+
         """
+
         with open(docx_path, "rb") as docx_file:
             result = d2h.convert_to_html(docx_file)
             html = result.value
             self.messages = result.messages
         return html
 
-    def post_new(self, title, category=None, tag=None, featured_image=None, excerpt=None, docx_path=None):
-        """ Add new post in WordPress site
+    def post_new(self, title, category=None, tag=None, featured_image=None, excerpt=None, file_path=None):
+        """ Add new post on WordPress site.
 
         :type title: str
         :type category: str
         :type tag: str
         :type featured_image: str
         :type excerpt: str
-        :type docx_path: str
+        :type file_path: str
         :param title: title of the post.
         :param category:  category name of the post. (optional)
         :param tag: tag of the post. (optional)
         :param featured_image: name of the Image in media library to set as featured image. (optional)
         :param excerpt: excerpt of the post. (optional)
-        :param docx_path: path of docx file. (optional)
+        :param file_path: path of docx or html file for post content. (optional)
 
         Example
         ----
-        wp.post_new("Post Title", "Technology", "tech", "")
+        Post with just a title:
+
+        wp.post_new("Post Title")
+
+        Post with title, category, tag, featured image and excerpt:
+
+        wp.post_new("Post Title", "Technology", "tech", "featured", "This is excerpt for this post")
+
+        Post with title, category, tag, featured image, excerpt and a file to post from:
+
+        wp.post_new("Post Title", "Technology", "tech", "featured", "This is excerpt for this post",
+        "docx/html-file-path")
 
         """
 
@@ -1475,7 +1571,7 @@ class WordPress:
             err = "Unable to close tutorial pop up"
             self.click_exists_by_xpath(xpath, err)
 
-        self.post_content_use_default_editor()
+        self.__post_content_use_default_editor()
 
         # Add title
         self.post_title(title)
@@ -1496,7 +1592,7 @@ class WordPress:
             sleep(self.sleep_time)
             self.post_excerpt(excerpt)
 
-        if docx_path:
+        if file_path:
             sleep(self.sleep_time)
-            html = self.docx_to_html(docx_path)
+            html = self.docx_to_html(file_path)
             self.post_content_block_html(html)

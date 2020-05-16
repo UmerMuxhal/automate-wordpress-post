@@ -1,12 +1,14 @@
-# Automate-WordPress
+# AutomateWordPressPost
 
-Automate-WordPress is a Python package for automating WordPress posts.
+AutomateWordPressPost is a Python package for automating WordPress posts.
 Automate WordPress Block Editor. Blocks that can be used are: Heading, Paragraph, Image, List and Custom HTML.
 Each block can be customized.
 Add post using docx file or html file.
 
 
 **Note:** Tested on WordPress version 5.4
+
+## [Documentation](https://github.com/UmerMuxhal/automate-wordpress-post/wiki)
 
 ## Prerequisites
 Required python modules ad libraries are: 
@@ -28,22 +30,6 @@ selenium==3.141.0
 soupsieve==2.0
 
 urllib3==1.25.9
-
-## Installation
-
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install Automate-WordPress-Post.
-
-```bash
-pip install automateWordPressPost
-```
-
-## Usage
-
-```python
-from automateWordPressPost.wordpress import WordPress
-wp = WordPress('mysite.com', 'mysite.com/wp-admin', 'path-to-chromedriver')
-wp.wp_login('email', 'password')
-```
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
