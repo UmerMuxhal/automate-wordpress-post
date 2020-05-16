@@ -30,5 +30,21 @@ soupsieve==2.0
 
 urllib3==1.25.9
 
+
+## Install
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install [Automate-WordPress-Post](https://pypi.org/project/automateWordPressPost/0.1/).
+
+```bash
+pip install automateWordPressPost
+```
+
+
+## Usage
+```python
+from automateWordPressPost.wordpress import WordPress
+wp = WordPress('mysite.com', 'mysite.com/wp-admin', 'path-to-chromedriver')
+wp.wp_login('email', 'password')
+```
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
