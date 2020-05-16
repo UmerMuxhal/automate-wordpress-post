@@ -7,7 +7,7 @@ Add post using docx file or html file.
 
 **Note:** Tested on WordPress version 5.4
 
-## [Documentation](https://github.com/UmerMuxhal/automate-wordpress-post/wiki)
+# [Documentation](https://github.com/UmerMuxhal/automate-wordpress-post/wiki)
 
 ## Prerequisites
 Required python modules ad libraries are: 
