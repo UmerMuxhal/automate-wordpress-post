@@ -168,7 +168,7 @@ class WordPress:
             return False
         return True
 
-    def send_keys_select_all(self, xpath=None, element_id=None, wait=False):
+    def __send_keys_select_all(self, xpath=None, element_id=None, wait=False):
         """ Send key combination Ctrl+A to select all text in html element either by xpath or id
 
         :type xpath: str or None
@@ -193,9 +193,9 @@ class WordPress:
 
         try:
             if xpath:
-                self.send_text_exists_by_xpath(xpath, Keys.CONTROL + "a")
+                self.__send_text_exists_by_xpath(xpath, Keys.CONTROL + "a")
             elif element_id:
-                self.send_text_exists_by_id(element_id, Keys.CONTROL + "a")
+                self.__send_text_exists_by_id(element_id, Keys.CONTROL + "a")
             if wait:
                 sleep(self.sleep_time)
         except selenium_exception.NoSuchElementException:
@@ -204,7 +204,7 @@ class WordPress:
             else:
                 self.error += "ERROR: Id: " + element_id + " [Element Not Found]\r\n"
 
-    def send_backspace_by_xpath(self, xpath, times, wait=False):
+    def __send_backspace_by_xpath(self, xpath, times, wait=False):
         """ Send backspace key for given number of times in html element by xpath
 
         :type xpath: str
@@ -223,13 +223,13 @@ class WordPress:
 
         try:
             for i in range(0, times):
-                self.send_text_exists_by_xpath(xpath, Keys.BACK_SPACE)
+                self.__send_text_exists_by_xpath(xpath, Keys.BACK_SPACE)
             if wait:
                 sleep(self.sleep_time)
         except selenium_exception.NoSuchElementException:
             self.error += "ERROR: Xpath: " + xpath + " [Element Not Found]\r\n"
 
-    def paste_in_browser(self):
+    def __paste_in_browser(self):
         """ Paste content from clipboard in active html element in browser
 
         Example
@@ -244,7 +244,7 @@ class WordPress:
         action.key_up(Keys.CONTROL)
         action.perform()
 
-    def send_text_in_browser(self, text):
+    def __send_text_in_browser(self, text):
         """ Type given text in active html element in browser
 
         :type text: str
@@ -260,7 +260,7 @@ class WordPress:
         actions.send_keys(text)
         actions.perform()
 
-    def send_text_exists_by_id(self, element_id, text, error=None, success=None, wait=False, key_wait=None):
+    def __send_text_exists_by_id(self, element_id, text, error=None, success=None, wait=False, key_wait=None):
         """ Type text in html element by id, if it exists
 
         :type element_id: str
@@ -304,7 +304,7 @@ class WordPress:
             self.success += "SUCCESS: " + success + "\r\n"
         return True
 
-    def send_text_exists_by_xpath(self, xpath, text, error=None, success=None, wait=False):
+    def __send_text_exists_by_xpath(self, xpath, text, error=None, success=None, wait=False):
         """ Type text in html element by xpath, if it exists
 
         :type xpath: str
@@ -340,7 +340,7 @@ class WordPress:
             self.success += "SUCCESS: " + success + "\r\n"
         return True
 
-    def click_exists_by_xpath(self, xpath, error=None, success=None, wait=False):
+    def __click_exists_by_xpath(self, xpath, error=None, success=None, wait=False):
         """ Click html element by xpath, if it exists
 
         :type xpath: str
@@ -384,7 +384,7 @@ class WordPress:
             self.success += "SUCCESS: " + success + "\r\n"
         return True
 
-    def click_exists_by_xpath_elements(self, xpath, wait=False):
+    def __click_exists_by_xpath_elements(self, xpath, wait=False):
         """ Click html elements by xpath, if they exist
 
         :type xpath: str
@@ -478,9 +478,9 @@ class WordPress:
         if not self.__check_exists_by_xpath(xpath_u):
             # Expand Heading Settings
             err = 'Unable to expand Permalink'
-            self.click_exists_by_xpath('//button[@type="button" and text()="Permalink"]', err, wait=True)
+            self.__click_exists_by_xpath('//button[@type="button" and text()="Permalink"]', err, wait=True)
         err = "Unable to type post url"
-        self.send_text_exists_by_xpath(xpath_u, url, err, wait=True)
+        self.__send_text_exists_by_xpath(xpath_u, url, err, wait=True)
 
     def __post_content_use_default_editor(self, xpath='//button[text()="Use Default Editor"]'):
         """ If the WordPress site has an active theme with page builder or a page builder plugin installed,
@@ -496,7 +496,7 @@ class WordPress:
         """
 
         err = 'Unable to use default editor'
-        self.click_exists_by_xpath(xpath, err)
+        self.__click_exists_by_xpath(xpath, err)
         sleep(self.sleep_time)
 
     def post_content_block_setting_open(self):
@@ -510,7 +510,7 @@ class WordPress:
 
         xpath = '//button[@type="button" and @aria-label="Block"]'
         err = "Unable to open Block setting"
-        self.click_exists_by_xpath(xpath, err, wait=True)
+        self.__click_exists_by_xpath(xpath, err, wait=True)
 
     def post_content_block_add(self, block_name):
         """ Add a block in the editor
@@ -551,11 +551,11 @@ class WordPress:
         err = 'Unable to add block :' + block_name
         cmp = block_name + ' Added'
         check_add = '//button[@type="button" and @aria-label="Add block"]'
-        if self.click_exists_by_xpath(check_add, err):
+        if self.__click_exists_by_xpath(check_add, err):
             check_add = '//input[@type="search" and @placeholder="Search for a block"]'
-            if self.send_text_exists_by_xpath(check_add, block_name, wait=True):
+            if self.__send_text_exists_by_xpath(check_add, block_name, wait=True):
                 check_add = '//span[text()="' + blocks[block_name] + '"]/parent::button'
-                if self.click_exists_by_xpath(check_add, err, cmp, True):
+                if self.__click_exists_by_xpath(check_add, err, cmp, True):
                     return True
 
     # Block edit as html
@@ -577,9 +577,9 @@ class WordPress:
                 # Open General Settings Menu
                 xpath_e = '//button[@type="button" and @aria-label="More options"]'
                 err = "Unable to open General Settings Menu"
-                self.click_exists_by_xpath(xpath_e, err, wait=True)
+                self.__click_exists_by_xpath(xpath_e, err, wait=True)
             err = "Unable to click Edit as html"
-            self.click_exists_by_xpath(xpath_a, err, wait=True)
+            self.__click_exists_by_xpath(xpath_a, err, wait=True)
 
     # Heading Block Setting
     def post_content_block_setting_heading(self, style):
@@ -608,11 +608,11 @@ class WordPress:
             if not self.__check_exists_by_xpath(check_h):
                 # Expand Heading Settings
                 err = 'Unable to expand Heading Settings'
-                self.click_exists_by_xpath('//button[@type="button" and text()="Heading Settings"]', err)
+                self.__click_exists_by_xpath('//button[@type="button" and text()="Heading Settings"]', err)
                 sleep(self.sleep_time)
 
             err = 'Invalid Heading style: [' + style + ']'
-            self.click_exists_by_xpath(check_h, err)
+            self.__click_exists_by_xpath(check_h, err)
 
     # Text Block Setting
     def post_content_block_setting_text(self, size=None, custom_size=None, drop_cap=False):
@@ -642,11 +642,11 @@ class WordPress:
         xpath_text = '//label[text()="Custom"]/following-sibling::input[@type="number"]'
         if not self.__check_exists_by_xpath(xpath_text):
             # Expand Text Settings
-            self.click_exists_by_xpath('//button[text()="Text Settings" and @type="button"]')
+            self.__click_exists_by_xpath('//button[text()="Text Settings" and @type="button"]')
             sleep(self.sleep_time)
 
         if custom_size:
-            self.send_text_exists_by_xpath(xpath_text, custom_size)
+            self.__send_text_exists_by_xpath(xpath_text, custom_size)
 
         if size:
             size_list = {
@@ -659,7 +659,7 @@ class WordPress:
             }
             if size.lower() in size_list:
                 err = 'Unable to choose text size: ' + size
-                self.send_text_exists_by_xpath(xpath_text, size_list[size], err)
+                self.__send_text_exists_by_xpath(xpath_text, size_list[size], err)
                 sleep(self.sleep_time)
             else:
                 self.__set_error('Invalid text size: ' + size)
@@ -667,7 +667,7 @@ class WordPress:
         if drop_cap:
             xpath_text = '//p[text()="Toggle to show a large initial letter."]/preceding-sibling::div//input[@type="checkbox"]'
             err = 'Unable to use Drop Cap'
-            self.click_exists_by_xpath(xpath_text, err)
+            self.__click_exists_by_xpath(xpath_text, err)
 
     # Text Block Setting
     def post_content_block_setting_text_align(self, align="left"):
@@ -689,15 +689,15 @@ class WordPress:
             'right'
         ]
         if align.lower() in list_align:
-            self.click_exists_by_xpath('//span[text()="Color settings"]/parent::button[@type="button"]', wait=True)
+            self.__click_exists_by_xpath('//span[text()="Color settings"]/parent::button[@type="button"]', wait=True)
             xpath_a = '//button[@type="button" and text()="Align text ' + align.lower() + '"]'
             if not self.__check_exists_by_xpath(xpath_a):
                 # Open Align Menu
                 xpath_e = '//button[@type="button" and @aria-label="Change text alignment"]'
                 err = "Unable to open Text Align Menu"
-                self.click_exists_by_xpath(xpath_e, err, wait=True)
+                self.__click_exists_by_xpath(xpath_e, err, wait=True)
             err = "Unable to align text " + align
-            self.click_exists_by_xpath(xpath_a, err, wait=True)
+            self.__click_exists_by_xpath(xpath_a, err, wait=True)
         else:
             self.__set_error("Invalid text alignment")
 
@@ -720,26 +720,26 @@ class WordPress:
         if not self.__check_exists_by_xpath(xpath_color):
             # Expand Color Settings
             err = "Unable to expand Color Settings"
-            self.click_exists_by_xpath('//span[text()="Color settings"]/parent::button[@type="button"]', err, wait=True)
+            self.__click_exists_by_xpath('//span[text()="Color settings"]/parent::button[@type="button"]', err, wait=True)
 
         if text_color:
             err = "Unable to set text color"
-            if self.click_exists_by_xpath(xpath_color, err):
+            if self.__click_exists_by_xpath(xpath_color, err):
                 xpath_color = '//label[text()="Color value in hexadecimal"]/following-sibling::input[@type="text"]'
                 sleep(self.sleep_time)
-                self.send_backspace_by_xpath(xpath_color, 8)
+                self.__send_backspace_by_xpath(xpath_color, 8)
                 err = "Unable to type text color"
-                self.send_text_exists_by_xpath(xpath_color, text_color, err)
+                self.__send_text_exists_by_xpath(xpath_color, text_color, err)
 
         if bg_color:
             xpath_color = '(//button[@type="button" and @aria-label="Custom color picker" and text()="Custom color"])[2]'
             err = "Unable to set background color"
-            if self.click_exists_by_xpath(xpath_color, err):
+            if self.__click_exists_by_xpath(xpath_color, err):
                 xpath_color = '//label[text()="Color value in hexadecimal"]/following-sibling::input[@type="text"]'
                 sleep(self.sleep_time)
-                self.send_backspace_by_xpath(xpath_color, 8)
+                self.__send_backspace_by_xpath(xpath_color, 8)
                 err = "Unable to type background color"
-                self.send_text_exists_by_xpath(xpath_color, bg_color, err)
+                self.__send_text_exists_by_xpath(xpath_color, bg_color, err)
 
     # Image Block Setting
     def post_content_block_setting_image_border(self, round_shape=False):
@@ -758,14 +758,14 @@ class WordPress:
         if not self.__check_exists_by_xpath(xpath_s):
             # Expand Styles Settings
             err = "Unable to expand Styles Settings"
-            self.click_exists_by_xpath('//button[text()="Styles" and @type="button"]', err, wait=True)
+            self.__click_exists_by_xpath('//button[text()="Styles" and @type="button"]', err, wait=True)
         if not round_shape:
             err = "Unable to set Default Style"
-            self.click_exists_by_xpath(xpath_s, err, wait=True)
+            self.__click_exists_by_xpath(xpath_s, err, wait=True)
         else:
             xpath_s = '//div[@role="button" and @aria-label="Rounded"]'
             err = "Unable to set Round Style"
-            self.click_exists_by_xpath(xpath_s, err, wait=True)
+            self.__click_exists_by_xpath(xpath_s, err, wait=True)
 
     # Image Block Setting
     def post_content_block_setting_image(self, alt_text=None, size=None, width=None, height=None, percentage=None):
@@ -791,11 +791,11 @@ class WordPress:
         if not self.__check_exists_by_xpath(xpath_s):
             # Expand Styles Settings
             err = "Unable to expand Image Settings"
-            self.click_exists_by_xpath('//button[text()="Image settings" and @type="button"]', err, wait=True)
+            self.__click_exists_by_xpath('//button[text()="Image settings" and @type="button"]', err, wait=True)
 
         if alt_text:
             err = "Unable to type alt text"
-            self.send_text_exists_by_xpath(xpath_s, alt_text, err, wait=True)
+            self.__send_text_exists_by_xpath(xpath_s, alt_text, err, wait=True)
 
         if size:
             s_list = [
@@ -807,19 +807,19 @@ class WordPress:
             if size.lower() in s_list:
                 xpath_s = '//label[text()="Image size"]/following-sibling::select/option[@value="' + size.lower() + '"]'
                 err = "Unable to set size (option not available)"
-                self.click_exists_by_xpath(xpath_s, err, wait=True)
+                self.__click_exists_by_xpath(xpath_s, err, wait=True)
 
         if width:
             xpath_s = '//label[text()="Width"]/following-sibling::input[@type="number"]'
             err = "Unable to set width"
-            self.send_keys_select_all(xpath_s)
-            self.send_text_exists_by_xpath(xpath_s, width, err, wait=True)
+            self.__send_keys_select_all(xpath_s)
+            self.__send_text_exists_by_xpath(xpath_s, width, err, wait=True)
 
         if height:
             xpath_s = '//label[text()="Height"]/following-sibling::input[@type="number"]'
             err = "Unable to set height"
-            self.send_keys_select_all(xpath_s)
-            self.send_text_exists_by_xpath(xpath_s, height, err, wait=True)
+            self.__send_keys_select_all(xpath_s)
+            self.__send_text_exists_by_xpath(xpath_s, height, err, wait=True)
 
         if percentage:
             p_list = {
@@ -831,7 +831,7 @@ class WordPress:
             if percentage in p_list:
                 xpath_s = '//button[contains(text(), "' + str(percentage) + '")]'
                 err = "Unable to set Percentage [xpath]: " + xpath_s
-                self.click_exists_by_xpath(xpath_s, err, wait=True)
+                self.__click_exists_by_xpath(xpath_s, err, wait=True)
 
     # Image Block Setting
     def post_content_block_setting_image_align(self, align="left"):
@@ -858,9 +858,9 @@ class WordPress:
                 # Open Align Menu
                 xpath_e = '//button[@type="button" and @aria-label="Change alignment"]'
                 err = "Unable to open Align Menu"
-                self.click_exists_by_xpath(xpath_e, err, wait=True)
+                self.__click_exists_by_xpath(xpath_e, err, wait=True)
             err = "Unable to align image " + align
-            self.click_exists_by_xpath(xpath_a, err, wait=True)
+            self.__click_exists_by_xpath(xpath_a, err, wait=True)
         else:
             self.__set_error("Invalid image alignment")
 
@@ -882,14 +882,14 @@ class WordPress:
         if not self.__check_exists_by_xpath(xpath_o):
             # Expand Ordered list Settings
             err = "Unable to expand Styles Settings"
-            self.click_exists_by_xpath('//button[text()="Ordered list settings" and @type="button"]', err, wait=True)
+            self.__click_exists_by_xpath('//button[text()="Ordered list settings" and @type="button"]', err, wait=True)
         if start:
             err = "Unable to set Start value"
-            self.send_text_exists_by_xpath(xpath_o, start, err, wait=True)
+            self.__send_text_exists_by_xpath(xpath_o, start, err, wait=True)
         if reverse:
             xpath_o = '//label[text()="Reverse list numbering"]'
             err = 'Unable to reverse list order'
-            self.click_exists_by_xpath(xpath_o, err, wait=True)
+            self.__click_exists_by_xpath(xpath_o, err, wait=True)
 
     def post_content_block_heading(self, heading, style='default', align='left', text_color=None):
         """ Add heading block and customize it.
@@ -914,7 +914,7 @@ class WordPress:
         """
 
         if self.post_content_block_add('heading'):
-            self.send_text_in_browser(heading)
+            self.__send_text_in_browser(heading)
             if align != "left":
                 self.post_content_block_setting_text_align(align)
             if style != 'default':
@@ -953,7 +953,7 @@ class WordPress:
         """
 
         if self.post_content_block_add('paragraph'):
-            self.send_text_in_browser(paragraph)
+            self.__send_text_in_browser(paragraph)
             if align != "left":
                 self.post_content_block_setting_text_align(align)
 
@@ -1007,16 +1007,16 @@ class WordPress:
         if self.post_content_block_add('image'):
             if image_name:
                 err = "Unable to click Media Library Button"
-                if self.click_exists_by_xpath('//button[text()="Media Library"]', err, wait=True):
+                if self.__click_exists_by_xpath('//button[text()="Media Library"]', err, wait=True):
                     if self.__media_search_and_select(image_name) is True:
                         check = True
 
             if image_url:
                 err = "Unable to click Insert from URL Button"
-                if self.click_exists_by_xpath('//button[text()="Insert from URL"]', err, wait=True):
-                    self.send_text_in_browser(image_url)
+                if self.__click_exists_by_xpath('//button[text()="Insert from URL"]', err, wait=True):
+                    self.__send_text_in_browser(image_url)
                     err = "Unable to click Apply Button"
-                    if self.click_exists_by_xpath('//button[@type="submit" and @aria-label="Apply"]', err, wait=True):
+                    if self.__click_exists_by_xpath('//button[@type="submit" and @aria-label="Apply"]', err, wait=True):
                         size = None
                         check = True
 
@@ -1027,7 +1027,7 @@ class WordPress:
                 if caption:
                     xpath = '//figcaption[@role="textbox" and text()=""]'
                     err = "Unable to type caption"
-                    if self.send_text_exists_by_xpath(xpath, caption, err, wait=True):
+                    if self.__send_text_exists_by_xpath(xpath, caption, err, wait=True):
                         if not percentage and not width and not height:
                             percentage = 100
 
@@ -1066,7 +1066,7 @@ class WordPress:
             if ordered:
                 err = "Unable to Order list"
                 xpath = '//button[@type="button" and @aria-label="Convert to ordered list"]'
-                self.click_exists_by_xpath(xpath, err, wait=True)
+                self.__click_exists_by_xpath(xpath, err, wait=True)
 
             list_text = list_text.split(separator)
             del list_text[len(list_text) - 1]
@@ -1074,10 +1074,10 @@ class WordPress:
                 if list_text[i]:
                     if list_text[i][0] == " ":
                         list_text[i] = list_text[i].replace(" ", "", 1)
-                self.send_text_in_browser(list_text[i] + separator)
+                self.__send_text_in_browser(list_text[i] + separator)
                 if i == len(list_text) - 1:
                     break
-                self.send_text_in_browser(Keys.RETURN)
+                self.__send_text_in_browser(Keys.RETURN)
 
             if ordered and (start or reverse):
                 self.post_content_block_setting_ordered_list(start, reverse)
@@ -1095,7 +1095,7 @@ class WordPress:
         """
 
         self.post_content_block_add('html')
-        self.send_text_in_browser(html)
+        self.__send_text_in_browser(html)
 
     def post_content_from_file(self, file_path='', typing_effect=False):
         """ Add a block using docx or html file.
@@ -1129,9 +1129,9 @@ class WordPress:
             if not typing_effect:
                 pyperclip.copy(html)
                 sleep(self.sleep_time)
-                self.paste_in_browser()
+                self.__paste_in_browser()
             else:
-                self.send_text_in_browser(html)
+                self.__send_text_in_browser(html)
         else:
             self.__set_error("Invalid File Type")
 
@@ -1150,7 +1150,7 @@ class WordPress:
 
         xpath = '//button[@type="button" and @aria-label="Document"]'
         err = "Unable to open Document setting"
-        self.click_exists_by_xpath(xpath, err, wait=True)
+        self.__click_exists_by_xpath(xpath, err, wait=True)
 
     def post_status(self, visibility='public', password=None, stick_top=False, pending_review=False):
         """ Configure Post Status Settings
@@ -1189,37 +1189,37 @@ class WordPress:
         if stick_top:
             element_discus = '//label[text()="Stick to the top of the blog"]/preceding-sibling::span/input[@type="checkbox"]'
             err = 'Unable to interact with Stick on Top of the blog(Status & Visibility)!'
-            self.click_exists_by_xpath(element_discus, err)
+            self.__click_exists_by_xpath(element_discus, err)
 
         # Check pending review
         if pending_review:
             element_discus = '//label[text()="Pending review"]/preceding-sibling::span/input[@type="checkbox"]'
             err = 'Unable to interact with Pending Review(Status & Visibility)!'
-            self.click_exists_by_xpath(element_discus, err)
+            self.__click_exists_by_xpath(element_discus, err)
 
         if visibility:
             check = True
             err = 'Unable to interact with Visibility(Status & Visibility)!'
-            if not self.click_exists_by_xpath('//button[text()="Public"]'):
-                if not self.click_exists_by_xpath('//button[text()="Private"]'):
-                    check = self.click_exists_by_xpath('//button[text()="Password Protected"]', err)
+            if not self.__click_exists_by_xpath('//button[text()="Public"]'):
+                if not self.__click_exists_by_xpath('//button[text()="Private"]'):
+                    check = self.__click_exists_by_xpath('//button[text()="Password Protected"]', err)
 
             if check:
                 sleep(self.sleep_time)
                 if visibility.lower() == 'public':
-                    self.click_exists_by_xpath('//input[@type="radio" and @value="public"]')
+                    self.__click_exists_by_xpath('//input[@type="radio" and @value="public"]')
                 elif visibility.lower() == 'private':
-                    self.click_exists_by_xpath('//input[@type="radio" and @value="private"]')
+                    self.__click_exists_by_xpath('//input[@type="radio" and @value="private"]')
                     sleep(self.sleep_time)
                     alert_obj = self.browser.switch_to.alert
                     alert_obj.accept()
                     self.browser.switch_to.default_content()
                     sleep(self.sleep_time)
                 elif password and visibility.lower() == 'password':
-                    self.click_exists_by_xpath('//input[@type="radio" and @value="password"]')
+                    self.__click_exists_by_xpath('//input[@type="radio" and @value="password"]')
                     xpath_pass = '//input[@type="text" and @placeholder="Use a secure password"]'
                     err = 'Unable to type password(Status & Visibility)!'
-                    self.send_text_exists_by_xpath(xpath_pass, password, err)
+                    self.__send_text_exists_by_xpath(xpath_pass, password, err)
                     sleep(self.sleep_time)
 
     # After post published
@@ -1240,7 +1240,7 @@ class WordPress:
         if formatting.lower() in format_list:
             xpath_ = '//label[text()="Post Format"]/following-sibling::div//select/option[@value="' + formatting + '"]'
             err = "Unable to select post format"
-            self.click_exists_by_xpath(xpath_, err, wait=True)
+            self.__click_exists_by_xpath(xpath_, err, wait=True)
 
     def post_category(self, category):
         """ Choose category if category name exists otherwise create new category.
@@ -1255,7 +1255,7 @@ class WordPress:
         """
 
         err = 'Unable to expand Categories Panel(Categories)!'
-        if self.click_exists_by_xpath('//button[text()="Categories"]', err):
+        if self.__click_exists_by_xpath('//button[text()="Categories"]', err):
             # Expand Categories
             sleep(self.sleep_time)
 
@@ -1263,18 +1263,18 @@ class WordPress:
         if not self.__check_exists_by_xpath(check_cat):
             # Add if category does not exist
             err = "Unable to click Add New Category 1"
-            self.click_exists_by_xpath('//button[text()="Add New Category"]', err)
+            self.__click_exists_by_xpath('//button[text()="Add New Category"]', err)
 
             err = "Unable to type Category name"
-            self.send_text_exists_by_xpath("//*[@id='editor-post-taxonomies__hierarchical-terms-input-0']", category,
-                                           err)
+            self.__send_text_exists_by_xpath("//*[@id='editor-post-taxonomies__hierarchical-terms-input-0']", category,
+                                             err)
 
             err = "Unable to click Add New Category 2"
-            self.click_exists_by_xpath('//button[@type="submit" and text()="Add New Category"]', err)
+            self.__click_exists_by_xpath('//button[@type="submit" and text()="Add New Category"]', err)
         else:
             # Select category
             err = "Unable to Select category"
-            self.click_exists_by_xpath(check_cat, err)
+            self.__click_exists_by_xpath(check_cat, err)
 
     def post_tag(self, tag):
         """ Choose tag if tag name exists otherwise create new tag.
@@ -1291,7 +1291,7 @@ class WordPress:
         if not self.__check_exists_by_xpath(check_tag):
             # Expand Tags
             err = "Unable to Expand Tags"
-            self.click_exists_by_xpath('//button[text()="Tags"]', err, wait=True)
+            self.__click_exists_by_xpath('//button[text()="Tags"]', err, wait=True)
 
         # Add Tag
         tag_input = self.browser.find_element_by_xpath(check_tag)
@@ -1307,32 +1307,32 @@ class WordPress:
         """
 
         err = "Unable to type image name"
-        self.send_keys_select_all(None, 'media-search-input')
-        self.send_text_exists_by_id('media-search-input', image_name, err, wait=True)
+        self.__send_keys_select_all(None, 'media-search-input')
+        self.__send_text_exists_by_id('media-search-input', image_name, err, wait=True)
 
         sleep(self.sleep_time)
         err = "No image found"
-        if not self.click_exists_by_xpath('(//li[@role="checkbox"])[1]', err):
+        if not self.__click_exists_by_xpath('(//li[@role="checkbox"])[1]', err):
             # xpath = '(//span[contains(@class, "media-modal-icon")]/parent::button[contains(@class, "media-modal-close")])[3]'
             xpath = '//span[contains(@class, "media-modal-icon")]/parent::button[contains(@class, "media-modal-close")]'
             err = "Unable to close Media Library"
-            self.click_exists_by_xpath_elements(xpath, True)
+            self.__click_exists_by_xpath_elements(xpath, True)
             err = "Unable to click Media Library Button Again"
-            if self.click_exists_by_xpath('//button[text()="Media Library"]', err, wait=True):
-                if not self.click_exists_by_xpath('(//li[@role="checkbox"])[1]', err):
+            if self.__click_exists_by_xpath('//button[text()="Media Library"]', err, wait=True):
+                if not self.__click_exists_by_xpath('(//li[@role="checkbox"])[1]', err):
                     xpath = '(//span[contains(@class, "media-modal-icon")]/parent::button[contains(@class, "media-modal-close")])[3]'
                     xpath = '//span[contains(@class, "media-modal-icon")]/parent::button[contains(@class, "media-modal-close")]'
                     err = "Unable to close Media Library"
-                    self.click_exists_by_xpath_elements(xpath, True)
+                    self.__click_exists_by_xpath_elements(xpath, True)
                 else:
                     err = "Unable to finish image selection"
-                    if self.click_exists_by_xpath(
+                    if self.__click_exists_by_xpath(
                             '//button[contains(@class, "media-button-select") and text()="' + image_type + '"]', err):
                         return True
 
         else:
             err = "Unable to finish image selection"
-            if self.click_exists_by_xpath(
+            if self.__click_exists_by_xpath(
                     '//button[contains(@class, "media-button-select") and text()="' + image_type + '"]', err):
                 return True
 
@@ -1352,10 +1352,10 @@ class WordPress:
         if not self.__check_exists_by_xpath(featured_img):
             # Expand Featured Image
             err = "Unable to Expand Featured Image"
-            self.click_exists_by_xpath('//button[text()="Featured image"]', err)
+            self.__click_exists_by_xpath('//button[text()="Featured image"]', err)
 
         err = "Unable to click Set featured image"
-        self.click_exists_by_xpath('//button[text()="Set featured image"]', err, wait=True)
+        self.__click_exists_by_xpath('//button[text()="Set featured image"]', err, wait=True)
         self.__media_search_and_select(image_name, "Set featured image")
 
     def post_excerpt(self, excerpt):
@@ -1374,7 +1374,7 @@ class WordPress:
         if not self.__check_exists_by_xpath(check_excerpt):
             # Expand Excerpt
             err = "Unable to Expand Excerpt Setting"
-            self.click_exists_by_xpath('//button[text()="Excerpt"]', err, wait=True)
+            self.__click_exists_by_xpath('//button[text()="Excerpt"]', err, wait=True)
 
         # Add Excerpt
         self.browser.find_element_by_xpath(check_excerpt).send_keys(excerpt)
@@ -1397,17 +1397,17 @@ class WordPress:
         if not self.__check_exists_by_xpath(element_discus):
             # Expand Discussion
             err = "Unable to Expand Discussion"
-            self.click_exists_by_xpath('//button[text()="Discussion"]', err)
+            self.__click_exists_by_xpath('//button[text()="Discussion"]', err)
 
         # Uncheck comments
         if not comments:
             err = "Unable to Disable comments"
-            self.click_exists_by_xpath(element_discus, err)
+            self.__click_exists_by_xpath(element_discus, err)
         # Uncheck traceback
         if not traceback:
             element_discus = '//label[text()="Allow pingbacks & trackbacks"]'
             err = "Unable to Disable pingbacks & trackbacks"
-            self.click_exists_by_xpath(element_discus, err)
+            self.__click_exists_by_xpath(element_discus, err)
 
     def post_save_draft(self):
         """ Save Post as Draft.
@@ -1425,11 +1425,11 @@ class WordPress:
         if not self.__check_exists_by_xpath(xpath_save):
             xpath_save = '//button[text()="Save as Pending"]'
             err = "Unable to click Save as Pending Button"
-            self.click_exists_by_xpath(xpath_save, err, wait=True)
+            self.__click_exists_by_xpath(xpath_save, err, wait=True)
             sleep(self.sleep_time)
         else:
             err = "Unable to click Save Draft Button"
-            if self.click_exists_by_xpath(xpath_save, err, wait=True):
+            if self.__click_exists_by_xpath(xpath_save, err, wait=True):
                 sleep(self.sleep_time)
 
     def post_switch_to_draft(self):
@@ -1443,7 +1443,7 @@ class WordPress:
         xpath_d = '//button[text()="Switch to draft"]'
         err = "Unable to click Switch to Draft Button"
         sleep(self.sleep_time)
-        if self.click_exists_by_xpath(xpath_d, err, wait=True):
+        if self.__click_exists_by_xpath(xpath_d, err, wait=True):
             alert_obj = self.browser.switch_to.alert
             alert_obj.accept()
             self.browser.switch_to.default_content()
@@ -1463,13 +1463,13 @@ class WordPress:
             sleep(self.sleep_time)
         xpath_p = '//button[text()="Publish…"]'
         err = "Unable to click Publish… Button (1)"
-        if self.click_exists_by_xpath(xpath_p, err, wait=True):
+        if self.__click_exists_by_xpath(xpath_p, err, wait=True):
             xpath_p = '//button[text()="Publish"]'
             err = "Unable to click Publish Button (2)"
-            if self.click_exists_by_xpath(xpath_p, err, wait=True):
+            if self.__click_exists_by_xpath(xpath_p, err, wait=True):
                 err = "Unable to close panel after Publish"
                 xpath_p = '//button[@aria-label="Close panel" and @type="button"]'
-                self.click_exists_by_xpath(xpath_p, err, wait=True)
+                self.__click_exists_by_xpath(xpath_p, err, wait=True)
 
     def post_update(self):
         """ Update Post.
@@ -1482,7 +1482,7 @@ class WordPress:
 
         xpath_u = '//button[text()="Update"]'
         err = "Unable to click Update Button"
-        if self.click_exists_by_xpath(xpath_u, err, wait=True):
+        if self.__click_exists_by_xpath(xpath_u, err, wait=True):
             sleep(self.sleep_time)
 
     @staticmethod
@@ -1569,7 +1569,7 @@ class WordPress:
         xpath = '//button[@type="button" and @aria-label="Close dialog"]'
         if self.__check_exists_by_xpath(xpath):
             err = "Unable to close tutorial pop up"
-            self.click_exists_by_xpath(xpath, err)
+            self.__click_exists_by_xpath(xpath, err)
 
         self.__post_content_use_default_editor()
 

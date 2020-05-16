@@ -5,7 +5,6 @@ Automate WordPress Block Editor. Blocks that can be used are: Heading, Paragraph
 Each block can be customized.
 Add post using docx file or html file.
 
-
 **Note:** Tested on WordPress version 5.4
 
 ## [Documentation](https://github.com/UmerMuxhal/automate-wordpress-post/wiki)
