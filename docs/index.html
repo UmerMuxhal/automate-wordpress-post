@@ -1,0 +1,4176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.8.1" />
+<title>WordPress Doc</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>wordpress</code></h1>
+</header>
+<section>
+<h2 class="section-title" id="header-classes">Class</h2>
+<dl>
+<dt id="wordpress.WordPress"><code class="flex name class">
+<span>class <span class="ident">WordPress</span></span>
+<span>(</span><span>site_url, login_url, chrome_driver_path, sleep_time=2, user_agent=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This class opens a chrome window and use it for automating post on a WordPress site.
+Automate WordPress Block Editor. Blocks that can be used are: Heading, Paragraph, Image, List and Custom HTML.
+Each block can be customized.
+Add post using docx file or html file.</p>
+<p>Constructor. Creates a new instance of chrome for a WordPress site</p>
+<p>:type site_url: str</p>
+<p>:type login_url: str</p>
+<p>:type chrome_driver_path: str</p>
+<p>:type sleep_time: int</p>
+<p>:type user_agent: bool</p>
+<p>:param site_url: Home address of WordPress site.</p>
+<p>:param login_url: Login address of WordPress site.</p>
+<p>:param chrome_driver_path: Path of chrome webdriver for selenium</p>
+<p>:param sleep_time: Wait time (seconds) between execution of different tasks (default is 2)</p>
+<p>:param user_agent: Use random User-Agent for chrome (default is False)</p>
+<h2 id="example">Example</h2>
+<p>wp = WordPress('mysite.com', 'mysite.com/wp-admin', 'path-to-chromedriver', 3, True)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class WordPress:
+    &#34;&#34;&#34; This class opens a chrome window and use it for automating post on a WordPress site.
+    Automate WordPress Block Editor. Blocks that can be used are: Heading, Paragraph, Image, List and Custom HTML.
+    Each block can be customized.
+    Add post using docx file or html file.
+
+    &#34;&#34;&#34;
+
+    success = &#39;&#39;
+    error = &#39;&#39;
+    messages = &#39;&#39;
+    sleep_time_page_load = 5
+
+    def __init__(self, site_url, login_url, chrome_driver_path, sleep_time=2, user_agent=False):
+        &#34;&#34;&#34; Constructor. Creates a new instance of chrome for a WordPress site
+
+        :type site_url: str
+
+        :type login_url: str
+
+        :type chrome_driver_path: str
+
+        :type sleep_time: int
+
+        :type user_agent: bool
+
+        :param site_url: Home address of WordPress site.
+
+        :param login_url: Login address of WordPress site.
+
+        :param chrome_driver_path: Path of chrome webdriver for selenium
+
+        :param sleep_time: Wait time (seconds) between execution of different tasks (default is 2)
+
+        :param user_agent: Use random User-Agent for chrome (default is False)
+
+        Example
+        ----
+        wp = WordPress(&#39;mysite.com&#39;, &#39;mysite.com/wp-admin&#39;, &#39;path-to-chromedriver&#39;, 3, True)
+        &#34;&#34;&#34;
+
+        self.site_url = site_url
+        self.login_url = login_url
+        self.chrome_options = Options()
+        self.chrome_driver_path = chrome_driver_path
+        if user_agent:
+            self.user_agent = self.__user_agent_generator()
+            self.chrome_options.add_argument(f&#39;user-agent={self.user_agent}&#39;)
+        self.browser = webdriver.Chrome(executable_path=chrome_driver_path, chrome_options=self.chrome_options)
+        self.sleep_time = sleep_time
+
+    def chrome_options_edit(self, window_size=None, gpu=False, user_agent=True, info_bars=False, extensions=False,
+                            notification=False):
+        if window_size:
+            self.chrome_options.add_argument(f&#39;--window-size={window_size[0]},{window_size[1]}&#39;)
+        if not gpu:
+            self.chrome_options.add_argument(&#39;--disable-gpu&#39;)
+        if user_agent:
+            self.__user_agent_generator()
+            self.chrome_options.add_argument(f&#39;user-agent={self.user_agent}&#39;)
+        if not info_bars:
+            self.chrome_options.add_argument(&#34;--disable-infobars&#34;)
+        if not extensions:
+            self.chrome_options.add_argument(&#34;--disable-extensions&#34;)
+        if not notification:
+            self.chrome_options.add_experimental_option(&#34;prefs&#34;, {
+                &#34;profile.default_content_setting_values.notifications&#34;: 2
+            })
+        self.browser = webdriver.Chrome(chrome_options=self.chrome_options)
+
+    def __user_agent_generator(self):
+        software_names = [SoftwareName.CHROME.value]
+        operating_systems = [OperatingSystem.WINDOWS.value, OperatingSystem.LINUX.value]
+        user_agent_rotate = UserAgent(software_names=software_names, operating_systems=operating_systems, limit=100)
+        return user_agent_rotate.get_random_user_agent()
+
+    def maximize_window(self):
+        &#34;&#34;&#34; Maximize Chrome window.
+
+        Example
+        ----
+        wp.maximize_window()
+        &#34;&#34;&#34;
+
+        self.browser.maximize_window()
+
+    def close(self):
+        &#34;&#34;&#34; Close Chrome window.
+
+        Example
+        ----
+        wp.close()
+        &#34;&#34;&#34;
+
+        self.browser.close()
+
+    def __set_error(self, error):
+        self.error += &#34;ERROR: &#34; + error + &#34;\r\n&#34;
+
+    @property
+    def get_errors(self):
+        &#34;&#34;&#34; Returns a string with failed tasks
+
+        :rtype: str
+
+        Example
+        ----
+        wp.get_errors()
+        &#34;&#34;&#34;
+
+        return &#34;Errors: \n&#34; + self.error
+
+    @property
+    def get_completed(self):
+        &#34;&#34;&#34; Returns a string with completed tasks
+
+        :rtype: str
+
+        Example
+        ----
+        wp.get_completed()
+        &#34;&#34;&#34;
+
+        return &#34;Completed Tasks: \n&#34; + self.success
+
+    def __check_exists_by_id(self, element_id):
+        &#34;&#34;&#34; Check if an element exists on page for the given html id
+
+        :type element_id: str
+
+        :rtype: bool
+
+        :param element_id: id attribute of html element
+
+        :returns: True if an element exists on page for the given html id, else False
+
+        Example
+        ----
+        wp.check_exists_by_id(&#39;username&#39;)
+        &#34;&#34;&#34;
+
+        try:
+            self.browser.find_element_by_id(element_id)
+        except NoSuchElementException:
+            return False
+        return True
+
+    def __check_exists_by_xpath(self, xpath):
+        &#34;&#34;&#34; Check if an element exists on page for the given html xpath
+
+        :type xpath: str
+
+        :rtype: bool
+
+        :param xpath: xpath of html element
+
+        :returns: True if an element exists on page for the given html xpath, else False
+
+        Example
+        ----
+        wp.check_exists_by_xpath(&#39;//input[@name=&#34;user&#34;]&#39;)
+        &#34;&#34;&#34;
+
+        try:
+            self.browser.find_element_by_xpath(xpath)
+        except NoSuchElementException:
+            return False
+        return True
+
+    def send_keys_select_all(self, xpath=None, element_id=None, wait=False):
+        &#34;&#34;&#34; Send key combination Ctrl+A to select all text in html element either by xpath or id
+
+        :type xpath: str or None
+
+        :type element_id: str
+
+        :type wait: bool
+
+        :param xpath: xpath of html element
+
+        :param element_id: id attribute of html element
+
+        :param wait: After sending keys, wait for time(if sleep_time set in constructor else 2 seconds)
+
+        Example
+        ----
+        # Send keys by html xpath
+
+        wp.send_keys_select_all(&#39;//input[@name=&#34;user&#34;]&#39;)
+
+        # Send keys by html id attribute
+
+        wp.send_keys_select_all(None,&#39;username&#39;)
+
+        # Wait after sending keys
+
+        wp.send_keys_select_all(&#39;//input[@name=&#34;user&#34;]&#39;, None, True)
+
+        &#34;&#34;&#34;
+
+        try:
+            if xpath:
+                self.send_text_exists_by_xpath(xpath, Keys.CONTROL + &#34;a&#34;)
+            elif element_id:
+                self.send_text_exists_by_id(element_id, Keys.CONTROL + &#34;a&#34;)
+            if wait:
+                sleep(self.sleep_time)
+        except selenium_exception.NoSuchElementException:
+            if xpath:
+                self.error += &#34;ERROR: Xpath: &#34; + xpath + &#34; [Element Not Found]\r\n&#34;
+            else:
+                self.error += &#34;ERROR: Id: &#34; + element_id + &#34; [Element Not Found]\r\n&#34;
+
+    def send_backspace_by_xpath(self, xpath, times, wait=False):
+        &#34;&#34;&#34; Send backspace key for given number of times in html element by xpath
+
+        :type xpath: str
+
+        :type times: int
+
+        :type wait: bool
+
+        :param xpath: xpath of html element
+
+        :param times: number of times backspace should be sent
+
+        :param wait: After sending key/s, wait for time(if sleep_time set in constructor else 2 seconds)
+
+        Example
+        ----
+        # Send backspace 10 times in html element by xpath and wait
+
+        wp.send_backspace_by_xpath(&#39;//input[@name=&#34;user&#34;]&#39;, 10, True)
+
+        &#34;&#34;&#34;
+
+        try:
+            for i in range(0, times):
+                self.send_text_exists_by_xpath(xpath, Keys.BACK_SPACE)
+            if wait:
+                sleep(self.sleep_time)
+        except selenium_exception.NoSuchElementException:
+            self.error += &#34;ERROR: Xpath: &#34; + xpath + &#34; [Element Not Found]\r\n&#34;
+
+    def paste_in_browser(self):
+        &#34;&#34;&#34; Paste content from clipboard in active html element in browser
+
+        Example
+        ----
+        wp.paste_in_browser()
+
+        &#34;&#34;&#34;
+
+        action = ActionChains(self.browser)
+        action.key_down(Keys.CONTROL)
+        action.send_keys(&#39;v&#39;)
+        action.key_up(Keys.CONTROL)
+        action.perform()
+
+    def send_text_in_browser(self, text):
+        &#34;&#34;&#34; Type given text in active html element in browser
+
+        :type text: str
+
+        :param text: Text to be typed
+
+        Example
+        ----
+        wp.send_text_in_browser(&#34;Hello World!&#34;)
+
+        &#34;&#34;&#34;
+
+        actions = ActionChains(self.browser)
+        actions.send_keys(text)
+        actions.perform()
+
+    def send_text_exists_by_id(self, element_id, text, error=None, success=None, wait=False, key_wait=None):
+        &#34;&#34;&#34; Type text in html element by id, if it exists
+
+        :type element_id: str
+
+        :type text: str
+
+        :type error: str
+
+        :type success: str
+
+        :type wait: bool
+
+        :type key_wait: int
+
+        :param element_id: id attribute of html element
+
+        :param text: text to be typed
+
+        :param error: error note in case of failure (Optional)
+
+        :param success: success note in case of completion (Optional)
+
+        :param wait: After typing, wait for time(if sleep_time set in constructor else 2 seconds) (Optional)
+
+        :param key_wait: After each character, wait for time(in seconds) (Optional)
+
+        Example
+        ----
+        wp.send_text_exists_by_id(&#39;username&#39;, &#39;Admin&#39;)
+
+        &#34;&#34;&#34;
+
+        try:
+            if not key_wait:
+                self.browser.find_element_by_id(element_id).send_keys(text)
+            else:
+                for i in range(0, len(text)):
+                    self.browser.find_element_by_id(element_id).send_keys(text[i])
+                    sleep(key_wait)
+
+            if wait:
+                sleep(self.sleep_time)
+        except selenium_exception.NoSuchElementException:
+            if error:
+                self.error += &#34;ERROR: &#34; + error + &#34; [Element Not Found]\r\n&#34;
+            return False
+        except selenium_exception.ElementNotInteractableException:
+            if error:
+                self.error += &#34;ERROR: &#34; + error + &#34; [Element Not Interactable]\r\n&#34;
+            return False
+        if success:
+            self.success += &#34;SUCCESS: &#34; + success + &#34;\r\n&#34;
+        return True
+
+    def send_text_exists_by_xpath(self, xpath, text, error=None, success=None, wait=False):
+        &#34;&#34;&#34; Type text in html element by xpath, if it exists
+
+        :type xpath: str
+
+        :type text: str or int
+
+        :type error: str
+
+        :type success: str
+
+        :type wait: bool
+
+        :param xpath: xpath of html element
+
+        :param text: text to be typed
+
+        :param error: error note in case of failure (Optional)
+
+        :param success: success note in case of completion (Optional)
+
+        :param wait: After typing, wait for time(if sleep_time set in constructor else 2 seconds) (Optional)
+
+        Example
+        ----
+        wp.send_text_exists_by_xpath(&#39;//input[@name=&#34;username&#34;]&#39;, &#39;Admin&#39;)
+
+        &#34;&#34;&#34;
+
+        try:
+            self.browser.find_element_by_xpath(xpath).send_keys(text)
+            if wait:
+                sleep(self.sleep_time)
+        except selenium_exception.NoSuchElementException:
+            if error:
+                self.error += &#34;ERROR: &#34; + error + &#34; [Element Not Found]\r\n&#34;
+            return False
+        except selenium_exception.ElementNotInteractableException:
+            if error:
+                self.error += &#34;ERROR: &#34; + error + &#34; [Element Not Interactable]\r\n&#34;
+            return False
+        if success:
+            self.success += &#34;SUCCESS: &#34; + success + &#34;\r\n&#34;
+        return True
+
+    def click_exists_by_xpath(self, xpath, error=None, success=None, wait=False):
+        &#34;&#34;&#34; Click html element by xpath, if it exists
+
+        :type xpath: str
+
+        :type error: str
+
+        :type success: str
+
+        :type wait: bool
+
+        :param xpath: xpath of html element
+
+        :param error: error note in case of failure (Optional)
+
+        :param success: success note in case of completion (Optional)
+
+        :param wait: After click, wait for time(if sleep_time set in constructor else 2 seconds) (Optional)
+
+        Example
+        ----
+        wp.click_exists_by_xpath(&#39;//input[@name=&#34;login&#34;]&#39;)
+
+        &#34;&#34;&#34;
+
+        try:
+            self.browser.find_element_by_xpath(xpath).click()
+            if wait:
+                sleep(self.sleep_time)
+        except selenium_exception.NoSuchElementException:
+            if error:
+                self.error += &#34;ERROR: &#34; + error + &#34; [Element Not Found]\r\n&#34;
+            return False
+        except selenium_exception.ElementNotInteractableException:
+            if error:
+                self.error += &#34;ERROR: &#34; + error + &#34; [Element Not Intractable]\r\n&#34;
+            return False
+        except (selenium_exception.WebDriverException, selenium_exception.ElementClickInterceptedException):
+            try:
+                btn = self.browser.find_element_by_xpath(xpath)
+                self.browser.execute_script(&#34;arguments[0].click();&#34;, btn)
+                if wait:
+                    sleep(self.sleep_time)
+            except selenium_exception:
+                if error:
+                    self.error += &#34;ERROR: &#34; + error + &#34;\r\n&#34;
+                return False
+        if success:
+            self.success += &#34;SUCCESS: &#34; + success + &#34;\r\n&#34;
+        return True
+
+    def click_exists_by_xpath_elements(self, xpath, wait=False):
+        &#34;&#34;&#34; Click html elements by xpath, if they exist
+
+        :type xpath: str
+
+        :type wait: bool
+
+        :param xpath: xpath of html elements
+
+        :param wait: After click on all elements, wait for time(if sleep_time set in constructor else 2 seconds)
+        (Optional)
+
+        Example
+        ----
+        wp.click_exists_by_xpath_elements(&#39;//input[@type=&#34;button&#34;]&#39;)
+
+        &#34;&#34;&#34;
+
+        elms = self.browser.find_elements_by_xpath(xpath)
+        for elm in elms:
+            try:
+                elm.click()
+            except selenium_exception.NoSuchElementException:
+                continue
+            except selenium_exception.ElementNotInteractableException:
+                continue
+            except (selenium_exception.WebDriverException, selenium_exception.ElementClickInterceptedException):
+                try:
+                    self.browser.execute_script(&#34;arguments[0].click();&#34;, elm)
+                except selenium_exception:
+                    continue
+        if wait:
+            sleep(self.sleep_time)
+
+    def wp_login(self, email, password):
+        &#34;&#34;&#34; Login to WordPress site
+
+        :type email: str
+
+        :type password: str
+
+        :param email: email or username of WordPress User
+
+        :param password: password of WordPress User
+
+        Example
+        ----
+        wp.wp_login(&#39;email&#39;, &#39;password&#39;)
+
+        &#34;&#34;&#34;
+
+        self.browser.get(self.login_url)
+        sleep(self.sleep_time)
+        self.browser.find_element_by_id(&#39;user_login&#39;).send_keys(email)
+        sleep(self.sleep_time)
+        self.browser.find_element_by_id(&#39;user_pass&#39;).send_keys(password)
+        self.browser.find_element_by_id(&#39;wp-submit&#39;).click()
+
+    def open_page_posts(self):
+        &#34;&#34;&#34; Open All Posts Page
+        &#34;&#34;&#34;
+
+        self.browser.get(self.site_url + &#34;/wp-admin/edit.php&#34;)
+
+    def post_title(self, title):
+        &#34;&#34;&#34; Set Post Title
+
+        :type title: str
+
+        :param title: title of the post
+
+        Example
+        ----
+        wp.post_title(&#34;Post Title&#34;)
+
+        &#34;&#34;&#34;
+
+        if self.__check_exists_by_id(&#34;post-title-0&#34;):
+            self.browser.find_element_by_id(&#34;post-title-0&#34;).send_keys(title)
+        else:
+            self.__set_error(&#34;Unable to type post title!&#34;)
+
+    # After post published
+    def post_url(self, url):
+        &#34;&#34;&#34; Set Post Url
+
+        :type url: str
+
+        :param url: title of the post
+
+        Example
+        ----
+        wp.post_url(&#34;url&#34;)
+
+        &#34;&#34;&#34;
+
+        self.post_document_setting_open()
+        xpath_u = &#39;//label[text()=&#34;URL Slug&#34;]/following-sibling::input[@type=&#34;text&#34;]&#39;
+        if not self.__check_exists_by_xpath(xpath_u):
+            # Expand Heading Settings
+            err = &#39;Unable to expand Permalink&#39;
+            self.click_exists_by_xpath(&#39;//button[@type=&#34;button&#34; and text()=&#34;Permalink&#34;]&#39;, err, wait=True)
+        err = &#34;Unable to type post url&#34;
+        self.send_text_exists_by_xpath(xpath_u, url, err, wait=True)
+
+    def post_content_use_default_editor(self, xpath=&#39;//button[text()=&#34;Use Default Editor&#34;]&#39;):
+        &#34;&#34;&#34; Set Post Url
+
+        :type xpath: str
+
+        :param xpath: xpath of the use default editor button (optional)
+
+        Example
+        ----
+        wp.post_content_use_default_editor()
+
+        &#34;&#34;&#34;
+
+        err = &#39;Unable to use default editor&#39;
+        self.click_exists_by_xpath(xpath, err)
+        sleep(self.sleep_time)
+
+    def post_content_block_setting_open(self):
+        &#34;&#34;&#34; Switch to BLOCK SETTING Panel on the right
+
+        &#34;&#34;&#34;
+
+        xpath = &#39;//button[@type=&#34;button&#34; and @aria-label=&#34;Block (selected)&#34;]&#39;
+        if self.__check_exists_by_xpath(xpath):
+            return True
+
+        xpath = &#39;//button[@type=&#34;button&#34; and @aria-label=&#34;Block&#34;]&#39;
+        err = &#34;Unable to open Block setting&#34;
+        self.click_exists_by_xpath(xpath, err, wait=True)
+
+    def post_content_block_add(self, block_name):
+        &#34;&#34;&#34; Add a block in the editor
+        Available blocks are: Heading, Paragraph, List, Image, Custom HTML
+
+        :type block_name: str
+
+        :param block_name: block name to be added (case insensitive) [&#39;heading&#39;, &#39;paragraph&#39;, &#39;list&#39;, &#39;image&#39;, &#39;html&#39;]
+
+        Example
+        ----
+        # For Heading:
+
+        wp.post_content_block_add(&#34;heading&#34;)
+
+        # For Paragraph:
+
+        wp.post_content_block_add(&#34;paragraph&#34;)
+
+        # For List:
+
+        wp.post_content_block_add(&#34;list&#34;)
+
+        # For Image:
+
+        wp.post_content_block_add(&#34;image&#34;)
+
+        # For Custom HTML:
+
+        wp.post_content_block_add(&#34;html&#34;)
+
+        &#34;&#34;&#34;
+
+        blocks = {
+            &#39;heading&#39;: &#39;Heading&#39;,
+            &#39;paragraph&#39;: &#39;Paragraph&#39;,
+            &#39;list&#39;: &#39;List&#39;,
+            &#39;image&#39;: &#39;Image&#39;,
+            &#39;html&#39;: &#39;Custom HTML&#39;
+        }
+        if block_name.lower() not in blocks:
+            self.__set_error(&#39;Enter a valid block name&#39;)
+            return False
+        err = &#39;Unable to add block :&#39; + block_name
+        cmp = block_name + &#39; Added&#39;
+        check_add = &#39;//button[@type=&#34;button&#34; and @aria-label=&#34;Add block&#34;]&#39;
+        if self.click_exists_by_xpath(check_add, err):
+            check_add = &#39;//input[@type=&#34;search&#34; and @placeholder=&#34;Search for a block&#34;]&#39;
+            if self.send_text_exists_by_xpath(check_add, block_name, wait=True):
+                check_add = &#39;//span[text()=&#34;&#39; + blocks[block_name] + &#39;&#34;]/parent::button&#39;
+                if self.click_exists_by_xpath(check_add, err, cmp, True):
+                    return True
+
+    # Block edit as html
+    def post_content_block_edit_as_html(self, html=False):
+        &#34;&#34;&#34; Click on Edit as HTML Button of Editor Block
+
+        :type html: bool
+
+        :param html: True if editor block is to be edited as custom html
+
+        Example
+        ----
+        wp.post_content_block_edit_as_html(True)
+
+        &#34;&#34;&#34;
+
+        if html:
+            xpath_a = &#39;//button[text()=&#34;Edit as HTML&#34; and @type=&#34;button&#34;]&#39;
+            if not self.__check_exists_by_xpath(xpath_a):
+                # Open General Settings Menu
+                xpath_e = &#39;//button[@type=&#34;button&#34; and @aria-label=&#34;More options&#34;]&#39;
+                err = &#34;Unable to open General Settings Menu&#34;
+                self.click_exists_by_xpath(xpath_e, err, wait=True)
+            err = &#34;Unable to click Edit as html&#34;
+            self.click_exists_by_xpath(xpath_a, err, wait=True)
+
+    # Heading Block Setting
+    def post_content_block_setting_heading(self, style):
+        &#34;&#34;&#34; Select Heading style
+        Available styles are: h1, h2, h3, h4, h5, h6
+
+        :type style: str
+
+        :param style: Style of heading tag. Allowed: [&#39;h1&#39;, &#39;h2&#39;, &#39;h3&#39;, &#39;h4&#39;, &#39;h5&#39;, &#39;h6&#39;]
+
+        Example
+        ----
+        wp.post_content_block_setting_heading(&#39;h1&#39;)
+
+        &#34;&#34;&#34;
+
+        head = {
+            &#39;h1&#39;: &#39;Heading 1&#39;,
+            &#39;h2&#39;: &#39;Heading 2&#39;,
+            &#39;h3&#39;: &#39;Heading 3&#39;,
+            &#39;h4&#39;: &#39;Heading 4&#39;,
+            &#39;h5&#39;: &#39;Heading 5&#39;,
+            &#39;h6&#39;: &#39;Heading 6&#39;
+        }
+        if style.lower() in head:
+            check_h = &#39;//button[@type=&#34;button&#34; and @aria-label=&#34;&#39; + head[style] + &#39;&#34;]&#39;
+            if not self.__check_exists_by_xpath(check_h):
+                # Expand Heading Settings
+                err = &#39;Unable to expand Heading Settings&#39;
+                self.click_exists_by_xpath(&#39;//button[@type=&#34;button&#34; and text()=&#34;Heading Settings&#34;]&#39;, err)
+                sleep(self.sleep_time)
+
+            err = &#39;Invalid Heading style: [&#39; + style + &#39;]&#39;
+            self.click_exists_by_xpath(check_h, err)
+
+    # Text Block Setting
+    def post_content_block_setting_text(self, size=None, custom_size=None, drop_cap=False):
+        &#34;&#34;&#34; Set Paragraph block settings
+
+        :type size: str
+
+        :type custom_size: int
+
+        :type drop_cap: bool
+
+        :param size: choose font size from sizes available in the editor:
+        [&#39;default&#39;, &#39;small&#39;, &#39;normal&#39;, &#39;medium&#39;, &#39;large&#39;, &#39;huge&#39;] (optional)
+
+        :param custom_size: font size (optional)
+
+        :param drop_cap: Set first character of paragraph to capital (optional)
+
+        Example
+        ----
+        # Using editor&#39;s font size
+
+        wp.post_content_block_setting_text(&#34;normal&#34;)
+
+        # Using custom font size
+
+        wp.post_content_block_setting_text(None, 54)
+
+        # Set First character capital of Text
+
+        wp.post_content_block_setting_text(&#34;small&#34;, None, True)
+
+        &#34;&#34;&#34;
+
+        xpath_text = &#39;//label[text()=&#34;Custom&#34;]/following-sibling::input[@type=&#34;number&#34;]&#39;
+        if not self.__check_exists_by_xpath(xpath_text):
+            # Expand Text Settings
+            self.click_exists_by_xpath(&#39;//button[text()=&#34;Text Settings&#34; and @type=&#34;button&#34;]&#39;)
+            sleep(self.sleep_time)
+
+        if custom_size:
+            self.send_text_exists_by_xpath(xpath_text, custom_size)
+
+        if size:
+            size_list = {
+                &#39;default&#39;: 14,
+                &#39;small&#39;: 13,
+                &#39;normal&#39;: 16,
+                &#39;medium&#39;: 20,
+                &#39;large&#39;: 36,
+                &#39;huge&#39;: 48
+            }
+            if size.lower() in size_list:
+                err = &#39;Unable to choose text size: &#39; + size
+                self.send_text_exists_by_xpath(xpath_text, size_list[size], err)
+                sleep(self.sleep_time)
+            else:
+                self.__set_error(&#39;Invalid text size: &#39; + size)
+
+        if drop_cap:
+            xpath_text = &#39;//p[text()=&#34;Toggle to show a large initial letter.&#34;]/preceding-sibling::div//input[@type=&#34;checkbox&#34;]&#39;
+            err = &#39;Unable to use Drop Cap&#39;
+            self.click_exists_by_xpath(xpath_text, err)
+
+    # Text Block Setting
+    def post_content_block_setting_text_align(self, align=&#34;left&#34;):
+        &#34;&#34;&#34; Select text alignment
+        Available alignments are: left, center, right
+
+        :type align: str
+
+        :param align: text alignment (default=&#34;left&#34;). Allowed: [&#39;left&#39;, &#39;center&#39;, &#39;right&#39;]
+
+        Example
+        ----
+        wp.post_content_block_setting_text_align(&#34;left&#34;)
+
+        &#34;&#34;&#34;
+
+        list_align = [
+            &#39;left&#39;,
+            &#39;center&#39;,
+            &#39;right&#39;
+        ]
+        if align.lower() in list_align:
+            self.click_exists_by_xpath(&#39;//span[text()=&#34;Color settings&#34;]/parent::button[@type=&#34;button&#34;]&#39;, wait=True)
+            xpath_a = &#39;//button[@type=&#34;button&#34; and text()=&#34;Align text &#39; + align.lower() + &#39;&#34;]&#39;
+            if not self.__check_exists_by_xpath(xpath_a):
+                # Open Align Menu
+                xpath_e = &#39;//button[@type=&#34;button&#34; and @aria-label=&#34;Change text alignment&#34;]&#39;
+                err = &#34;Unable to open Text Align Menu&#34;
+                self.click_exists_by_xpath(xpath_e, err, wait=True)
+            err = &#34;Unable to align text &#34; + align
+            self.click_exists_by_xpath(xpath_a, err, wait=True)
+        else:
+            self.__set_error(&#34;Invalid text alignment&#34;)
+
+    # Color Block Setting
+    def post_content_block_setting_color(self, text_color, bg_color=None):
+        &#34;&#34;&#34; Set color of text and background
+
+        :type text_color: str
+
+        :type bg_color: str
+
+        :param text_color: hex color code
+
+        :param bg_color: hex color code (optional)
+
+        Example
+        ----
+        wp.post_content_block_setting_color(&#39;#1bbafe&#39;, &#39;#ffffff&#39;)
+
+        &#34;&#34;&#34;
+
+        xpath_color = &#39;(//button[text()=&#34;Custom color&#34; and @type=&#34;button&#34; and @aria-label=&#34;Custom color picker&#34;])[1]&#39;
+        if not self.__check_exists_by_xpath(xpath_color):
+            # Expand Color Settings
+            err = &#34;Unable to expand Color Settings&#34;
+            self.click_exists_by_xpath(&#39;//span[text()=&#34;Color settings&#34;]/parent::button[@type=&#34;button&#34;]&#39;, err, wait=True)
+
+        err = &#34;Unable to set text color&#34;
+        if self.click_exists_by_xpath(xpath_color, err):
+            xpath_color = &#39;//label[text()=&#34;Color value in hexadecimal&#34;]/following-sibling::input[@type=&#34;text&#34;]&#39;
+            sleep(self.sleep_time)
+            self.send_backspace_by_xpath(xpath_color, 8)
+            err = &#34;Unable to type text color&#34;
+            self.send_text_exists_by_xpath(xpath_color, text_color, err)
+
+        if bg_color:
+            xpath_color = &#39;(//button[@type=&#34;button&#34; and @aria-label=&#34;Custom color picker&#34; and text()=&#34;Custom color&#34;])[2]&#39;
+            err = &#34;Unable to set background color&#34;
+            if self.click_exists_by_xpath(xpath_color, err):
+                xpath_color = &#39;//label[text()=&#34;Color value in hexadecimal&#34;]/following-sibling::input[@type=&#34;text&#34;]&#39;
+                sleep(self.sleep_time)
+                self.send_backspace_by_xpath(xpath_color, 8)
+                err = &#34;Unable to type background color&#34;
+                self.send_text_exists_by_xpath(xpath_color, bg_color, err)
+
+    # Image Block Setting
+    def post_content_block_setting_image_style(self, round_shape=False):
+        &#34;&#34;&#34; Set Image Border&#39;s style
+
+        :type round_shape: bool
+
+        :param round_shape: True, to set round borders. (default=False)
+
+        Example
+        ----
+        wp.post_content_block_setting_image_style(True)
+
+        &#34;&#34;&#34;
+
+        xpath_s = &#39;//div[@role=&#34;button&#34; and @aria-label=&#34;Default&#34;]&#39;
+        if not self.__check_exists_by_xpath(xpath_s):
+            # Expand Styles Settings
+            err = &#34;Unable to expand Styles Settings&#34;
+            self.click_exists_by_xpath(&#39;//button[text()=&#34;Styles&#34; and @type=&#34;button&#34;]&#39;, err, wait=True)
+        if not round_shape:
+            err = &#34;Unable to set Default Style&#34;
+            self.click_exists_by_xpath(xpath_s, err, wait=True)
+        else:
+            xpath_s = &#39;//div[@role=&#34;button&#34; and @aria-label=&#34;Rounded&#34;]&#39;
+            err = &#34;Unable to set Round Style&#34;
+            self.click_exists_by_xpath(xpath_s, err, wait=True)
+
+    # Image Block Setting
+    def post_content_block_setting_image(self, alt_text=None, size=None, width=None, height=None, percentage=None):
+        &#34;&#34;&#34; Set image block style
+
+        :type alt_text: str
+
+        :type size: str
+
+        :type width: int
+
+        :type height: int
+
+        :type percentage: int
+
+        :param alt_text: Alt text for image (optional)
+
+        :param size: Select size of Image from editor. Allowed: [&#39;thumbnail&#39;, &#39;medium&#39;, &#39;large&#39;, &#39;full&#39;] (optional)
+
+        :param width: Width of image (optional)
+
+        :param height: Height of image (optional)
+
+        :param percentage: Percentage of image. Allowed: [25, 50, 75, 100] (optional)
+
+        Example
+        ----
+        wp.post_content_block_setting_image(&#34;Image 1&#34;, &#34;full&#34;, 500, 500, 75%)
+
+        &#34;&#34;&#34;
+        xpath_s = &#39;//label[text()=&#34;Alt text (alternative text)&#34;]/following-sibling::textarea&#39;
+        if not self.__check_exists_by_xpath(xpath_s):
+            # Expand Styles Settings
+            err = &#34;Unable to expand Image Settings&#34;
+            self.click_exists_by_xpath(&#39;//button[text()=&#34;Image settings&#34; and @type=&#34;button&#34;]&#39;, err, wait=True)
+
+        if alt_text:
+            err = &#34;Unable to type alt text&#34;
+            self.send_text_exists_by_xpath(xpath_s, alt_text, err, wait=True)
+
+        if size:
+            s_list = [
+                &#34;thumbnail&#34;,
+                &#34;medium&#34;,
+                &#34;large&#34;,
+                &#34;full&#34;,
+            ]
+            if size.lower() in s_list:
+                xpath_s = &#39;//label[text()=&#34;Image size&#34;]/following-sibling::select/option[@value=&#34;&#39; + size.lower() + &#39;&#34;]&#39;
+                err = &#34;Unable to set size (option not available)&#34;
+                self.click_exists_by_xpath(xpath_s, err, wait=True)
+
+        if width:
+            xpath_s = &#39;//label[text()=&#34;Width&#34;]/following-sibling::input[@type=&#34;number&#34;]&#39;
+            err = &#34;Unable to set width&#34;
+            self.send_keys_select_all(xpath_s)
+            self.send_text_exists_by_xpath(xpath_s, width, err, wait=True)
+
+        if height:
+            xpath_s = &#39;//label[text()=&#34;Height&#34;]/following-sibling::input[@type=&#34;number&#34;]&#39;
+            err = &#34;Unable to set height&#34;
+            self.send_keys_select_all(xpath_s)
+            self.send_text_exists_by_xpath(xpath_s, height, err, wait=True)
+
+        if percentage:
+            p_list = {
+                25: &#39;25%&#39;,
+                50: &#39;50%&#39;,
+                75: &#39;75%&#39;,
+                100: &#39;100%&#39;,
+            }
+            if percentage in p_list:
+                xpath_s = &#39;//button[contains(text(), &#34;&#39; + str(percentage) + &#39;&#34;)]&#39;
+                err = &#34;Unable to set Percentage [xpath]: &#34; + xpath_s
+                self.click_exists_by_xpath(xpath_s, err, wait=True)
+
+    # Image Block Setting
+    def post_content_block_setting_image_align(self, align=&#39;left&#39;):
+        &#34;&#34;&#34; Select image alignment
+        Available alignments are: left, center, right
+
+        :type align: str
+
+        :param align: image alignment (default=&#34;left&#34;). Allowed: [&#39;left&#39;, &#39;center&#39;, &#39;right&#39;]
+
+        Example
+        ----
+        wp.post_content_block_setting_image_align(&#34;center&#34;)
+
+        &#34;&#34;&#34;
+
+        list_align = [
+            &#39;left&#39;,
+            &#39;center&#39;,
+            &#39;right&#39;
+        ]
+        if align.lower() in list_align:
+            xpath_a = &#39;//button[@type=&#34;button&#34; and text()=&#34;Align &#39; + align.lower() + &#39;&#34;]&#39;
+            if not self.__check_exists_by_xpath(xpath_a):
+                # Open Align Menu
+                xpath_e = &#39;//button[@type=&#34;button&#34; and @aria-label=&#34;Change alignment&#34;]&#39;
+                err = &#34;Unable to open Align Menu&#34;
+                self.click_exists_by_xpath(xpath_e, err, wait=True)
+            err = &#34;Unable to align image &#34; + align
+            self.click_exists_by_xpath(xpath_a, err, wait=True)
+        else:
+            self.__set_error(&#34;Invalid image alignment&#34;)
+
+    # List Block Setting
+    def post_content_block_setting_ordered_list(self, start=None, reverse=False):
+        &#34;&#34;&#34; Customize List block style
+
+        :type start: int
+
+        :type reverse: bool
+
+        :param start: Number from where to start the list. (optional)
+
+        :param reverse: Reverse the numbering of list. (optional)
+
+        Example
+        ----
+        wp.post_content_block_setting_ordered_list(10, True)
+
+        &#34;&#34;&#34;
+        xpath_o = &#39;//label[text()=&#34;Start value&#34;]/following-sibling::input[@type=&#34;number&#34;]&#39;
+        if not self.__check_exists_by_xpath(xpath_o):
+            # Expand Ordered list Settings
+            err = &#34;Unable to expand Styles Settings&#34;
+            self.click_exists_by_xpath(&#39;//button[text()=&#34;Ordered list settings&#34; and @type=&#34;button&#34;]&#39;, err, wait=True)
+        if start:
+            err = &#34;Unable to set Start value&#34;
+            self.send_text_exists_by_xpath(xpath_o, start, err, wait=True)
+        if reverse:
+            xpath_o = &#39;//label[text()=&#34;Reverse list numbering&#34;]&#39;
+            err = &#39;Unable to reverse list order&#39;
+            self.click_exists_by_xpath(xpath_o, err, wait=True)
+
+    def post_content_block_heading(self, heading, style=&#39;default&#39;, align=&#39;left&#39;, text_color=None):
+        &#34;&#34;&#34; Add heading block and customize it
+
+        :type heading: str
+
+        :type style: str
+
+        :type align: str
+
+        :type text_color: str
+
+        :param heading: Heading text
+
+        :param style: Style of heading tag. Allowed: [&#39;h1&#39;, &#39;h2&#39;, &#39;h3&#39;, &#39;h4&#39;, &#39;h5&#39;, &#39;h6&#39;]
+
+        :param align: Heading alignment (default=&#34;left&#34;). Allowed: [&#39;left&#39;, &#39;center&#39;, &#39;right&#39;] (optional)
+
+        :param text_color: hex color code for heading&#39;s text color. (optional)
+
+        Example
+        ----
+        # Simple
+
+        wp.post_content_block_heading(&#34;Heading 1&#34;)
+
+        # Customized
+
+        wp.post_content_block_heading(&#34;Heading 1&#34;, &#39;h1&#39;, &#39;center&#39;, &#39;#1bbafe&#39;)
+
+        &#34;&#34;&#34;
+
+        if self.post_content_block_add(&#39;heading&#39;):
+            self.send_text_in_browser(heading)
+            if align != &#34;left&#34;:
+                self.post_content_block_setting_text_align(align)
+            if style != &#39;default&#39;:
+                self.post_content_block_setting_heading(style)
+            if text_color:
+                self.post_content_block_setting_color(text_color)
+
+    def post_content_block_paragraph(self, paragraph, align=&#39;left&#39;, size=None, custom_size=None, drop_cap=False,
+                                     text_color=None, bg_color=None):
+        &#34;&#34;&#34; Add paragraph block and customize it
+
+        :type paragraph: str
+
+        :type align: str
+
+        :type size: str
+
+        :type custom_size: int
+
+        :type drop_cap: bool
+
+        :type text_color: str
+
+        :type bg_color: str
+
+        :param paragraph: Paragraph text
+
+        :param align: Paragraph alignment (default=&#34;left&#34;). Allowed: [&#39;left&#39;, &#39;center&#39;, &#39;right&#39;] (optional)
+
+        :param size: choose font size from sizes available in the editor:
+        [&#39;default&#39;, &#39;small&#39;, &#39;normal&#39;, &#39;medium&#39;, &#39;large&#39;, &#39;huge&#39;] (optional)
+
+        :param custom_size: font size (optional)
+
+        :param drop_cap: Set first character of paragraph to capital (optional)
+
+        :param text_color: hex color code for paragraph&#39;s text color. (optional)
+
+        :param bg_color: hex color code for paragraph&#39;s background color. (optional)
+
+        Example
+        ----
+        # Simple
+
+        wp.post_content_block_paragraph(&#34;This is a paragraph.&#34;)
+
+        # Customized
+
+        wp.post_content_block_paragraph(&#34;This is a paragraph.&#34;, &#34;center&#34;, &#34;normal&#34;, None, True, &#34;#1bbafe&#34;, &#34;#ffffff&#34;)
+
+        &#34;&#34;&#34;
+
+        if self.post_content_block_add(&#39;paragraph&#39;):
+            self.send_text_in_browser(paragraph)
+            if align != &#34;left&#34;:
+                self.post_content_block_setting_text_align(align)
+
+            if size or custom_size or drop_cap:
+                self.post_content_block_setting_text(size, custom_size, drop_cap)
+
+            if text_color or bg_color:
+                self.post_content_block_setting_color(text_color, bg_color)
+
+    def post_content_block_image(self, image_name=None, caption=None, image_url=None, align=&#39;left&#39;, round_shape=None,
+                                 alt_text=None, size=None, width=None, height=None, percentage=None):
+        &#34;&#34;&#34; Add image block and customize it
+        For Image block image should be in media library or use url.
+
+        :type image_name: str
+
+        :type caption: str
+
+        :type image_url: str
+
+        :type align: str
+
+        :type round_shape: bool
+
+        :type alt_text: str
+
+        :type size: str
+
+        :type width: int
+
+        :type height: int
+
+        :type percentage: int
+
+        :param image_name: Image name in media library. (Full image name is not necessary) (optional)
+        {Image must be in media of WordPress site, for this to work}
+
+        :param caption: Caption for Image (optional)
+
+        :param image_url: Image url (optional)
+
+        :param align: image alignment (default=&#34;left&#34;). Allowed: [&#39;left&#39;, &#39;center&#39;, &#39;right&#39;]
+
+        :param round_shape: True, to set round borders. (default=False)
+
+        :param alt_text: Alt text for image (optional)
+
+        :param size: Select size of Image from editor. Allowed: [&#39;thumbnail&#39;, &#39;medium&#39;, &#39;large&#39;, &#39;full&#39;] (optional)
+
+        :param width: Width of image (optional)
+
+        :param height: Height of image (optional)
+
+        :param percentage: Percentage of image. Allowed: [25, 50, 75, 100] (optional)
+
+        Example
+        ----
+        # Simple
+
+        wp.post_content_block_image(&#34;ImageName&#34;)
+
+        wp.post_content_block_image(None, None, &#34;https://www.example.com/image&#34;)
+
+        # Customized
+
+        wp.post_content_block_image(&#34;ImageName&#34;, &#34;caption&#34;, None, &#34;center&#34;, True, &#34;alt-text&#34;, &#34;thumbnail&#34;, 500, 500, 75)
+
+        &#34;&#34;&#34;
+
+        check = False
+        if self.post_content_block_add(&#39;image&#39;):
+            if image_name:
+                err = &#34;Unable to click Media Library Button&#34;
+                if self.click_exists_by_xpath(&#39;//button[text()=&#34;Media Library&#34;]&#39;, err, wait=True):
+                    if self.__media_search_and_select(image_name) is True:
+                        check = True
+
+            if image_url:
+                err = &#34;Unable to click Insert from URL Button&#34;
+                if self.click_exists_by_xpath(&#39;//button[text()=&#34;Insert from URL&#34;]&#39;, err, wait=True):
+                    self.send_text_in_browser(image_url)
+                    err = &#34;Unable to click Apply Button&#34;
+                    if self.click_exists_by_xpath(&#39;//button[@type=&#34;submit&#34; and @aria-label=&#34;Apply&#34;]&#39;, err, wait=True):
+                        size = None
+                        check = True
+
+            if check:
+                if align != &#34;left&#34;:
+                    self.post_content_block_setting_image_align(align)
+
+                if caption:
+                    xpath = &#39;//figcaption[@role=&#34;textbox&#34; and text()=&#34;&#34;]&#39;
+                    err = &#34;Unable to type caption&#34;
+                    if self.send_text_exists_by_xpath(xpath, caption, err, wait=True):
+                        if not percentage and not width and not height:
+                            percentage = 100
+
+                self.post_content_block_setting_image_style(round_shape)
+                self.post_content_block_setting_image(alt_text, size, width, height, percentage)
+
+    def post_content_block_list(self, list_text, ordered=False, start=None, reverse=False, separator=&#39;.&#39;):
+        &#34;&#34;&#34; Add list block and customize it
+
+        :type list_text: str
+
+        :type ordered: bool
+
+        :type start: int
+
+        :type reverse: bool
+
+        :type separator: str
+
+        :param list_text: List
+
+        :param ordered: True, for numbering. (optional)
+
+        :param start: Number from where to start the list. (optional)
+
+        :param reverse: Reverse the numbering of list. (optional)
+
+        :param separator: Separator before new item in the list. (default=&#34;.&#34;)
+        Example: &#34;Line 1. Line 2&#34; -- Here &#34;.&#34; is the separator between list items.
+
+        Example
+        ----
+        # Un-ordered List
+
+        wp.post_content_block_list(&#34;Line 1. Line 2&#34;)
+
+        # Ordered List
+
+        wp.post_content_block_list(&#34;Line 1. Line 2&#34;, True, 50, True)
+
+        # Using separator
+
+        wp.post_content_block_list(&#34;Line 1, Line 2&#34;, True, 50, True, &#34;,&#34;)
+
+        &#34;&#34;&#34;
+
+        if self.post_content_block_add(&#39;list&#39;):
+            if ordered:
+                err = &#34;Unable to Order list&#34;
+                xpath = &#39;//button[@type=&#34;button&#34; and @aria-label=&#34;Convert to ordered list&#34;]&#39;
+                self.click_exists_by_xpath(xpath, err, wait=True)
+
+            list_text = list_text.split(separator)
+            del list_text[len(list_text) - 1]
+            for i in range(0, len(list_text)):
+                if list_text[i]:
+                    if list_text[i][0] == &#34; &#34;:
+                        list_text[i] = list_text[i].replace(&#34; &#34;, &#34;&#34;, 1)
+                self.send_text_in_browser(list_text[i] + separator)
+                if i == len(list_text) - 1:
+                    break
+                self.send_text_in_browser(Keys.RETURN)
+
+            if ordered and (start or reverse):
+                self.post_content_block_setting_ordered_list(start, reverse)
+
+    def post_content_block_html(self, html):
+        &#34;&#34;&#34; Add html block
+
+        :type html: str
+
+        :param html: html code for html block
+
+        Example
+        ----
+        wp.post_content_block_html(&#34;&lt;div&gt;&lt;h5&gt;Heading&lt;/h5&gt;&lt;/div&gt;&#34;)
+
+        &#34;&#34;&#34;
+
+        self.post_content_block_add(&#39;html&#39;)
+        self.send_text_in_browser(html)
+
+    def post_content_from_file(self, file_path=&#39;&#39;, typing_effect=False):
+        &#34;&#34;&#34;
+
+        :type file_path: str
+
+        :type typing_effect: bool
+
+        :param file_path: path to docx or html file on computer
+
+        :param typing_effect: True if keyboard typing effect is required. (optional) (default=False)
+
+        Example
+        ----
+        # Docx file
+
+        wp.post_content_from_file(&#34;C\\Path\\To\\File.docx&#34;)
+
+        # Html file with typing effect
+
+        wp.post_content_from_file(&#34;C\\Path\\To\\File.html&#34;, True)
+
+        &#34;&#34;&#34;
+
+        list_ext = [
+            &#39;docx&#39;,
+            &#39;html&#39;
+        ]
+        ext = file_path.split(&#39;.&#39;)
+        if ext[-1].lower() in list_ext:
+            self.post_content_block_add(&#39;html&#39;)
+            if ext[-1].lower() == &#39;docx&#39;:
+                html = self.docx_to_html(file_path)
+            else:
+                html = self.read_html(file_path)
+            if not typing_effect:
+                pyperclip.copy(html)
+                sleep(self.sleep_time)
+                self.paste_in_browser()
+            else:
+                self.send_text_in_browser(html)
+        else:
+            self.__set_error(&#34;Invalid File Type&#34;)
+
+    def post_document_setting_open(self):
+        &#34;&#34;&#34; Switch to DOCUMENT SETTING Panel on the right
+
+        &#34;&#34;&#34;
+
+        xpath = &#39;//button[@type=&#34;button&#34; and @aria-label=&#34;Document (selected)&#34;]&#39;
+        if self.__check_exists_by_xpath(xpath):
+            return True
+
+        xpath = &#39;//button[@type=&#34;button&#34; and @aria-label=&#34;Document&#34;]&#39;
+        err = &#34;Unable to open Document setting&#34;
+        self.click_exists_by_xpath(xpath, err, wait=True)
+
+    def post_status(self, visibility=&#39;public&#39;, password=None, stick_top=False, pending_review=False):
+        &#34;&#34;&#34; Configure Post Status Settings
+
+        :type visibility: str
+
+        :type password: str
+
+        :type stick_top: bool
+
+        :type pending_review: bool
+
+        :param visibility: Visibility of Post. Allowed: [&#39;public&#39;, &#39;private, &#39;password&#39;] (optional)
+
+        :param password: Password for post if visibility set to password protected.
+
+        :param stick_top: True to stick post on top on the blog page. (optional)
+
+        :param pending_review: True to add post in pending
+        &#34;&#34;&#34;
+
+        element_discus = &#39;//span[text()=&#34;Visibility&#34;]&#39;
+        if not self.__check_exists_by_xpath(element_discus):
+            # Expand Excerpt
+            self.browser.find_element_by_xpath(&#39;//button[text()=&#34;Status &amp; Visibility&#34;]&#39;).click()
+            sleep(self.sleep_time)
+
+        # Check stick on top
+        if stick_top:
+            element_discus = &#39;//label[text()=&#34;Stick to the top of the blog&#34;]/preceding-sibling::span/input[@type=&#34;checkbox&#34;]&#39;
+            err = &#39;Unable to interact with Stick on Top of the blog(Status &amp; Visibility)!&#39;
+            self.click_exists_by_xpath(element_discus, err)
+
+        # Check pending review
+        if pending_review:
+            element_discus = &#39;//label[text()=&#34;Pending review&#34;]/preceding-sibling::span/input[@type=&#34;checkbox&#34;]&#39;
+            err = &#39;Unable to interact with Pending Review(Status &amp; Visibility)!&#39;
+            self.click_exists_by_xpath(element_discus, err)
+
+        if visibility:
+            check = True
+            err = &#39;Unable to interact with Visibility(Status &amp; Visibility)!&#39;
+            if not self.click_exists_by_xpath(&#39;//button[text()=&#34;Public&#34;]&#39;):
+                if not self.click_exists_by_xpath(&#39;//button[text()=&#34;Private&#34;]&#39;):
+                    check = self.click_exists_by_xpath(&#39;//button[text()=&#34;Password Protected&#34;]&#39;, err)
+
+            if check:
+                sleep(self.sleep_time)
+                if visibility.lower() == &#39;public&#39;:
+                    self.click_exists_by_xpath(&#39;//input[@type=&#34;radio&#34; and @value=&#34;public&#34;]&#39;)
+                elif visibility.lower() == &#39;private&#39;:
+                    self.click_exists_by_xpath(&#39;//input[@type=&#34;radio&#34; and @value=&#34;private&#34;]&#39;)
+                    sleep(self.sleep_time)
+                    alert_obj = self.browser.switch_to.alert
+                    alert_obj.accept()
+                    self.browser.switch_to.default_content()
+                    sleep(self.sleep_time)
+                elif password and visibility.lower() == &#39;password&#39;:
+                    self.click_exists_by_xpath(&#39;//input[@type=&#34;radio&#34; and @value=&#34;password&#34;]&#39;)
+                    xpath_pass = &#39;//input[@type=&#34;text&#34; and @placeholder=&#34;Use a secure password&#34;]&#39;
+                    err = &#39;Unable to type password(Status &amp; Visibility)!&#39;
+                    self.send_text_exists_by_xpath(xpath_pass, password, err)
+                    sleep(self.sleep_time)
+
+    # After post published
+    def post_format(self, formatting=&#39;standard&#39;):
+        &#34;&#34;&#34; Set Post Format
+
+        :type formatting: str
+
+        :param formatting: Post display format. Allowed: [&#39;standard&#39;, &#39;gallery&#39;, &#39;link&#39;, &#39;quote&#39;, &#39;video&#39;, &#39;audio&#39;]
+        &#34;&#34;&#34;
+
+        self.post_document_setting_open()
+        format_list = [&#39;standard&#39;, &#39;gallery&#39;, &#39;link&#39;, &#39;quote&#39;, &#39;video&#39;, &#39;audio&#39;]
+        if formatting.lower() in format_list:
+            xpath_ = &#39;//label[text()=&#34;Post Format&#34;]/following-sibling::div//select/option[@value=&#34;&#39; + formatting + &#39;&#34;]&#39;
+            err = &#34;Unable to select post format&#34;
+            self.click_exists_by_xpath(xpath_, err, wait=True)
+
+    def post_category(self, category):
+        &#34;&#34;&#34; Set post category name
+
+        :type category: str
+
+        :param category: Post category name
+        &#34;&#34;&#34;
+
+        err = &#39;Unable to expand Categories Panel(Categories)!&#39;
+        if self.click_exists_by_xpath(&#39;//button[text()=&#34;Categories&#34;]&#39;, err):
+            # Expand Categories
+            sleep(self.sleep_time)
+
+        check_cat = &#34;//label[text()=&#39;&#34; + category + &#34;&#39;]&#34;
+        if not self.__check_exists_by_xpath(check_cat):
+            # Add if category does not exist
+            err = &#34;Unable to click Add New Category 1&#34;
+            self.click_exists_by_xpath(&#39;//button[text()=&#34;Add New Category&#34;]&#39;, err)
+
+            err = &#34;Unable to type Category name&#34;
+            self.send_text_exists_by_xpath(&#34;//*[@id=&#39;editor-post-taxonomies__hierarchical-terms-input-0&#39;]&#34;, category,
+                                           err)
+
+            err = &#34;Unable to click Add New Category 2&#34;
+            self.click_exists_by_xpath(&#39;//button[@type=&#34;submit&#34; and text()=&#34;Add New Category&#34;]&#39;, err)
+        else:
+            # Select category
+            err = &#34;Unable to Select category&#34;
+            self.click_exists_by_xpath(check_cat, err)
+
+    def post_tag(self, tag):
+        &#34;&#34;&#34; Set post tag
+
+        :type tag: str
+
+        :param tag: tag of the post
+        &#34;&#34;&#34;
+
+        check_tag = &#39;//label[text()=&#34;Add New Tag&#34;]/following-sibling::div/child::input&#39;
+        if not self.__check_exists_by_xpath(check_tag):
+            # Expand Tags
+            err = &#34;Unable to Expand Tags&#34;
+            self.click_exists_by_xpath(&#39;//button[text()=&#34;Tags&#34;]&#39;, err, wait=True)
+
+        # Add Tag
+        tag_input = self.browser.find_element_by_xpath(check_tag)
+        tag_input.send_keys(tag + Keys.RETURN)
+
+    def __media_search_and_select(self, image_name, image_type=&#34;Select&#34;):
+        &#34;&#34;&#34; Search and select image from media library of WordPress site
+
+        :type image_name: str
+
+        :type image_type: str
+
+        :param image_name: Name of the Image in media library
+
+        :param image_type: Select or Set featured image
+        &#34;&#34;&#34;
+
+        err = &#34;Unable to type image name&#34;
+        self.send_keys_select_all(None, &#39;media-search-input&#39;)
+        self.send_text_exists_by_id(&#39;media-search-input&#39;, image_name, err, wait=True)
+
+        sleep(self.sleep_time)
+        err = &#34;No image found&#34;
+        if not self.click_exists_by_xpath(&#39;(//li[@role=&#34;checkbox&#34;])[1]&#39;, err):
+            # xpath = &#39;(//span[contains(@class, &#34;media-modal-icon&#34;)]/parent::button[contains(@class, &#34;media-modal-close&#34;)])[3]&#39;
+            xpath = &#39;//span[contains(@class, &#34;media-modal-icon&#34;)]/parent::button[contains(@class, &#34;media-modal-close&#34;)]&#39;
+            err = &#34;Unable to close Media Library&#34;
+            self.click_exists_by_xpath_elements(xpath, True)
+            err = &#34;Unable to click Media Library Button Again&#34;
+            if self.click_exists_by_xpath(&#39;//button[text()=&#34;Media Library&#34;]&#39;, err, wait=True):
+                if not self.click_exists_by_xpath(&#39;(//li[@role=&#34;checkbox&#34;])[1]&#39;, err):
+                    xpath = &#39;(//span[contains(@class, &#34;media-modal-icon&#34;)]/parent::button[contains(@class, &#34;media-modal-close&#34;)])[3]&#39;
+                    xpath = &#39;//span[contains(@class, &#34;media-modal-icon&#34;)]/parent::button[contains(@class, &#34;media-modal-close&#34;)]&#39;
+                    err = &#34;Unable to close Media Library&#34;
+                    self.click_exists_by_xpath_elements(xpath, True)
+                else:
+                    err = &#34;Unable to finish image selection&#34;
+                    if self.click_exists_by_xpath(
+                            &#39;//button[contains(@class, &#34;media-button-select&#34;) and text()=&#34;&#39; + image_type + &#39;&#34;]&#39;, err):
+                        return True
+
+        else:
+            err = &#34;Unable to finish image selection&#34;
+            if self.click_exists_by_xpath(
+                    &#39;//button[contains(@class, &#34;media-button-select&#34;) and text()=&#34;&#39; + image_type + &#39;&#34;]&#39;, err):
+                return True
+
+    def post_image(self, image_name):
+        &#34;&#34;&#34; Set Featured Image for Post
+
+        :type image_name: str
+
+        :param image_name: Name of the Image in media library.
+        &#34;&#34;&#34;
+
+        featured_img = &#39;//button[text()=&#34;Set featured image&#34;]&#39;
+        if not self.__check_exists_by_xpath(featured_img):
+            # Expand Featured Image
+            err = &#34;Unable to Expand Featured Image&#34;
+            self.click_exists_by_xpath(&#39;//button[text()=&#34;Featured image&#34;]&#39;, err)
+
+        err = &#34;Unable to click Set featured image&#34;
+        self.click_exists_by_xpath(&#39;//button[text()=&#34;Set featured image&#34;]&#39;, err, wait=True)
+        self.__media_search_and_select(image_name, &#34;Set featured image&#34;)
+
+    def post_excerpt(self, excerpt):
+        &#34;&#34;&#34; Set Post excerpt
+
+        :type excerpt: str
+
+        :param excerpt: excerpt of the post
+        &#34;&#34;&#34;
+
+        check_excerpt = &#39;//label[text()=&#34;Write an excerpt (optional)&#34;]/following-sibling::textarea&#39;
+        if not self.__check_exists_by_xpath(check_excerpt):
+            # Expand Excerpt
+            err = &#34;Unable to Expand Excerpt Setting&#34;
+            self.click_exists_by_xpath(&#39;//button[text()=&#34;Excerpt&#34;]&#39;, err, wait=True)
+
+        # Add Excerpt
+        self.browser.find_element_by_xpath(check_excerpt).send_keys(excerpt)
+
+    def post_discussion(self, comments=True, traceback=True):
+        &#34;&#34;&#34; Configure Discussion settings for post
+
+        :type comments: bool
+
+        :type traceback: bool
+
+        :param comments: False to Disable comments on post
+
+        :param traceback: False to Disable pingbacks &amp; trackbacks
+        &#34;&#34;&#34;
+
+        element_discus = &#39;//label[text()=&#34;Allow comments&#34;]&#39;
+        if not self.__check_exists_by_xpath(element_discus):
+            # Expand Discussion
+            err = &#34;Unable to Expand Discussion&#34;
+            self.click_exists_by_xpath(&#39;//button[text()=&#34;Discussion&#34;]&#39;, err)
+
+        # Uncheck comments
+        if not comments:
+            err = &#34;Unable to Disable comments&#34;
+            self.click_exists_by_xpath(element_discus, err)
+        # Uncheck traceback
+        if not traceback:
+            element_discus = &#39;//label[text()=&#34;Allow pingbacks &amp; trackbacks&#34;]&#39;
+            err = &#34;Unable to Disable pingbacks &amp; trackbacks&#34;
+            self.click_exists_by_xpath(element_discus, err)
+
+    def post_save_draft(self):
+        &#34;&#34;&#34; Save Post as Draft
+        &#34;&#34;&#34;
+
+        xpath_save = &#39;//button[text()=&#34;Publish…&#34; and @aria-disabled=&#34;true&#34;]&#39;
+        if self.__check_exists_by_xpath(xpath_save):
+            sleep(self.sleep_time)
+        xpath_save = &#39;//button[text()=&#34;Save Draft&#34;]&#39;
+        if not self.__check_exists_by_xpath(xpath_save):
+            xpath_save = &#39;//button[text()=&#34;Save as Pending&#34;]&#39;
+            err = &#34;Unable to click Save as Pending Button&#34;
+            self.click_exists_by_xpath(xpath_save, err, wait=True)
+            sleep(self.sleep_time)
+        else:
+            err = &#34;Unable to click Save Draft Button&#34;
+            if self.click_exists_by_xpath(xpath_save, err, wait=True):
+                sleep(self.sleep_time)
+
+    def post_switch_to_draft(self):
+        &#34;&#34;&#34; Switch Post from Published to Draft
+        &#34;&#34;&#34;
+
+        xpath_d = &#39;//button[text()=&#34;Switch to draft&#34;]&#39;
+        err = &#34;Unable to click Switch to Draft Button&#34;
+        sleep(self.sleep_time)
+        if self.click_exists_by_xpath(xpath_d, err, wait=True):
+            alert_obj = self.browser.switch_to.alert
+            alert_obj.accept()
+            self.browser.switch_to.default_content()
+            sleep(self.sleep_time)
+
+    def post_publish(self):
+        &#34;&#34;&#34; Publish Post
+        &#34;&#34;&#34;
+
+        xpath_p = &#39;//button[text()=&#34;Publish…&#34; and @aria-disabled=&#34;true&#34;]&#39;
+        if self.__check_exists_by_xpath(xpath_p):
+            sleep(self.sleep_time)
+        xpath_p = &#39;//button[text()=&#34;Publish…&#34;]&#39;
+        err = &#34;Unable to click Publish… Button (1)&#34;
+        if self.click_exists_by_xpath(xpath_p, err, wait=True):
+            xpath_p = &#39;//button[text()=&#34;Publish&#34;]&#39;
+            err = &#34;Unable to click Publish Button (2)&#34;
+            if self.click_exists_by_xpath(xpath_p, err, wait=True):
+                err = &#34;Unable to close panel after Publish&#34;
+                xpath_p = &#39;//button[@aria-label=&#34;Close panel&#34; and @type=&#34;button&#34;]&#39;
+                self.click_exists_by_xpath(xpath_p, err, wait=True)
+
+    def post_update(self):
+        &#34;&#34;&#34; Update Post
+        &#34;&#34;&#34;
+
+        xpath_u = &#39;//button[text()=&#34;Update&#34;]&#39;
+        err = &#34;Unable to click Update Button&#34;
+        if self.click_exists_by_xpath(xpath_u, err, wait=True):
+            sleep(self.sleep_time)
+
+    @staticmethod
+    def read_html(html_path, full=False):
+        &#34;&#34;&#34; Read html file and return the code
+
+        :type html_path: str
+
+        :type full: bool
+
+        :param html_path: html file path
+
+        :param full: True to get full code, otherwise code in body tag. (optional)
+
+        :return: html code of the file
+        &#34;&#34;&#34;
+        f = codecs.open(html_path, &#39;r&#39;)
+        html = f.read()
+        soup = BeautifulSoup(html, &#39;html.parser&#39;)
+        if not full:
+            return soup.body.prettify()
+        else:
+            return soup.prettify()
+
+    def docx_to_html(self, docx_path):
+        &#34;&#34;&#34; Convert docx file to html code
+
+        :param docx_path: Path of docx file
+
+        :return: html code
+        &#34;&#34;&#34;
+        with open(docx_path, &#34;rb&#34;) as docx_file:
+            result = d2h.convert_to_html(docx_file)
+            html = result.value
+            self.messages = result.messages
+        return html
+
+    def post_new(self, title, category=None, tag=None, featured_image=None, excerpt=None, docx_path=None):
+        &#34;&#34;&#34; Add new post in WordPress site
+
+        :type title: str
+
+        :type category: str
+
+        :type tag: str
+
+        :type featured_image: str
+
+        :type excerpt: str
+
+        :type docx_path: str
+
+        :param title: title of the post.
+
+        :param category:  category name of the post. (optional)
+
+        :param tag: tag of the post. (optional)
+
+        :param featured_image: name of the Image in media library to set as featured image. (optional)
+
+        :param excerpt: excerpt of the post. (optional)
+
+        :param docx_path: path of docx file. (optional)
+
+        Example
+        ----
+        wp.post_new(&#34;Post Title&#34;, &#34;Technology&#34;, &#34;tech&#34;, &#34;&#34;)
+
+        &#34;&#34;&#34;
+
+        self.browser.get(self.site_url + &#34;/wp-admin/post-new.php&#34;)
+        sleep(self.sleep_time_page_load)
+
+        xpath = &#39;//button[@type=&#34;button&#34; and @aria-label=&#34;Close dialog&#34;]&#39;
+        if self.__check_exists_by_xpath(xpath):
+            err = &#34;Unable to close tutorial pop up&#34;
+            self.click_exists_by_xpath(xpath, err)
+
+        self.post_content_use_default_editor()
+
+        # Add title
+        self.post_title(title)
+
+        if category:
+            sleep(self.sleep_time)
+            self.post_category(category)
+
+        if tag:
+            sleep(self.sleep_time)
+            self.post_tag(tag)
+
+        if featured_image:
+            sleep(self.sleep_time)
+            self.post_image(featured_image)
+
+        if excerpt:
+            sleep(self.sleep_time)
+            self.post_excerpt(excerpt)
+
+        if docx_path:
+            sleep(self.sleep_time)
+            html = self.docx_to_html(docx_path)
+            self.post_content_block_html(html)</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="wordpress.WordPress.error"><code class="name">var <span class="ident">error</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="wordpress.WordPress.messages"><code class="name">var <span class="ident">messages</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="wordpress.WordPress.sleep_time_page_load"><code class="name">var <span class="ident">sleep_time_page_load</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="wordpress.WordPress.success"><code class="name">var <span class="ident">success</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Static methods</h3>
+<dl>
+<dt id="wordpress.WordPress.read_html"><code class="name flex">
+<span>def <span class="ident">read_html</span></span>(<span>html_path, full=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Read html file and return the code</p>
+<p>:type html_path: str</p>
+<p>:type full: bool</p>
+<p>:param html_path: html file path</p>
+<p>:param full: True to get full code, otherwise code in body tag. (optional)</p>
+<p>:return: html code of the file</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def read_html(html_path, full=False):
+    &#34;&#34;&#34; Read html file and return the code
+
+    :type html_path: str
+
+    :type full: bool
+
+    :param html_path: html file path
+
+    :param full: True to get full code, otherwise code in body tag. (optional)
+
+    :return: html code of the file
+    &#34;&#34;&#34;
+    f = codecs.open(html_path, &#39;r&#39;)
+    html = f.read()
+    soup = BeautifulSoup(html, &#39;html.parser&#39;)
+    if not full:
+        return soup.body.prettify()
+    else:
+        return soup.prettify()</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="wordpress.WordPress.get_completed"><code class="name">var <span class="ident">get_completed</span></code></dt>
+<dd>
+<div class="desc"><p>Returns a string with completed tasks</p>
+<p>:rtype: str</p>
+<h2 id="example">Example</h2>
+<p>wp.get_completed()</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def get_completed(self):
+    &#34;&#34;&#34; Returns a string with completed tasks
+
+    :rtype: str
+
+    Example
+    ----
+    wp.get_completed()
+    &#34;&#34;&#34;
+
+    return &#34;Completed Tasks: \n&#34; + self.success</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.get_errors"><code class="name">var <span class="ident">get_errors</span></code></dt>
+<dd>
+<div class="desc"><p>Returns a string with failed tasks</p>
+<p>:rtype: str</p>
+<h2 id="example">Example</h2>
+<p>wp.get_errors()</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def get_errors(self):
+    &#34;&#34;&#34; Returns a string with failed tasks
+
+    :rtype: str
+
+    Example
+    ----
+    wp.get_errors()
+    &#34;&#34;&#34;
+
+    return &#34;Errors: \n&#34; + self.error</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="wordpress.WordPress.chrome_options_edit"><code class="name flex">
+<span>def <span class="ident">chrome_options_edit</span></span>(<span>self, window_size=None, gpu=False, user_agent=True, info_bars=False, extensions=False, notification=False)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def chrome_options_edit(self, window_size=None, gpu=False, user_agent=True, info_bars=False, extensions=False,
+                        notification=False):
+    if window_size:
+        self.chrome_options.add_argument(f&#39;--window-size={window_size[0]},{window_size[1]}&#39;)
+    if not gpu:
+        self.chrome_options.add_argument(&#39;--disable-gpu&#39;)
+    if user_agent:
+        self.__user_agent_generator()
+        self.chrome_options.add_argument(f&#39;user-agent={self.user_agent}&#39;)
+    if not info_bars:
+        self.chrome_options.add_argument(&#34;--disable-infobars&#34;)
+    if not extensions:
+        self.chrome_options.add_argument(&#34;--disable-extensions&#34;)
+    if not notification:
+        self.chrome_options.add_experimental_option(&#34;prefs&#34;, {
+            &#34;profile.default_content_setting_values.notifications&#34;: 2
+        })
+    self.browser = webdriver.Chrome(chrome_options=self.chrome_options)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.click_exists_by_xpath"><code class="name flex">
+<span>def <span class="ident">click_exists_by_xpath</span></span>(<span>self, xpath, error=None, success=None, wait=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Click html element by xpath, if it exists</p>
+<p>:type xpath: str</p>
+<p>:type error: str</p>
+<p>:type success: str</p>
+<p>:type wait: bool</p>
+<p>:param xpath: xpath of html element</p>
+<p>:param error: error note in case of failure (Optional)</p>
+<p>:param success: success note in case of completion (Optional)</p>
+<p>:param wait: After click, wait for time(if sleep_time set in constructor else 2 seconds) (Optional)</p>
+<h2 id="example">Example</h2>
+<p>wp.click_exists_by_xpath('//input[@name="login"]')</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def click_exists_by_xpath(self, xpath, error=None, success=None, wait=False):
+    &#34;&#34;&#34; Click html element by xpath, if it exists
+
+    :type xpath: str
+
+    :type error: str
+
+    :type success: str
+
+    :type wait: bool
+
+    :param xpath: xpath of html element
+
+    :param error: error note in case of failure (Optional)
+
+    :param success: success note in case of completion (Optional)
+
+    :param wait: After click, wait for time(if sleep_time set in constructor else 2 seconds) (Optional)
+
+    Example
+    ----
+    wp.click_exists_by_xpath(&#39;//input[@name=&#34;login&#34;]&#39;)
+
+    &#34;&#34;&#34;
+
+    try:
+        self.browser.find_element_by_xpath(xpath).click()
+        if wait:
+            sleep(self.sleep_time)
+    except selenium_exception.NoSuchElementException:
+        if error:
+            self.error += &#34;ERROR: &#34; + error + &#34; [Element Not Found]\r\n&#34;
+        return False
+    except selenium_exception.ElementNotInteractableException:
+        if error:
+            self.error += &#34;ERROR: &#34; + error + &#34; [Element Not Intractable]\r\n&#34;
+        return False
+    except (selenium_exception.WebDriverException, selenium_exception.ElementClickInterceptedException):
+        try:
+            btn = self.browser.find_element_by_xpath(xpath)
+            self.browser.execute_script(&#34;arguments[0].click();&#34;, btn)
+            if wait:
+                sleep(self.sleep_time)
+        except selenium_exception:
+            if error:
+                self.error += &#34;ERROR: &#34; + error + &#34;\r\n&#34;
+            return False
+    if success:
+        self.success += &#34;SUCCESS: &#34; + success + &#34;\r\n&#34;
+    return True</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.click_exists_by_xpath_elements"><code class="name flex">
+<span>def <span class="ident">click_exists_by_xpath_elements</span></span>(<span>self, xpath, wait=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Click html elements by xpath, if they exist</p>
+<p>:type xpath: str</p>
+<p>:type wait: bool</p>
+<p>:param xpath: xpath of html elements</p>
+<p>:param wait: After click on all elements, wait for time(if sleep_time set in constructor else 2 seconds)
+(Optional)</p>
+<h2 id="example">Example</h2>
+<p>wp.click_exists_by_xpath_elements('//input[@type="button"]')</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def click_exists_by_xpath_elements(self, xpath, wait=False):
+    &#34;&#34;&#34; Click html elements by xpath, if they exist
+
+    :type xpath: str
+
+    :type wait: bool
+
+    :param xpath: xpath of html elements
+
+    :param wait: After click on all elements, wait for time(if sleep_time set in constructor else 2 seconds)
+    (Optional)
+
+    Example
+    ----
+    wp.click_exists_by_xpath_elements(&#39;//input[@type=&#34;button&#34;]&#39;)
+
+    &#34;&#34;&#34;
+
+    elms = self.browser.find_elements_by_xpath(xpath)
+    for elm in elms:
+        try:
+            elm.click()
+        except selenium_exception.NoSuchElementException:
+            continue
+        except selenium_exception.ElementNotInteractableException:
+            continue
+        except (selenium_exception.WebDriverException, selenium_exception.ElementClickInterceptedException):
+            try:
+                self.browser.execute_script(&#34;arguments[0].click();&#34;, elm)
+            except selenium_exception:
+                continue
+    if wait:
+        sleep(self.sleep_time)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.close"><code class="name flex">
+<span>def <span class="ident">close</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Close Chrome window.</p>
+<h2 id="example">Example</h2>
+<p>wp.close()</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def close(self):
+    &#34;&#34;&#34; Close Chrome window.
+
+    Example
+    ----
+    wp.close()
+    &#34;&#34;&#34;
+
+    self.browser.close()</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.docx_to_html"><code class="name flex">
+<span>def <span class="ident">docx_to_html</span></span>(<span>self, docx_path)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Convert docx file to html code</p>
+<p>:param docx_path: Path of docx file</p>
+<p>:return: html code</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def docx_to_html(self, docx_path):
+    &#34;&#34;&#34; Convert docx file to html code
+
+    :param docx_path: Path of docx file
+
+    :return: html code
+    &#34;&#34;&#34;
+    with open(docx_path, &#34;rb&#34;) as docx_file:
+        result = d2h.convert_to_html(docx_file)
+        html = result.value
+        self.messages = result.messages
+    return html</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.maximize_window"><code class="name flex">
+<span>def <span class="ident">maximize_window</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Maximize Chrome window.</p>
+<h2 id="example">Example</h2>
+<p>wp.maximize_window()</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def maximize_window(self):
+    &#34;&#34;&#34; Maximize Chrome window.
+
+    Example
+    ----
+    wp.maximize_window()
+    &#34;&#34;&#34;
+
+    self.browser.maximize_window()</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.open_page_posts"><code class="name flex">
+<span>def <span class="ident">open_page_posts</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Open All Posts Page</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def open_page_posts(self):
+    &#34;&#34;&#34; Open All Posts Page
+    &#34;&#34;&#34;
+
+    self.browser.get(self.site_url + &#34;/wp-admin/edit.php&#34;)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.paste_in_browser"><code class="name flex">
+<span>def <span class="ident">paste_in_browser</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Paste content from clipboard in active html element in browser</p>
+<h2 id="example">Example</h2>
+<p>wp.paste_in_browser()</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def paste_in_browser(self):
+    &#34;&#34;&#34; Paste content from clipboard in active html element in browser
+
+    Example
+    ----
+    wp.paste_in_browser()
+
+    &#34;&#34;&#34;
+
+    action = ActionChains(self.browser)
+    action.key_down(Keys.CONTROL)
+    action.send_keys(&#39;v&#39;)
+    action.key_up(Keys.CONTROL)
+    action.perform()</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_category"><code class="name flex">
+<span>def <span class="ident">post_category</span></span>(<span>self, category)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set post category name</p>
+<p>:type category: str</p>
+<p>:param category: Post category name</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_category(self, category):
+    &#34;&#34;&#34; Set post category name
+
+    :type category: str
+
+    :param category: Post category name
+    &#34;&#34;&#34;
+
+    err = &#39;Unable to expand Categories Panel(Categories)!&#39;
+    if self.click_exists_by_xpath(&#39;//button[text()=&#34;Categories&#34;]&#39;, err):
+        # Expand Categories
+        sleep(self.sleep_time)
+
+    check_cat = &#34;//label[text()=&#39;&#34; + category + &#34;&#39;]&#34;
+    if not self.__check_exists_by_xpath(check_cat):
+        # Add if category does not exist
+        err = &#34;Unable to click Add New Category 1&#34;
+        self.click_exists_by_xpath(&#39;//button[text()=&#34;Add New Category&#34;]&#39;, err)
+
+        err = &#34;Unable to type Category name&#34;
+        self.send_text_exists_by_xpath(&#34;//*[@id=&#39;editor-post-taxonomies__hierarchical-terms-input-0&#39;]&#34;, category,
+                                       err)
+
+        err = &#34;Unable to click Add New Category 2&#34;
+        self.click_exists_by_xpath(&#39;//button[@type=&#34;submit&#34; and text()=&#34;Add New Category&#34;]&#39;, err)
+    else:
+        # Select category
+        err = &#34;Unable to Select category&#34;
+        self.click_exists_by_xpath(check_cat, err)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_content_block_add"><code class="name flex">
+<span>def <span class="ident">post_content_block_add</span></span>(<span>self, block_name)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add a block in the editor
+Available blocks are: Heading, Paragraph, List, Image, Custom HTML</p>
+<p>:type block_name: str</p>
+<p>:param block_name: block name to be added (case insensitive) ['heading', 'paragraph', 'list', 'image', 'html']</p>
+<h2 id="example">Example</h2>
+<h1 id="for-heading">For Heading:</h1>
+<p>wp.post_content_block_add("heading")</p>
+<h1 id="for-paragraph">For Paragraph:</h1>
+<p>wp.post_content_block_add("paragraph")</p>
+<h1 id="for-list">For List:</h1>
+<p>wp.post_content_block_add("list")</p>
+<h1 id="for-image">For Image:</h1>
+<p>wp.post_content_block_add("image")</p>
+<h1 id="for-custom-html">For Custom HTML:</h1>
+<p>wp.post_content_block_add("html")</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_content_block_add(self, block_name):
+    &#34;&#34;&#34; Add a block in the editor
+    Available blocks are: Heading, Paragraph, List, Image, Custom HTML
+
+    :type block_name: str
+
+    :param block_name: block name to be added (case insensitive) [&#39;heading&#39;, &#39;paragraph&#39;, &#39;list&#39;, &#39;image&#39;, &#39;html&#39;]
+
+    Example
+    ----
+    # For Heading:
+
+    wp.post_content_block_add(&#34;heading&#34;)
+
+    # For Paragraph:
+
+    wp.post_content_block_add(&#34;paragraph&#34;)
+
+    # For List:
+
+    wp.post_content_block_add(&#34;list&#34;)
+
+    # For Image:
+
+    wp.post_content_block_add(&#34;image&#34;)
+
+    # For Custom HTML:
+
+    wp.post_content_block_add(&#34;html&#34;)
+
+    &#34;&#34;&#34;
+
+    blocks = {
+        &#39;heading&#39;: &#39;Heading&#39;,
+        &#39;paragraph&#39;: &#39;Paragraph&#39;,
+        &#39;list&#39;: &#39;List&#39;,
+        &#39;image&#39;: &#39;Image&#39;,
+        &#39;html&#39;: &#39;Custom HTML&#39;
+    }
+    if block_name.lower() not in blocks:
+        self.__set_error(&#39;Enter a valid block name&#39;)
+        return False
+    err = &#39;Unable to add block :&#39; + block_name
+    cmp = block_name + &#39; Added&#39;
+    check_add = &#39;//button[@type=&#34;button&#34; and @aria-label=&#34;Add block&#34;]&#39;
+    if self.click_exists_by_xpath(check_add, err):
+        check_add = &#39;//input[@type=&#34;search&#34; and @placeholder=&#34;Search for a block&#34;]&#39;
+        if self.send_text_exists_by_xpath(check_add, block_name, wait=True):
+            check_add = &#39;//span[text()=&#34;&#39; + blocks[block_name] + &#39;&#34;]/parent::button&#39;
+            if self.click_exists_by_xpath(check_add, err, cmp, True):
+                return True</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_content_block_edit_as_html"><code class="name flex">
+<span>def <span class="ident">post_content_block_edit_as_html</span></span>(<span>self, html=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Click on Edit as HTML Button of Editor Block</p>
+<p>:type html: bool</p>
+<p>:param html: True if editor block is to be edited as custom html</p>
+<h2 id="example">Example</h2>
+<p>wp.post_content_block_edit_as_html(True)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_content_block_edit_as_html(self, html=False):
+    &#34;&#34;&#34; Click on Edit as HTML Button of Editor Block
+
+    :type html: bool
+
+    :param html: True if editor block is to be edited as custom html
+
+    Example
+    ----
+    wp.post_content_block_edit_as_html(True)
+
+    &#34;&#34;&#34;
+
+    if html:
+        xpath_a = &#39;//button[text()=&#34;Edit as HTML&#34; and @type=&#34;button&#34;]&#39;
+        if not self.__check_exists_by_xpath(xpath_a):
+            # Open General Settings Menu
+            xpath_e = &#39;//button[@type=&#34;button&#34; and @aria-label=&#34;More options&#34;]&#39;
+            err = &#34;Unable to open General Settings Menu&#34;
+            self.click_exists_by_xpath(xpath_e, err, wait=True)
+        err = &#34;Unable to click Edit as html&#34;
+        self.click_exists_by_xpath(xpath_a, err, wait=True)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_content_block_heading"><code class="name flex">
+<span>def <span class="ident">post_content_block_heading</span></span>(<span>self, heading, style='default', align='left', text_color=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add heading block and customize it</p>
+<p>:type heading: str</p>
+<p>:type style: str</p>
+<p>:type align: str</p>
+<p>:type text_color: str</p>
+<p>:param heading: Heading text</p>
+<p>:param style: Style of heading tag. Allowed: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']</p>
+<p>:param align: Heading alignment (default="left"). Allowed: ['left', 'center', 'right'] (optional)</p>
+<p>:param text_color: hex color code for heading's text color. (optional)</p>
+<h2 id="example">Example</h2>
+<h1 id="simple">Simple</h1>
+<p>wp.post_content_block_heading("Heading 1")</p>
+<h1 id="customized">Customized</h1>
+<p>wp.post_content_block_heading("Heading 1", 'h1', 'center', '#1bbafe')</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_content_block_heading(self, heading, style=&#39;default&#39;, align=&#39;left&#39;, text_color=None):
+    &#34;&#34;&#34; Add heading block and customize it
+
+    :type heading: str
+
+    :type style: str
+
+    :type align: str
+
+    :type text_color: str
+
+    :param heading: Heading text
+
+    :param style: Style of heading tag. Allowed: [&#39;h1&#39;, &#39;h2&#39;, &#39;h3&#39;, &#39;h4&#39;, &#39;h5&#39;, &#39;h6&#39;]
+
+    :param align: Heading alignment (default=&#34;left&#34;). Allowed: [&#39;left&#39;, &#39;center&#39;, &#39;right&#39;] (optional)
+
+    :param text_color: hex color code for heading&#39;s text color. (optional)
+
+    Example
+    ----
+    # Simple
+
+    wp.post_content_block_heading(&#34;Heading 1&#34;)
+
+    # Customized
+
+    wp.post_content_block_heading(&#34;Heading 1&#34;, &#39;h1&#39;, &#39;center&#39;, &#39;#1bbafe&#39;)
+
+    &#34;&#34;&#34;
+
+    if self.post_content_block_add(&#39;heading&#39;):
+        self.send_text_in_browser(heading)
+        if align != &#34;left&#34;:
+            self.post_content_block_setting_text_align(align)
+        if style != &#39;default&#39;:
+            self.post_content_block_setting_heading(style)
+        if text_color:
+            self.post_content_block_setting_color(text_color)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_content_block_html"><code class="name flex">
+<span>def <span class="ident">post_content_block_html</span></span>(<span>self, html)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add html block</p>
+<p>:type html: str</p>
+<p>:param html: html code for html block</p>
+<h2 id="example">Example</h2>
+<p>wp.post_content_block_html("<div><h5>Heading</h5></div>")</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_content_block_html(self, html):
+    &#34;&#34;&#34; Add html block
+
+    :type html: str
+
+    :param html: html code for html block
+
+    Example
+    ----
+    wp.post_content_block_html(&#34;&lt;div&gt;&lt;h5&gt;Heading&lt;/h5&gt;&lt;/div&gt;&#34;)
+
+    &#34;&#34;&#34;
+
+    self.post_content_block_add(&#39;html&#39;)
+    self.send_text_in_browser(html)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_content_block_image"><code class="name flex">
+<span>def <span class="ident">post_content_block_image</span></span>(<span>self, image_name=None, caption=None, image_url=None, align='left', round_shape=None, alt_text=None, size=None, width=None, height=None, percentage=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add image block and customize it
+For Image block image should be in media library or use url.</p>
+<p>:type image_name: str</p>
+<p>:type caption: str</p>
+<p>:type image_url: str</p>
+<p>:type align: str</p>
+<p>:type round_shape: bool</p>
+<p>:type alt_text: str</p>
+<p>:type size: str</p>
+<p>:type width: int</p>
+<p>:type height: int</p>
+<p>:type percentage: int</p>
+<p Image WordPress be for in media must of site_="site," this to work>:param image_name: Image name in media library. (Full image name is not necessary) (optional)</p>
+<p>:param caption: Caption for Image (optional)</p>
+<p>:param image_url: Image url (optional)</p>
+<p>:param align: image alignment (default="left"). Allowed: ['left', 'center', 'right']</p>
+<p>:param round_shape: True, to set round borders. (default=False)</p>
+<p>:param alt_text: Alt text for image (optional)</p>
+<p>:param size: Select size of Image from editor. Allowed: ['thumbnail', 'medium', 'large', 'full'] (optional)</p>
+<p>:param width: Width of image (optional)</p>
+<p>:param height: Height of image (optional)</p>
+<p>:param percentage: Percentage of image. Allowed: [25, 50, 75, 100] (optional)</p>
+<h2 id="example">Example</h2>
+<h1 id="simple">Simple</h1>
+<p>wp.post_content_block_image("ImageName")</p>
+<p>wp.post_content_block_image(None, None, "https://www.example.com/image")</p>
+<h1 id="customized">Customized</h1>
+<p>wp.post_content_block_image("ImageName", "caption", None, "center", True, "alt-text", "thumbnail", 500, 500, 75)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_content_block_image(self, image_name=None, caption=None, image_url=None, align=&#39;left&#39;, round_shape=None,
+                             alt_text=None, size=None, width=None, height=None, percentage=None):
+    &#34;&#34;&#34; Add image block and customize it
+    For Image block image should be in media library or use url.
+
+    :type image_name: str
+
+    :type caption: str
+
+    :type image_url: str
+
+    :type align: str
+
+    :type round_shape: bool
+
+    :type alt_text: str
+
+    :type size: str
+
+    :type width: int
+
+    :type height: int
+
+    :type percentage: int
+
+    :param image_name: Image name in media library. (Full image name is not necessary) (optional)
+    {Image must be in media of WordPress site, for this to work}
+
+    :param caption: Caption for Image (optional)
+
+    :param image_url: Image url (optional)
+
+    :param align: image alignment (default=&#34;left&#34;). Allowed: [&#39;left&#39;, &#39;center&#39;, &#39;right&#39;]
+
+    :param round_shape: True, to set round borders. (default=False)
+
+    :param alt_text: Alt text for image (optional)
+
+    :param size: Select size of Image from editor. Allowed: [&#39;thumbnail&#39;, &#39;medium&#39;, &#39;large&#39;, &#39;full&#39;] (optional)
+
+    :param width: Width of image (optional)
+
+    :param height: Height of image (optional)
+
+    :param percentage: Percentage of image. Allowed: [25, 50, 75, 100] (optional)
+
+    Example
+    ----
+    # Simple
+
+    wp.post_content_block_image(&#34;ImageName&#34;)
+
+    wp.post_content_block_image(None, None, &#34;https://www.example.com/image&#34;)
+
+    # Customized
+
+    wp.post_content_block_image(&#34;ImageName&#34;, &#34;caption&#34;, None, &#34;center&#34;, True, &#34;alt-text&#34;, &#34;thumbnail&#34;, 500, 500, 75)
+
+    &#34;&#34;&#34;
+
+    check = False
+    if self.post_content_block_add(&#39;image&#39;):
+        if image_name:
+            err = &#34;Unable to click Media Library Button&#34;
+            if self.click_exists_by_xpath(&#39;//button[text()=&#34;Media Library&#34;]&#39;, err, wait=True):
+                if self.__media_search_and_select(image_name) is True:
+                    check = True
+
+        if image_url:
+            err = &#34;Unable to click Insert from URL Button&#34;
+            if self.click_exists_by_xpath(&#39;//button[text()=&#34;Insert from URL&#34;]&#39;, err, wait=True):
+                self.send_text_in_browser(image_url)
+                err = &#34;Unable to click Apply Button&#34;
+                if self.click_exists_by_xpath(&#39;//button[@type=&#34;submit&#34; and @aria-label=&#34;Apply&#34;]&#39;, err, wait=True):
+                    size = None
+                    check = True
+
+        if check:
+            if align != &#34;left&#34;:
+                self.post_content_block_setting_image_align(align)
+
+            if caption:
+                xpath = &#39;//figcaption[@role=&#34;textbox&#34; and text()=&#34;&#34;]&#39;
+                err = &#34;Unable to type caption&#34;
+                if self.send_text_exists_by_xpath(xpath, caption, err, wait=True):
+                    if not percentage and not width and not height:
+                        percentage = 100
+
+            self.post_content_block_setting_image_style(round_shape)
+            self.post_content_block_setting_image(alt_text, size, width, height, percentage)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_content_block_list"><code class="name flex">
+<span>def <span class="ident">post_content_block_list</span></span>(<span>self, list_text, ordered=False, start=None, reverse=False, separator='.')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add list block and customize it</p>
+<p>:type list_text: str</p>
+<p>:type ordered: bool</p>
+<p>:type start: int</p>
+<p>:type reverse: bool</p>
+<p>:type separator: str</p>
+<p>:param list_text: List</p>
+<p>:param ordered: True, for numbering. (optional)</p>
+<p>:param start: Number from where to start the list. (optional)</p>
+<p>:param reverse: Reverse the numbering of list. (optional)</p>
+<p>:param separator: Separator before new item in the list. (default=".")
+Example: "Line 1. Line 2" &ndash; Here "." is the separator between list items.</p>
+<h2 id="example">Example</h2>
+<h1 id="un-ordered-list">Un-ordered List</h1>
+<p>wp.post_content_block_list("Line 1. Line 2")</p>
+<h1 id="ordered-list">Ordered List</h1>
+<p>wp.post_content_block_list("Line 1. Line 2", True, 50, True)</p>
+<h1 id="using-separator">Using separator</h1>
+<p>wp.post_content_block_list("Line 1, Line 2", True, 50, True, ",")</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_content_block_list(self, list_text, ordered=False, start=None, reverse=False, separator=&#39;.&#39;):
+    &#34;&#34;&#34; Add list block and customize it
+
+    :type list_text: str
+
+    :type ordered: bool
+
+    :type start: int
+
+    :type reverse: bool
+
+    :type separator: str
+
+    :param list_text: List
+
+    :param ordered: True, for numbering. (optional)
+
+    :param start: Number from where to start the list. (optional)
+
+    :param reverse: Reverse the numbering of list. (optional)
+
+    :param separator: Separator before new item in the list. (default=&#34;.&#34;)
+    Example: &#34;Line 1. Line 2&#34; -- Here &#34;.&#34; is the separator between list items.
+
+    Example
+    ----
+    # Un-ordered List
+
+    wp.post_content_block_list(&#34;Line 1. Line 2&#34;)
+
+    # Ordered List
+
+    wp.post_content_block_list(&#34;Line 1. Line 2&#34;, True, 50, True)
+
+    # Using separator
+
+    wp.post_content_block_list(&#34;Line 1, Line 2&#34;, True, 50, True, &#34;,&#34;)
+
+    &#34;&#34;&#34;
+
+    if self.post_content_block_add(&#39;list&#39;):
+        if ordered:
+            err = &#34;Unable to Order list&#34;
+            xpath = &#39;//button[@type=&#34;button&#34; and @aria-label=&#34;Convert to ordered list&#34;]&#39;
+            self.click_exists_by_xpath(xpath, err, wait=True)
+
+        list_text = list_text.split(separator)
+        del list_text[len(list_text) - 1]
+        for i in range(0, len(list_text)):
+            if list_text[i]:
+                if list_text[i][0] == &#34; &#34;:
+                    list_text[i] = list_text[i].replace(&#34; &#34;, &#34;&#34;, 1)
+            self.send_text_in_browser(list_text[i] + separator)
+            if i == len(list_text) - 1:
+                break
+            self.send_text_in_browser(Keys.RETURN)
+
+        if ordered and (start or reverse):
+            self.post_content_block_setting_ordered_list(start, reverse)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_content_block_paragraph"><code class="name flex">
+<span>def <span class="ident">post_content_block_paragraph</span></span>(<span>self, paragraph, align='left', size=None, custom_size=None, drop_cap=False, text_color=None, bg_color=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add paragraph block and customize it</p>
+<p>:type paragraph: str</p>
+<p>:type align: str</p>
+<p>:type size: str</p>
+<p>:type custom_size: int</p>
+<p>:type drop_cap: bool</p>
+<p>:type text_color: str</p>
+<p>:type bg_color: str</p>
+<p>:param paragraph: Paragraph text</p>
+<p>:param align: Paragraph alignment (default="left"). Allowed: ['left', 'center', 'right'] (optional)</p>
+<p>:param size: choose font size from sizes available in the editor:
+['default', 'small', 'normal', 'medium', 'large', 'huge'] (optional)</p>
+<p>:param custom_size: font size (optional)</p>
+<p>:param drop_cap: Set first character of paragraph to capital (optional)</p>
+<p>:param text_color: hex color code for paragraph's text color. (optional)</p>
+<p>:param bg_color: hex color code for paragraph's background color. (optional)</p>
+<h2 id="example">Example</h2>
+<h1 id="simple">Simple</h1>
+<p>wp.post_content_block_paragraph("This is a paragraph.")</p>
+<h1 id="customized">Customized</h1>
+<p>wp.post_content_block_paragraph("This is a paragraph.", "center", "normal", None, True, "#1bbafe", "#ffffff")</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_content_block_paragraph(self, paragraph, align=&#39;left&#39;, size=None, custom_size=None, drop_cap=False,
+                                 text_color=None, bg_color=None):
+    &#34;&#34;&#34; Add paragraph block and customize it
+
+    :type paragraph: str
+
+    :type align: str
+
+    :type size: str
+
+    :type custom_size: int
+
+    :type drop_cap: bool
+
+    :type text_color: str
+
+    :type bg_color: str
+
+    :param paragraph: Paragraph text
+
+    :param align: Paragraph alignment (default=&#34;left&#34;). Allowed: [&#39;left&#39;, &#39;center&#39;, &#39;right&#39;] (optional)
+
+    :param size: choose font size from sizes available in the editor:
+    [&#39;default&#39;, &#39;small&#39;, &#39;normal&#39;, &#39;medium&#39;, &#39;large&#39;, &#39;huge&#39;] (optional)
+
+    :param custom_size: font size (optional)
+
+    :param drop_cap: Set first character of paragraph to capital (optional)
+
+    :param text_color: hex color code for paragraph&#39;s text color. (optional)
+
+    :param bg_color: hex color code for paragraph&#39;s background color. (optional)
+
+    Example
+    ----
+    # Simple
+
+    wp.post_content_block_paragraph(&#34;This is a paragraph.&#34;)
+
+    # Customized
+
+    wp.post_content_block_paragraph(&#34;This is a paragraph.&#34;, &#34;center&#34;, &#34;normal&#34;, None, True, &#34;#1bbafe&#34;, &#34;#ffffff&#34;)
+
+    &#34;&#34;&#34;
+
+    if self.post_content_block_add(&#39;paragraph&#39;):
+        self.send_text_in_browser(paragraph)
+        if align != &#34;left&#34;:
+            self.post_content_block_setting_text_align(align)
+
+        if size or custom_size or drop_cap:
+            self.post_content_block_setting_text(size, custom_size, drop_cap)
+
+        if text_color or bg_color:
+            self.post_content_block_setting_color(text_color, bg_color)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_content_block_setting_color"><code class="name flex">
+<span>def <span class="ident">post_content_block_setting_color</span></span>(<span>self, text_color, bg_color=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set color of text and background</p>
+<p>:type text_color: str</p>
+<p>:type bg_color: str</p>
+<p>:param text_color: hex color code</p>
+<p>:param bg_color: hex color code (optional)</p>
+<h2 id="example">Example</h2>
+<p>wp.post_content_block_setting_color('#1bbafe', '#ffffff')</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_content_block_setting_color(self, text_color, bg_color=None):
+    &#34;&#34;&#34; Set color of text and background
+
+    :type text_color: str
+
+    :type bg_color: str
+
+    :param text_color: hex color code
+
+    :param bg_color: hex color code (optional)
+
+    Example
+    ----
+    wp.post_content_block_setting_color(&#39;#1bbafe&#39;, &#39;#ffffff&#39;)
+
+    &#34;&#34;&#34;
+
+    xpath_color = &#39;(//button[text()=&#34;Custom color&#34; and @type=&#34;button&#34; and @aria-label=&#34;Custom color picker&#34;])[1]&#39;
+    if not self.__check_exists_by_xpath(xpath_color):
+        # Expand Color Settings
+        err = &#34;Unable to expand Color Settings&#34;
+        self.click_exists_by_xpath(&#39;//span[text()=&#34;Color settings&#34;]/parent::button[@type=&#34;button&#34;]&#39;, err, wait=True)
+
+    err = &#34;Unable to set text color&#34;
+    if self.click_exists_by_xpath(xpath_color, err):
+        xpath_color = &#39;//label[text()=&#34;Color value in hexadecimal&#34;]/following-sibling::input[@type=&#34;text&#34;]&#39;
+        sleep(self.sleep_time)
+        self.send_backspace_by_xpath(xpath_color, 8)
+        err = &#34;Unable to type text color&#34;
+        self.send_text_exists_by_xpath(xpath_color, text_color, err)
+
+    if bg_color:
+        xpath_color = &#39;(//button[@type=&#34;button&#34; and @aria-label=&#34;Custom color picker&#34; and text()=&#34;Custom color&#34;])[2]&#39;
+        err = &#34;Unable to set background color&#34;
+        if self.click_exists_by_xpath(xpath_color, err):
+            xpath_color = &#39;//label[text()=&#34;Color value in hexadecimal&#34;]/following-sibling::input[@type=&#34;text&#34;]&#39;
+            sleep(self.sleep_time)
+            self.send_backspace_by_xpath(xpath_color, 8)
+            err = &#34;Unable to type background color&#34;
+            self.send_text_exists_by_xpath(xpath_color, bg_color, err)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_content_block_setting_heading"><code class="name flex">
+<span>def <span class="ident">post_content_block_setting_heading</span></span>(<span>self, style)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Select Heading style
+Available styles are: h1, h2, h3, h4, h5, h6</p>
+<p>:type style: str</p>
+<p>:param style: Style of heading tag. Allowed: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']</p>
+<h2 id="example">Example</h2>
+<p>wp.post_content_block_setting_heading('h1')</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_content_block_setting_heading(self, style):
+    &#34;&#34;&#34; Select Heading style
+    Available styles are: h1, h2, h3, h4, h5, h6
+
+    :type style: str
+
+    :param style: Style of heading tag. Allowed: [&#39;h1&#39;, &#39;h2&#39;, &#39;h3&#39;, &#39;h4&#39;, &#39;h5&#39;, &#39;h6&#39;]
+
+    Example
+    ----
+    wp.post_content_block_setting_heading(&#39;h1&#39;)
+
+    &#34;&#34;&#34;
+
+    head = {
+        &#39;h1&#39;: &#39;Heading 1&#39;,
+        &#39;h2&#39;: &#39;Heading 2&#39;,
+        &#39;h3&#39;: &#39;Heading 3&#39;,
+        &#39;h4&#39;: &#39;Heading 4&#39;,
+        &#39;h5&#39;: &#39;Heading 5&#39;,
+        &#39;h6&#39;: &#39;Heading 6&#39;
+    }
+    if style.lower() in head:
+        check_h = &#39;//button[@type=&#34;button&#34; and @aria-label=&#34;&#39; + head[style] + &#39;&#34;]&#39;
+        if not self.__check_exists_by_xpath(check_h):
+            # Expand Heading Settings
+            err = &#39;Unable to expand Heading Settings&#39;
+            self.click_exists_by_xpath(&#39;//button[@type=&#34;button&#34; and text()=&#34;Heading Settings&#34;]&#39;, err)
+            sleep(self.sleep_time)
+
+        err = &#39;Invalid Heading style: [&#39; + style + &#39;]&#39;
+        self.click_exists_by_xpath(check_h, err)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_content_block_setting_image"><code class="name flex">
+<span>def <span class="ident">post_content_block_setting_image</span></span>(<span>self, alt_text=None, size=None, width=None, height=None, percentage=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set image block style</p>
+<p>:type alt_text: str</p>
+<p>:type size: str</p>
+<p>:type width: int</p>
+<p>:type height: int</p>
+<p>:type percentage: int</p>
+<p>:param alt_text: Alt text for image (optional)</p>
+<p>:param size: Select size of Image from editor. Allowed: ['thumbnail', 'medium', 'large', 'full'] (optional)</p>
+<p>:param width: Width of image (optional)</p>
+<p>:param height: Height of image (optional)</p>
+<p>:param percentage: Percentage of image. Allowed: [25, 50, 75, 100] (optional)</p>
+<h2 id="example">Example</h2>
+<p>wp.post_content_block_setting_image("Image 1", "full", 500, 500, 75%)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_content_block_setting_image(self, alt_text=None, size=None, width=None, height=None, percentage=None):
+    &#34;&#34;&#34; Set image block style
+
+    :type alt_text: str
+
+    :type size: str
+
+    :type width: int
+
+    :type height: int
+
+    :type percentage: int
+
+    :param alt_text: Alt text for image (optional)
+
+    :param size: Select size of Image from editor. Allowed: [&#39;thumbnail&#39;, &#39;medium&#39;, &#39;large&#39;, &#39;full&#39;] (optional)
+
+    :param width: Width of image (optional)
+
+    :param height: Height of image (optional)
+
+    :param percentage: Percentage of image. Allowed: [25, 50, 75, 100] (optional)
+
+    Example
+    ----
+    wp.post_content_block_setting_image(&#34;Image 1&#34;, &#34;full&#34;, 500, 500, 75%)
+
+    &#34;&#34;&#34;
+    xpath_s = &#39;//label[text()=&#34;Alt text (alternative text)&#34;]/following-sibling::textarea&#39;
+    if not self.__check_exists_by_xpath(xpath_s):
+        # Expand Styles Settings
+        err = &#34;Unable to expand Image Settings&#34;
+        self.click_exists_by_xpath(&#39;//button[text()=&#34;Image settings&#34; and @type=&#34;button&#34;]&#39;, err, wait=True)
+
+    if alt_text:
+        err = &#34;Unable to type alt text&#34;
+        self.send_text_exists_by_xpath(xpath_s, alt_text, err, wait=True)
+
+    if size:
+        s_list = [
+            &#34;thumbnail&#34;,
+            &#34;medium&#34;,
+            &#34;large&#34;,
+            &#34;full&#34;,
+        ]
+        if size.lower() in s_list:
+            xpath_s = &#39;//label[text()=&#34;Image size&#34;]/following-sibling::select/option[@value=&#34;&#39; + size.lower() + &#39;&#34;]&#39;
+            err = &#34;Unable to set size (option not available)&#34;
+            self.click_exists_by_xpath(xpath_s, err, wait=True)
+
+    if width:
+        xpath_s = &#39;//label[text()=&#34;Width&#34;]/following-sibling::input[@type=&#34;number&#34;]&#39;
+        err = &#34;Unable to set width&#34;
+        self.send_keys_select_all(xpath_s)
+        self.send_text_exists_by_xpath(xpath_s, width, err, wait=True)
+
+    if height:
+        xpath_s = &#39;//label[text()=&#34;Height&#34;]/following-sibling::input[@type=&#34;number&#34;]&#39;
+        err = &#34;Unable to set height&#34;
+        self.send_keys_select_all(xpath_s)
+        self.send_text_exists_by_xpath(xpath_s, height, err, wait=True)
+
+    if percentage:
+        p_list = {
+            25: &#39;25%&#39;,
+            50: &#39;50%&#39;,
+            75: &#39;75%&#39;,
+            100: &#39;100%&#39;,
+        }
+        if percentage in p_list:
+            xpath_s = &#39;//button[contains(text(), &#34;&#39; + str(percentage) + &#39;&#34;)]&#39;
+            err = &#34;Unable to set Percentage [xpath]: &#34; + xpath_s
+            self.click_exists_by_xpath(xpath_s, err, wait=True)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_content_block_setting_image_align"><code class="name flex">
+<span>def <span class="ident">post_content_block_setting_image_align</span></span>(<span>self, align='left')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Select image alignment
+Available alignments are: left, center, right</p>
+<p>:type align: str</p>
+<p>:param align: image alignment (default="left"). Allowed: ['left', 'center', 'right']</p>
+<h2 id="example">Example</h2>
+<p>wp.post_content_block_setting_image_align("center")</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_content_block_setting_image_align(self, align=&#39;left&#39;):
+    &#34;&#34;&#34; Select image alignment
+    Available alignments are: left, center, right
+
+    :type align: str
+
+    :param align: image alignment (default=&#34;left&#34;). Allowed: [&#39;left&#39;, &#39;center&#39;, &#39;right&#39;]
+
+    Example
+    ----
+    wp.post_content_block_setting_image_align(&#34;center&#34;)
+
+    &#34;&#34;&#34;
+
+    list_align = [
+        &#39;left&#39;,
+        &#39;center&#39;,
+        &#39;right&#39;
+    ]
+    if align.lower() in list_align:
+        xpath_a = &#39;//button[@type=&#34;button&#34; and text()=&#34;Align &#39; + align.lower() + &#39;&#34;]&#39;
+        if not self.__check_exists_by_xpath(xpath_a):
+            # Open Align Menu
+            xpath_e = &#39;//button[@type=&#34;button&#34; and @aria-label=&#34;Change alignment&#34;]&#39;
+            err = &#34;Unable to open Align Menu&#34;
+            self.click_exists_by_xpath(xpath_e, err, wait=True)
+        err = &#34;Unable to align image &#34; + align
+        self.click_exists_by_xpath(xpath_a, err, wait=True)
+    else:
+        self.__set_error(&#34;Invalid image alignment&#34;)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_content_block_setting_image_style"><code class="name flex">
+<span>def <span class="ident">post_content_block_setting_image_style</span></span>(<span>self, round_shape=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set Image Border's style</p>
+<p>:type round_shape: bool</p>
+<p>:param round_shape: True, to set round borders. (default=False)</p>
+<h2 id="example">Example</h2>
+<p>wp.post_content_block_setting_image_style(True)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_content_block_setting_image_style(self, round_shape=False):
+    &#34;&#34;&#34; Set Image Border&#39;s style
+
+    :type round_shape: bool
+
+    :param round_shape: True, to set round borders. (default=False)
+
+    Example
+    ----
+    wp.post_content_block_setting_image_style(True)
+
+    &#34;&#34;&#34;
+
+    xpath_s = &#39;//div[@role=&#34;button&#34; and @aria-label=&#34;Default&#34;]&#39;
+    if not self.__check_exists_by_xpath(xpath_s):
+        # Expand Styles Settings
+        err = &#34;Unable to expand Styles Settings&#34;
+        self.click_exists_by_xpath(&#39;//button[text()=&#34;Styles&#34; and @type=&#34;button&#34;]&#39;, err, wait=True)
+    if not round_shape:
+        err = &#34;Unable to set Default Style&#34;
+        self.click_exists_by_xpath(xpath_s, err, wait=True)
+    else:
+        xpath_s = &#39;//div[@role=&#34;button&#34; and @aria-label=&#34;Rounded&#34;]&#39;
+        err = &#34;Unable to set Round Style&#34;
+        self.click_exists_by_xpath(xpath_s, err, wait=True)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_content_block_setting_open"><code class="name flex">
+<span>def <span class="ident">post_content_block_setting_open</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Switch to BLOCK SETTING Panel on the right</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_content_block_setting_open(self):
+    &#34;&#34;&#34; Switch to BLOCK SETTING Panel on the right
+
+    &#34;&#34;&#34;
+
+    xpath = &#39;//button[@type=&#34;button&#34; and @aria-label=&#34;Block (selected)&#34;]&#39;
+    if self.__check_exists_by_xpath(xpath):
+        return True
+
+    xpath = &#39;//button[@type=&#34;button&#34; and @aria-label=&#34;Block&#34;]&#39;
+    err = &#34;Unable to open Block setting&#34;
+    self.click_exists_by_xpath(xpath, err, wait=True)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_content_block_setting_ordered_list"><code class="name flex">
+<span>def <span class="ident">post_content_block_setting_ordered_list</span></span>(<span>self, start=None, reverse=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Customize List block style</p>
+<p>:type start: int</p>
+<p>:type reverse: bool</p>
+<p>:param start: Number from where to start the list. (optional)</p>
+<p>:param reverse: Reverse the numbering of list. (optional)</p>
+<h2 id="example">Example</h2>
+<p>wp.post_content_block_setting_ordered_list(10, True)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_content_block_setting_ordered_list(self, start=None, reverse=False):
+    &#34;&#34;&#34; Customize List block style
+
+    :type start: int
+
+    :type reverse: bool
+
+    :param start: Number from where to start the list. (optional)
+
+    :param reverse: Reverse the numbering of list. (optional)
+
+    Example
+    ----
+    wp.post_content_block_setting_ordered_list(10, True)
+
+    &#34;&#34;&#34;
+    xpath_o = &#39;//label[text()=&#34;Start value&#34;]/following-sibling::input[@type=&#34;number&#34;]&#39;
+    if not self.__check_exists_by_xpath(xpath_o):
+        # Expand Ordered list Settings
+        err = &#34;Unable to expand Styles Settings&#34;
+        self.click_exists_by_xpath(&#39;//button[text()=&#34;Ordered list settings&#34; and @type=&#34;button&#34;]&#39;, err, wait=True)
+    if start:
+        err = &#34;Unable to set Start value&#34;
+        self.send_text_exists_by_xpath(xpath_o, start, err, wait=True)
+    if reverse:
+        xpath_o = &#39;//label[text()=&#34;Reverse list numbering&#34;]&#39;
+        err = &#39;Unable to reverse list order&#39;
+        self.click_exists_by_xpath(xpath_o, err, wait=True)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_content_block_setting_text"><code class="name flex">
+<span>def <span class="ident">post_content_block_setting_text</span></span>(<span>self, size=None, custom_size=None, drop_cap=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set Paragraph block settings</p>
+<p>:type size: str</p>
+<p>:type custom_size: int</p>
+<p>:type drop_cap: bool</p>
+<p>:param size: choose font size from sizes available in the editor:
+['default', 'small', 'normal', 'medium', 'large', 'huge'] (optional)</p>
+<p>:param custom_size: font size (optional)</p>
+<p>:param drop_cap: Set first character of paragraph to capital (optional)</p>
+<h2 id="example">Example</h2>
+<h1 id="using-editors-font-size">Using editor's font size</h1>
+<p>wp.post_content_block_setting_text("normal")</p>
+<h1 id="using-custom-font-size">Using custom font size</h1>
+<p>wp.post_content_block_setting_text(None, 54)</p>
+<h1 id="set-first-character-capital-of-text">Set First character capital of Text</h1>
+<p>wp.post_content_block_setting_text("small", None, True)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_content_block_setting_text(self, size=None, custom_size=None, drop_cap=False):
+    &#34;&#34;&#34; Set Paragraph block settings
+
+    :type size: str
+
+    :type custom_size: int
+
+    :type drop_cap: bool
+
+    :param size: choose font size from sizes available in the editor:
+    [&#39;default&#39;, &#39;small&#39;, &#39;normal&#39;, &#39;medium&#39;, &#39;large&#39;, &#39;huge&#39;] (optional)
+
+    :param custom_size: font size (optional)
+
+    :param drop_cap: Set first character of paragraph to capital (optional)
+
+    Example
+    ----
+    # Using editor&#39;s font size
+
+    wp.post_content_block_setting_text(&#34;normal&#34;)
+
+    # Using custom font size
+
+    wp.post_content_block_setting_text(None, 54)
+
+    # Set First character capital of Text
+
+    wp.post_content_block_setting_text(&#34;small&#34;, None, True)
+
+    &#34;&#34;&#34;
+
+    xpath_text = &#39;//label[text()=&#34;Custom&#34;]/following-sibling::input[@type=&#34;number&#34;]&#39;
+    if not self.__check_exists_by_xpath(xpath_text):
+        # Expand Text Settings
+        self.click_exists_by_xpath(&#39;//button[text()=&#34;Text Settings&#34; and @type=&#34;button&#34;]&#39;)
+        sleep(self.sleep_time)
+
+    if custom_size:
+        self.send_text_exists_by_xpath(xpath_text, custom_size)
+
+    if size:
+        size_list = {
+            &#39;default&#39;: 14,
+            &#39;small&#39;: 13,
+            &#39;normal&#39;: 16,
+            &#39;medium&#39;: 20,
+            &#39;large&#39;: 36,
+            &#39;huge&#39;: 48
+        }
+        if size.lower() in size_list:
+            err = &#39;Unable to choose text size: &#39; + size
+            self.send_text_exists_by_xpath(xpath_text, size_list[size], err)
+            sleep(self.sleep_time)
+        else:
+            self.__set_error(&#39;Invalid text size: &#39; + size)
+
+    if drop_cap:
+        xpath_text = &#39;//p[text()=&#34;Toggle to show a large initial letter.&#34;]/preceding-sibling::div//input[@type=&#34;checkbox&#34;]&#39;
+        err = &#39;Unable to use Drop Cap&#39;
+        self.click_exists_by_xpath(xpath_text, err)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_content_block_setting_text_align"><code class="name flex">
+<span>def <span class="ident">post_content_block_setting_text_align</span></span>(<span>self, align='left')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Select text alignment
+Available alignments are: left, center, right</p>
+<p>:type align: str</p>
+<p>:param align: text alignment (default="left"). Allowed: ['left', 'center', 'right']</p>
+<h2 id="example">Example</h2>
+<p>wp.post_content_block_setting_text_align("left")</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_content_block_setting_text_align(self, align=&#34;left&#34;):
+    &#34;&#34;&#34; Select text alignment
+    Available alignments are: left, center, right
+
+    :type align: str
+
+    :param align: text alignment (default=&#34;left&#34;). Allowed: [&#39;left&#39;, &#39;center&#39;, &#39;right&#39;]
+
+    Example
+    ----
+    wp.post_content_block_setting_text_align(&#34;left&#34;)
+
+    &#34;&#34;&#34;
+
+    list_align = [
+        &#39;left&#39;,
+        &#39;center&#39;,
+        &#39;right&#39;
+    ]
+    if align.lower() in list_align:
+        self.click_exists_by_xpath(&#39;//span[text()=&#34;Color settings&#34;]/parent::button[@type=&#34;button&#34;]&#39;, wait=True)
+        xpath_a = &#39;//button[@type=&#34;button&#34; and text()=&#34;Align text &#39; + align.lower() + &#39;&#34;]&#39;
+        if not self.__check_exists_by_xpath(xpath_a):
+            # Open Align Menu
+            xpath_e = &#39;//button[@type=&#34;button&#34; and @aria-label=&#34;Change text alignment&#34;]&#39;
+            err = &#34;Unable to open Text Align Menu&#34;
+            self.click_exists_by_xpath(xpath_e, err, wait=True)
+        err = &#34;Unable to align text &#34; + align
+        self.click_exists_by_xpath(xpath_a, err, wait=True)
+    else:
+        self.__set_error(&#34;Invalid text alignment&#34;)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_content_from_file"><code class="name flex">
+<span>def <span class="ident">post_content_from_file</span></span>(<span>self, file_path='', typing_effect=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>:type file_path: str</p>
+<p>:type typing_effect: bool</p>
+<p>:param file_path: path to docx or html file on computer</p>
+<p>:param typing_effect: True if keyboard typing effect is required. (optional) (default=False)</p>
+<h2 id="example">Example</h2>
+<h1 id="docx-file">Docx file</h1>
+<p>wp.post_content_from_file("C\Path\To\File.docx")</p>
+<h1 id="html-file-with-typing-effect">Html file with typing effect</h1>
+<p>wp.post_content_from_file("C\Path\To\File.html", True)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_content_from_file(self, file_path=&#39;&#39;, typing_effect=False):
+    &#34;&#34;&#34;
+
+    :type file_path: str
+
+    :type typing_effect: bool
+
+    :param file_path: path to docx or html file on computer
+
+    :param typing_effect: True if keyboard typing effect is required. (optional) (default=False)
+
+    Example
+    ----
+    # Docx file
+
+    wp.post_content_from_file(&#34;C\\Path\\To\\File.docx&#34;)
+
+    # Html file with typing effect
+
+    wp.post_content_from_file(&#34;C\\Path\\To\\File.html&#34;, True)
+
+    &#34;&#34;&#34;
+
+    list_ext = [
+        &#39;docx&#39;,
+        &#39;html&#39;
+    ]
+    ext = file_path.split(&#39;.&#39;)
+    if ext[-1].lower() in list_ext:
+        self.post_content_block_add(&#39;html&#39;)
+        if ext[-1].lower() == &#39;docx&#39;:
+            html = self.docx_to_html(file_path)
+        else:
+            html = self.read_html(file_path)
+        if not typing_effect:
+            pyperclip.copy(html)
+            sleep(self.sleep_time)
+            self.paste_in_browser()
+        else:
+            self.send_text_in_browser(html)
+    else:
+        self.__set_error(&#34;Invalid File Type&#34;)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_content_use_default_editor"><code class="name flex">
+<span>def <span class="ident">post_content_use_default_editor</span></span>(<span>self, xpath='//button[text()="Use Default Editor"]')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set Post Url</p>
+<p>:type xpath: str</p>
+<p>:param xpath: xpath of the use default editor button (optional)</p>
+<h2 id="example">Example</h2>
+<p>wp.post_content_use_default_editor()</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_content_use_default_editor(self, xpath=&#39;//button[text()=&#34;Use Default Editor&#34;]&#39;):
+    &#34;&#34;&#34; Set Post Url
+
+    :type xpath: str
+
+    :param xpath: xpath of the use default editor button (optional)
+
+    Example
+    ----
+    wp.post_content_use_default_editor()
+
+    &#34;&#34;&#34;
+
+    err = &#39;Unable to use default editor&#39;
+    self.click_exists_by_xpath(xpath, err)
+    sleep(self.sleep_time)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_discussion"><code class="name flex">
+<span>def <span class="ident">post_discussion</span></span>(<span>self, comments=True, traceback=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Configure Discussion settings for post</p>
+<p>:type comments: bool</p>
+<p>:type traceback: bool</p>
+<p>:param comments: False to Disable comments on post</p>
+<p>:param traceback: False to Disable pingbacks &amp; trackbacks</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_discussion(self, comments=True, traceback=True):
+    &#34;&#34;&#34; Configure Discussion settings for post
+
+    :type comments: bool
+
+    :type traceback: bool
+
+    :param comments: False to Disable comments on post
+
+    :param traceback: False to Disable pingbacks &amp; trackbacks
+    &#34;&#34;&#34;
+
+    element_discus = &#39;//label[text()=&#34;Allow comments&#34;]&#39;
+    if not self.__check_exists_by_xpath(element_discus):
+        # Expand Discussion
+        err = &#34;Unable to Expand Discussion&#34;
+        self.click_exists_by_xpath(&#39;//button[text()=&#34;Discussion&#34;]&#39;, err)
+
+    # Uncheck comments
+    if not comments:
+        err = &#34;Unable to Disable comments&#34;
+        self.click_exists_by_xpath(element_discus, err)
+    # Uncheck traceback
+    if not traceback:
+        element_discus = &#39;//label[text()=&#34;Allow pingbacks &amp; trackbacks&#34;]&#39;
+        err = &#34;Unable to Disable pingbacks &amp; trackbacks&#34;
+        self.click_exists_by_xpath(element_discus, err)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_document_setting_open"><code class="name flex">
+<span>def <span class="ident">post_document_setting_open</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Switch to DOCUMENT SETTING Panel on the right</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_document_setting_open(self):
+    &#34;&#34;&#34; Switch to DOCUMENT SETTING Panel on the right
+
+    &#34;&#34;&#34;
+
+    xpath = &#39;//button[@type=&#34;button&#34; and @aria-label=&#34;Document (selected)&#34;]&#39;
+    if self.__check_exists_by_xpath(xpath):
+        return True
+
+    xpath = &#39;//button[@type=&#34;button&#34; and @aria-label=&#34;Document&#34;]&#39;
+    err = &#34;Unable to open Document setting&#34;
+    self.click_exists_by_xpath(xpath, err, wait=True)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_excerpt"><code class="name flex">
+<span>def <span class="ident">post_excerpt</span></span>(<span>self, excerpt)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set Post excerpt</p>
+<p>:type excerpt: str</p>
+<p>:param excerpt: excerpt of the post</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_excerpt(self, excerpt):
+    &#34;&#34;&#34; Set Post excerpt
+
+    :type excerpt: str
+
+    :param excerpt: excerpt of the post
+    &#34;&#34;&#34;
+
+    check_excerpt = &#39;//label[text()=&#34;Write an excerpt (optional)&#34;]/following-sibling::textarea&#39;
+    if not self.__check_exists_by_xpath(check_excerpt):
+        # Expand Excerpt
+        err = &#34;Unable to Expand Excerpt Setting&#34;
+        self.click_exists_by_xpath(&#39;//button[text()=&#34;Excerpt&#34;]&#39;, err, wait=True)
+
+    # Add Excerpt
+    self.browser.find_element_by_xpath(check_excerpt).send_keys(excerpt)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_format"><code class="name flex">
+<span>def <span class="ident">post_format</span></span>(<span>self, formatting='standard')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set Post Format</p>
+<p>:type formatting: str</p>
+<p>:param formatting: Post display format. Allowed: ['standard', 'gallery', 'link', 'quote', 'video', 'audio']</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_format(self, formatting=&#39;standard&#39;):
+    &#34;&#34;&#34; Set Post Format
+
+    :type formatting: str
+
+    :param formatting: Post display format. Allowed: [&#39;standard&#39;, &#39;gallery&#39;, &#39;link&#39;, &#39;quote&#39;, &#39;video&#39;, &#39;audio&#39;]
+    &#34;&#34;&#34;
+
+    self.post_document_setting_open()
+    format_list = [&#39;standard&#39;, &#39;gallery&#39;, &#39;link&#39;, &#39;quote&#39;, &#39;video&#39;, &#39;audio&#39;]
+    if formatting.lower() in format_list:
+        xpath_ = &#39;//label[text()=&#34;Post Format&#34;]/following-sibling::div//select/option[@value=&#34;&#39; + formatting + &#39;&#34;]&#39;
+        err = &#34;Unable to select post format&#34;
+        self.click_exists_by_xpath(xpath_, err, wait=True)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_image"><code class="name flex">
+<span>def <span class="ident">post_image</span></span>(<span>self, image_name)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set Featured Image for Post</p>
+<p>:type image_name: str</p>
+<p>:param image_name: Name of the Image in media library.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_image(self, image_name):
+    &#34;&#34;&#34; Set Featured Image for Post
+
+    :type image_name: str
+
+    :param image_name: Name of the Image in media library.
+    &#34;&#34;&#34;
+
+    featured_img = &#39;//button[text()=&#34;Set featured image&#34;]&#39;
+    if not self.__check_exists_by_xpath(featured_img):
+        # Expand Featured Image
+        err = &#34;Unable to Expand Featured Image&#34;
+        self.click_exists_by_xpath(&#39;//button[text()=&#34;Featured image&#34;]&#39;, err)
+
+    err = &#34;Unable to click Set featured image&#34;
+    self.click_exists_by_xpath(&#39;//button[text()=&#34;Set featured image&#34;]&#39;, err, wait=True)
+    self.__media_search_and_select(image_name, &#34;Set featured image&#34;)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_new"><code class="name flex">
+<span>def <span class="ident">post_new</span></span>(<span>self, title, category=None, tag=None, featured_image=None, excerpt=None, docx_path=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add new post in WordPress site</p>
+<p>:type title: str</p>
+<p>:type category: str</p>
+<p>:type tag: str</p>
+<p>:type featured_image: str</p>
+<p>:type excerpt: str</p>
+<p>:type docx_path: str</p>
+<p>:param title: title of the post.</p>
+<p>:param category:
+category name of the post. (optional)</p>
+<p>:param tag: tag of the post. (optional)</p>
+<p>:param featured_image: name of the Image in media library to set as featured image. (optional)</p>
+<p>:param excerpt: excerpt of the post. (optional)</p>
+<p>:param docx_path: path of docx file. (optional)</p>
+<h2 id="example">Example</h2>
+<p>wp.post_new("Post Title", "Technology", "tech", "")</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_new(self, title, category=None, tag=None, featured_image=None, excerpt=None, docx_path=None):
+    &#34;&#34;&#34; Add new post in WordPress site
+
+    :type title: str
+
+    :type category: str
+
+    :type tag: str
+
+    :type featured_image: str
+
+    :type excerpt: str
+
+    :type docx_path: str
+
+    :param title: title of the post.
+
+    :param category:  category name of the post. (optional)
+
+    :param tag: tag of the post. (optional)
+
+    :param featured_image: name of the Image in media library to set as featured image. (optional)
+
+    :param excerpt: excerpt of the post. (optional)
+
+    :param docx_path: path of docx file. (optional)
+
+    Example
+    ----
+    wp.post_new(&#34;Post Title&#34;, &#34;Technology&#34;, &#34;tech&#34;, &#34;&#34;)
+
+    &#34;&#34;&#34;
+
+    self.browser.get(self.site_url + &#34;/wp-admin/post-new.php&#34;)
+    sleep(self.sleep_time_page_load)
+
+    xpath = &#39;//button[@type=&#34;button&#34; and @aria-label=&#34;Close dialog&#34;]&#39;
+    if self.__check_exists_by_xpath(xpath):
+        err = &#34;Unable to close tutorial pop up&#34;
+        self.click_exists_by_xpath(xpath, err)
+
+    self.post_content_use_default_editor()
+
+    # Add title
+    self.post_title(title)
+
+    if category:
+        sleep(self.sleep_time)
+        self.post_category(category)
+
+    if tag:
+        sleep(self.sleep_time)
+        self.post_tag(tag)
+
+    if featured_image:
+        sleep(self.sleep_time)
+        self.post_image(featured_image)
+
+    if excerpt:
+        sleep(self.sleep_time)
+        self.post_excerpt(excerpt)
+
+    if docx_path:
+        sleep(self.sleep_time)
+        html = self.docx_to_html(docx_path)
+        self.post_content_block_html(html)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_publish"><code class="name flex">
+<span>def <span class="ident">post_publish</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Publish Post</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_publish(self):
+    &#34;&#34;&#34; Publish Post
+    &#34;&#34;&#34;
+
+    xpath_p = &#39;//button[text()=&#34;Publish…&#34; and @aria-disabled=&#34;true&#34;]&#39;
+    if self.__check_exists_by_xpath(xpath_p):
+        sleep(self.sleep_time)
+    xpath_p = &#39;//button[text()=&#34;Publish…&#34;]&#39;
+    err = &#34;Unable to click Publish… Button (1)&#34;
+    if self.click_exists_by_xpath(xpath_p, err, wait=True):
+        xpath_p = &#39;//button[text()=&#34;Publish&#34;]&#39;
+        err = &#34;Unable to click Publish Button (2)&#34;
+        if self.click_exists_by_xpath(xpath_p, err, wait=True):
+            err = &#34;Unable to close panel after Publish&#34;
+            xpath_p = &#39;//button[@aria-label=&#34;Close panel&#34; and @type=&#34;button&#34;]&#39;
+            self.click_exists_by_xpath(xpath_p, err, wait=True)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_save_draft"><code class="name flex">
+<span>def <span class="ident">post_save_draft</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Save Post as Draft</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_save_draft(self):
+    &#34;&#34;&#34; Save Post as Draft
+    &#34;&#34;&#34;
+
+    xpath_save = &#39;//button[text()=&#34;Publish…&#34; and @aria-disabled=&#34;true&#34;]&#39;
+    if self.__check_exists_by_xpath(xpath_save):
+        sleep(self.sleep_time)
+    xpath_save = &#39;//button[text()=&#34;Save Draft&#34;]&#39;
+    if not self.__check_exists_by_xpath(xpath_save):
+        xpath_save = &#39;//button[text()=&#34;Save as Pending&#34;]&#39;
+        err = &#34;Unable to click Save as Pending Button&#34;
+        self.click_exists_by_xpath(xpath_save, err, wait=True)
+        sleep(self.sleep_time)
+    else:
+        err = &#34;Unable to click Save Draft Button&#34;
+        if self.click_exists_by_xpath(xpath_save, err, wait=True):
+            sleep(self.sleep_time)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_status"><code class="name flex">
+<span>def <span class="ident">post_status</span></span>(<span>self, visibility='public', password=None, stick_top=False, pending_review=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Configure Post Status Settings</p>
+<p>:type visibility: str</p>
+<p>:type password: str</p>
+<p>:type stick_top: bool</p>
+<p>:type pending_review: bool</p>
+<p>:param visibility: Visibility of Post. Allowed: ['public', 'private, 'password'] (optional)</p>
+<p>:param password: Password for post if visibility set to password protected.</p>
+<p>:param stick_top: True to stick post on top on the blog page. (optional)</p>
+<p>:param pending_review: True to add post in pending</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_status(self, visibility=&#39;public&#39;, password=None, stick_top=False, pending_review=False):
+    &#34;&#34;&#34; Configure Post Status Settings
+
+    :type visibility: str
+
+    :type password: str
+
+    :type stick_top: bool
+
+    :type pending_review: bool
+
+    :param visibility: Visibility of Post. Allowed: [&#39;public&#39;, &#39;private, &#39;password&#39;] (optional)
+
+    :param password: Password for post if visibility set to password protected.
+
+    :param stick_top: True to stick post on top on the blog page. (optional)
+
+    :param pending_review: True to add post in pending
+    &#34;&#34;&#34;
+
+    element_discus = &#39;//span[text()=&#34;Visibility&#34;]&#39;
+    if not self.__check_exists_by_xpath(element_discus):
+        # Expand Excerpt
+        self.browser.find_element_by_xpath(&#39;//button[text()=&#34;Status &amp; Visibility&#34;]&#39;).click()
+        sleep(self.sleep_time)
+
+    # Check stick on top
+    if stick_top:
+        element_discus = &#39;//label[text()=&#34;Stick to the top of the blog&#34;]/preceding-sibling::span/input[@type=&#34;checkbox&#34;]&#39;
+        err = &#39;Unable to interact with Stick on Top of the blog(Status &amp; Visibility)!&#39;
+        self.click_exists_by_xpath(element_discus, err)
+
+    # Check pending review
+    if pending_review:
+        element_discus = &#39;//label[text()=&#34;Pending review&#34;]/preceding-sibling::span/input[@type=&#34;checkbox&#34;]&#39;
+        err = &#39;Unable to interact with Pending Review(Status &amp; Visibility)!&#39;
+        self.click_exists_by_xpath(element_discus, err)
+
+    if visibility:
+        check = True
+        err = &#39;Unable to interact with Visibility(Status &amp; Visibility)!&#39;
+        if not self.click_exists_by_xpath(&#39;//button[text()=&#34;Public&#34;]&#39;):
+            if not self.click_exists_by_xpath(&#39;//button[text()=&#34;Private&#34;]&#39;):
+                check = self.click_exists_by_xpath(&#39;//button[text()=&#34;Password Protected&#34;]&#39;, err)
+
+        if check:
+            sleep(self.sleep_time)
+            if visibility.lower() == &#39;public&#39;:
+                self.click_exists_by_xpath(&#39;//input[@type=&#34;radio&#34; and @value=&#34;public&#34;]&#39;)
+            elif visibility.lower() == &#39;private&#39;:
+                self.click_exists_by_xpath(&#39;//input[@type=&#34;radio&#34; and @value=&#34;private&#34;]&#39;)
+                sleep(self.sleep_time)
+                alert_obj = self.browser.switch_to.alert
+                alert_obj.accept()
+                self.browser.switch_to.default_content()
+                sleep(self.sleep_time)
+            elif password and visibility.lower() == &#39;password&#39;:
+                self.click_exists_by_xpath(&#39;//input[@type=&#34;radio&#34; and @value=&#34;password&#34;]&#39;)
+                xpath_pass = &#39;//input[@type=&#34;text&#34; and @placeholder=&#34;Use a secure password&#34;]&#39;
+                err = &#39;Unable to type password(Status &amp; Visibility)!&#39;
+                self.send_text_exists_by_xpath(xpath_pass, password, err)
+                sleep(self.sleep_time)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_switch_to_draft"><code class="name flex">
+<span>def <span class="ident">post_switch_to_draft</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Switch Post from Published to Draft</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_switch_to_draft(self):
+    &#34;&#34;&#34; Switch Post from Published to Draft
+    &#34;&#34;&#34;
+
+    xpath_d = &#39;//button[text()=&#34;Switch to draft&#34;]&#39;
+    err = &#34;Unable to click Switch to Draft Button&#34;
+    sleep(self.sleep_time)
+    if self.click_exists_by_xpath(xpath_d, err, wait=True):
+        alert_obj = self.browser.switch_to.alert
+        alert_obj.accept()
+        self.browser.switch_to.default_content()
+        sleep(self.sleep_time)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_tag"><code class="name flex">
+<span>def <span class="ident">post_tag</span></span>(<span>self, tag)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set post tag</p>
+<p>:type tag: str</p>
+<p>:param tag: tag of the post</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_tag(self, tag):
+    &#34;&#34;&#34; Set post tag
+
+    :type tag: str
+
+    :param tag: tag of the post
+    &#34;&#34;&#34;
+
+    check_tag = &#39;//label[text()=&#34;Add New Tag&#34;]/following-sibling::div/child::input&#39;
+    if not self.__check_exists_by_xpath(check_tag):
+        # Expand Tags
+        err = &#34;Unable to Expand Tags&#34;
+        self.click_exists_by_xpath(&#39;//button[text()=&#34;Tags&#34;]&#39;, err, wait=True)
+
+    # Add Tag
+    tag_input = self.browser.find_element_by_xpath(check_tag)
+    tag_input.send_keys(tag + Keys.RETURN)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_title"><code class="name flex">
+<span>def <span class="ident">post_title</span></span>(<span>self, title)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set Post Title</p>
+<p>:type title: str</p>
+<p>:param title: title of the post</p>
+<h2 id="example">Example</h2>
+<p>wp.post_title("Post Title")</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_title(self, title):
+    &#34;&#34;&#34; Set Post Title
+
+    :type title: str
+
+    :param title: title of the post
+
+    Example
+    ----
+    wp.post_title(&#34;Post Title&#34;)
+
+    &#34;&#34;&#34;
+
+    if self.__check_exists_by_id(&#34;post-title-0&#34;):
+        self.browser.find_element_by_id(&#34;post-title-0&#34;).send_keys(title)
+    else:
+        self.__set_error(&#34;Unable to type post title!&#34;)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_update"><code class="name flex">
+<span>def <span class="ident">post_update</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Update Post</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_update(self):
+    &#34;&#34;&#34; Update Post
+    &#34;&#34;&#34;
+
+    xpath_u = &#39;//button[text()=&#34;Update&#34;]&#39;
+    err = &#34;Unable to click Update Button&#34;
+    if self.click_exists_by_xpath(xpath_u, err, wait=True):
+        sleep(self.sleep_time)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.post_url"><code class="name flex">
+<span>def <span class="ident">post_url</span></span>(<span>self, url)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set Post Url</p>
+<p>:type url: str</p>
+<p>:param url: title of the post</p>
+<h2 id="example">Example</h2>
+<p>wp.post_url("url")</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def post_url(self, url):
+    &#34;&#34;&#34; Set Post Url
+
+    :type url: str
+
+    :param url: title of the post
+
+    Example
+    ----
+    wp.post_url(&#34;url&#34;)
+
+    &#34;&#34;&#34;
+
+    self.post_document_setting_open()
+    xpath_u = &#39;//label[text()=&#34;URL Slug&#34;]/following-sibling::input[@type=&#34;text&#34;]&#39;
+    if not self.__check_exists_by_xpath(xpath_u):
+        # Expand Heading Settings
+        err = &#39;Unable to expand Permalink&#39;
+        self.click_exists_by_xpath(&#39;//button[@type=&#34;button&#34; and text()=&#34;Permalink&#34;]&#39;, err, wait=True)
+    err = &#34;Unable to type post url&#34;
+    self.send_text_exists_by_xpath(xpath_u, url, err, wait=True)</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.send_backspace_by_xpath"><code class="name flex">
+<span>def <span class="ident">send_backspace_by_xpath</span></span>(<span>self, xpath, times, wait=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Send backspace key for given number of times in html element by xpath</p>
+<p>:type xpath: str</p>
+<p>:type times: int</p>
+<p>:type wait: bool</p>
+<p>:param xpath: xpath of html element</p>
+<p>:param times: number of times backspace should be sent</p>
+<p>:param wait: After sending key/s, wait for time(if sleep_time set in constructor else 2 seconds)</p>
+<h2 id="example">Example</h2>
+<h1 id="send-backspace-10-times-in-html-element-by-xpath-and-wait">Send backspace 10 times in html element by xpath and wait</h1>
+<p>wp.send_backspace_by_xpath('//input[@name="user"]', 10, True)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def send_backspace_by_xpath(self, xpath, times, wait=False):
+    &#34;&#34;&#34; Send backspace key for given number of times in html element by xpath
+
+    :type xpath: str
+
+    :type times: int
+
+    :type wait: bool
+
+    :param xpath: xpath of html element
+
+    :param times: number of times backspace should be sent
+
+    :param wait: After sending key/s, wait for time(if sleep_time set in constructor else 2 seconds)
+
+    Example
+    ----
+    # Send backspace 10 times in html element by xpath and wait
+
+    wp.send_backspace_by_xpath(&#39;//input[@name=&#34;user&#34;]&#39;, 10, True)
+
+    &#34;&#34;&#34;
+
+    try:
+        for i in range(0, times):
+            self.send_text_exists_by_xpath(xpath, Keys.BACK_SPACE)
+        if wait:
+            sleep(self.sleep_time)
+    except selenium_exception.NoSuchElementException:
+        self.error += &#34;ERROR: Xpath: &#34; + xpath + &#34; [Element Not Found]\r\n&#34;</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.send_keys_select_all"><code class="name flex">
+<span>def <span class="ident">send_keys_select_all</span></span>(<span>self, xpath=None, element_id=None, wait=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Send key combination Ctrl+A to select all text in html element either by xpath or id</p>
+<p>:type xpath: str or None</p>
+<p>:type element_id: str</p>
+<p>:type wait: bool</p>
+<p>:param xpath: xpath of html element</p>
+<p>:param element_id: id attribute of html element</p>
+<p>:param wait: After sending keys, wait for time(if sleep_time set in constructor else 2 seconds)</p>
+<h2 id="example">Example</h2>
+<h1 id="send-keys-by-html-xpath">Send keys by html xpath</h1>
+<p>wp.send_keys_select_all('//input[@name="user"]')</p>
+<h1 id="send-keys-by-html-id-attribute">Send keys by html id attribute</h1>
+<p>wp.send_keys_select_all(None,'username')</p>
+<h1 id="wait-after-sending-keys">Wait after sending keys</h1>
+<p>wp.send_keys_select_all('//input[@name="user"]', None, True)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def send_keys_select_all(self, xpath=None, element_id=None, wait=False):
+    &#34;&#34;&#34; Send key combination Ctrl+A to select all text in html element either by xpath or id
+
+    :type xpath: str or None
+
+    :type element_id: str
+
+    :type wait: bool
+
+    :param xpath: xpath of html element
+
+    :param element_id: id attribute of html element
+
+    :param wait: After sending keys, wait for time(if sleep_time set in constructor else 2 seconds)
+
+    Example
+    ----
+    # Send keys by html xpath
+
+    wp.send_keys_select_all(&#39;//input[@name=&#34;user&#34;]&#39;)
+
+    # Send keys by html id attribute
+
+    wp.send_keys_select_all(None,&#39;username&#39;)
+
+    # Wait after sending keys
+
+    wp.send_keys_select_all(&#39;//input[@name=&#34;user&#34;]&#39;, None, True)
+
+    &#34;&#34;&#34;
+
+    try:
+        if xpath:
+            self.send_text_exists_by_xpath(xpath, Keys.CONTROL + &#34;a&#34;)
+        elif element_id:
+            self.send_text_exists_by_id(element_id, Keys.CONTROL + &#34;a&#34;)
+        if wait:
+            sleep(self.sleep_time)
+    except selenium_exception.NoSuchElementException:
+        if xpath:
+            self.error += &#34;ERROR: Xpath: &#34; + xpath + &#34; [Element Not Found]\r\n&#34;
+        else:
+            self.error += &#34;ERROR: Id: &#34; + element_id + &#34; [Element Not Found]\r\n&#34;</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.send_text_exists_by_id"><code class="name flex">
+<span>def <span class="ident">send_text_exists_by_id</span></span>(<span>self, element_id, text, error=None, success=None, wait=False, key_wait=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Type text in html element by id, if it exists</p>
+<p>:type element_id: str</p>
+<p>:type text: str</p>
+<p>:type error: str</p>
+<p>:type success: str</p>
+<p>:type wait: bool</p>
+<p>:type key_wait: int</p>
+<p>:param element_id: id attribute of html element</p>
+<p>:param text: text to be typed</p>
+<p>:param error: error note in case of failure (Optional)</p>
+<p>:param success: success note in case of completion (Optional)</p>
+<p>:param wait: After typing, wait for time(if sleep_time set in constructor else 2 seconds) (Optional)</p>
+<p>:param key_wait: After each character, wait for time(in seconds) (Optional)</p>
+<h2 id="example">Example</h2>
+<p>wp.send_text_exists_by_id('username', 'Admin')</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def send_text_exists_by_id(self, element_id, text, error=None, success=None, wait=False, key_wait=None):
+    &#34;&#34;&#34; Type text in html element by id, if it exists
+
+    :type element_id: str
+
+    :type text: str
+
+    :type error: str
+
+    :type success: str
+
+    :type wait: bool
+
+    :type key_wait: int
+
+    :param element_id: id attribute of html element
+
+    :param text: text to be typed
+
+    :param error: error note in case of failure (Optional)
+
+    :param success: success note in case of completion (Optional)
+
+    :param wait: After typing, wait for time(if sleep_time set in constructor else 2 seconds) (Optional)
+
+    :param key_wait: After each character, wait for time(in seconds) (Optional)
+
+    Example
+    ----
+    wp.send_text_exists_by_id(&#39;username&#39;, &#39;Admin&#39;)
+
+    &#34;&#34;&#34;
+
+    try:
+        if not key_wait:
+            self.browser.find_element_by_id(element_id).send_keys(text)
+        else:
+            for i in range(0, len(text)):
+                self.browser.find_element_by_id(element_id).send_keys(text[i])
+                sleep(key_wait)
+
+        if wait:
+            sleep(self.sleep_time)
+    except selenium_exception.NoSuchElementException:
+        if error:
+            self.error += &#34;ERROR: &#34; + error + &#34; [Element Not Found]\r\n&#34;
+        return False
+    except selenium_exception.ElementNotInteractableException:
+        if error:
+            self.error += &#34;ERROR: &#34; + error + &#34; [Element Not Interactable]\r\n&#34;
+        return False
+    if success:
+        self.success += &#34;SUCCESS: &#34; + success + &#34;\r\n&#34;
+    return True</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.send_text_exists_by_xpath"><code class="name flex">
+<span>def <span class="ident">send_text_exists_by_xpath</span></span>(<span>self, xpath, text, error=None, success=None, wait=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Type text in html element by xpath, if it exists</p>
+<p>:type xpath: str</p>
+<p>:type text: str or int</p>
+<p>:type error: str</p>
+<p>:type success: str</p>
+<p>:type wait: bool</p>
+<p>:param xpath: xpath of html element</p>
+<p>:param text: text to be typed</p>
+<p>:param error: error note in case of failure (Optional)</p>
+<p>:param success: success note in case of completion (Optional)</p>
+<p>:param wait: After typing, wait for time(if sleep_time set in constructor else 2 seconds) (Optional)</p>
+<h2 id="example">Example</h2>
+<p>wp.send_text_exists_by_xpath('//input[@name="username"]', 'Admin')</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def send_text_exists_by_xpath(self, xpath, text, error=None, success=None, wait=False):
+    &#34;&#34;&#34; Type text in html element by xpath, if it exists
+
+    :type xpath: str
+
+    :type text: str or int
+
+    :type error: str
+
+    :type success: str
+
+    :type wait: bool
+
+    :param xpath: xpath of html element
+
+    :param text: text to be typed
+
+    :param error: error note in case of failure (Optional)
+
+    :param success: success note in case of completion (Optional)
+
+    :param wait: After typing, wait for time(if sleep_time set in constructor else 2 seconds) (Optional)
+
+    Example
+    ----
+    wp.send_text_exists_by_xpath(&#39;//input[@name=&#34;username&#34;]&#39;, &#39;Admin&#39;)
+
+    &#34;&#34;&#34;
+
+    try:
+        self.browser.find_element_by_xpath(xpath).send_keys(text)
+        if wait:
+            sleep(self.sleep_time)
+    except selenium_exception.NoSuchElementException:
+        if error:
+            self.error += &#34;ERROR: &#34; + error + &#34; [Element Not Found]\r\n&#34;
+        return False
+    except selenium_exception.ElementNotInteractableException:
+        if error:
+            self.error += &#34;ERROR: &#34; + error + &#34; [Element Not Interactable]\r\n&#34;
+        return False
+    if success:
+        self.success += &#34;SUCCESS: &#34; + success + &#34;\r\n&#34;
+    return True</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.send_text_in_browser"><code class="name flex">
+<span>def <span class="ident">send_text_in_browser</span></span>(<span>self, text)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Type given text in active html element in browser</p>
+<p>:type text: str</p>
+<p>:param text: Text to be typed</p>
+<h2 id="example">Example</h2>
+<p>wp.send_text_in_browser("Hello World!")</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def send_text_in_browser(self, text):
+    &#34;&#34;&#34; Type given text in active html element in browser
+
+    :type text: str
+
+    :param text: Text to be typed
+
+    Example
+    ----
+    wp.send_text_in_browser(&#34;Hello World!&#34;)
+
+    &#34;&#34;&#34;
+
+    actions = ActionChains(self.browser)
+    actions.send_keys(text)
+    actions.perform()</code></pre>
+</details>
+</dd>
+<dt id="wordpress.WordPress.wp_login"><code class="name flex">
+<span>def <span class="ident">wp_login</span></span>(<span>self, email, password)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Login to WordPress site</p>
+<p>:type email: str</p>
+<p>:type password: str</p>
+<p>:param email: email or username of WordPress User</p>
+<p>:param password: password of WordPress User</p>
+<h2 id="example">Example</h2>
+<p>wp.wp_login('email', 'password')</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def wp_login(self, email, password):
+    &#34;&#34;&#34; Login to WordPress site
+
+    :type email: str
+
+    :type password: str
+
+    :param email: email or username of WordPress User
+
+    :param password: password of WordPress User
+
+    Example
+    ----
+    wp.wp_login(&#39;email&#39;, &#39;password&#39;)
+
+    &#34;&#34;&#34;
+
+    self.browser.get(self.login_url)
+    sleep(self.sleep_time)
+    self.browser.find_element_by_id(&#39;user_login&#39;).send_keys(email)
+    sleep(self.sleep_time)
+    self.browser.find_element_by_id(&#39;user_pass&#39;).send_keys(password)
+    self.browser.find_element_by_id(&#39;wp-submit&#39;).click()</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-classes"></a></h3>
+<ul>
+<li>
+<h4><code><a title="wordpress.WordPress" href="#wordpress.WordPress">WordPress</a></code></h4>
+<ul class="">
+<li><code><a title="wordpress.WordPress.chrome_options_edit" href="#wordpress.WordPress.chrome_options_edit">chrome_options_edit</a></code></li>
+<li><code><a title="wordpress.WordPress.click_exists_by_xpath" href="#wordpress.WordPress.click_exists_by_xpath">click_exists_by_xpath</a></code></li>
+<li><code><a title="wordpress.WordPress.click_exists_by_xpath_elements" href="#wordpress.WordPress.click_exists_by_xpath_elements">click_exists_by_xpath_elements</a></code></li>
+<li><code><a title="wordpress.WordPress.close" href="#wordpress.WordPress.close">close</a></code></li>
+<li><code><a title="wordpress.WordPress.docx_to_html" href="#wordpress.WordPress.docx_to_html">docx_to_html</a></code></li>
+<li><code><a title="wordpress.WordPress.error" href="#wordpress.WordPress.error">error</a></code></li>
+<li><code><a title="wordpress.WordPress.get_completed" href="#wordpress.WordPress.get_completed">get_completed</a></code></li>
+<li><code><a title="wordpress.WordPress.get_errors" href="#wordpress.WordPress.get_errors">get_errors</a></code></li>
+<li><code><a title="wordpress.WordPress.maximize_window" href="#wordpress.WordPress.maximize_window">maximize_window</a></code></li>
+<li><code><a title="wordpress.WordPress.messages" href="#wordpress.WordPress.messages">messages</a></code></li>
+<li><code><a title="wordpress.WordPress.open_page_posts" href="#wordpress.WordPress.open_page_posts">open_page_posts</a></code></li>
+<li><code><a title="wordpress.WordPress.paste_in_browser" href="#wordpress.WordPress.paste_in_browser">paste_in_browser</a></code></li>
+<li><code><a title="wordpress.WordPress.post_category" href="#wordpress.WordPress.post_category">post_category</a></code></li>
+<li><code><a title="wordpress.WordPress.post_content_block_add" href="#wordpress.WordPress.post_content_block_add">post_content_block_add</a></code></li>
+<li><code><a title="wordpress.WordPress.post_content_block_edit_as_html" href="#wordpress.WordPress.post_content_block_edit_as_html">post_content_block_edit_as_html</a></code></li>
+<li><code><a title="wordpress.WordPress.post_content_block_heading" href="#wordpress.WordPress.post_content_block_heading">post_content_block_heading</a></code></li>
+<li><code><a title="wordpress.WordPress.post_content_block_html" href="#wordpress.WordPress.post_content_block_html">post_content_block_html</a></code></li>
+<li><code><a title="wordpress.WordPress.post_content_block_image" href="#wordpress.WordPress.post_content_block_image">post_content_block_image</a></code></li>
+<li><code><a title="wordpress.WordPress.post_content_block_list" href="#wordpress.WordPress.post_content_block_list">post_content_block_list</a></code></li>
+<li><code><a title="wordpress.WordPress.post_content_block_paragraph" href="#wordpress.WordPress.post_content_block_paragraph">post_content_block_paragraph</a></code></li>
+<li><code><a title="wordpress.WordPress.post_content_block_setting_color" href="#wordpress.WordPress.post_content_block_setting_color">post_content_block_setting_color</a></code></li>
+<li><code><a title="wordpress.WordPress.post_content_block_setting_heading" href="#wordpress.WordPress.post_content_block_setting_heading">post_content_block_setting_heading</a></code></li>
+<li><code><a title="wordpress.WordPress.post_content_block_setting_image" href="#wordpress.WordPress.post_content_block_setting_image">post_content_block_setting_image</a></code></li>
+<li><code><a title="wordpress.WordPress.post_content_block_setting_image_align" href="#wordpress.WordPress.post_content_block_setting_image_align">post_content_block_setting_image_align</a></code></li>
+<li><code><a title="wordpress.WordPress.post_content_block_setting_image_style" href="#wordpress.WordPress.post_content_block_setting_image_style">post_content_block_setting_image_style</a></code></li>
+<li><code><a title="wordpress.WordPress.post_content_block_setting_open" href="#wordpress.WordPress.post_content_block_setting_open">post_content_block_setting_open</a></code></li>
+<li><code><a title="wordpress.WordPress.post_content_block_setting_ordered_list" href="#wordpress.WordPress.post_content_block_setting_ordered_list">post_content_block_setting_ordered_list</a></code></li>
+<li><code><a title="wordpress.WordPress.post_content_block_setting_text" href="#wordpress.WordPress.post_content_block_setting_text">post_content_block_setting_text</a></code></li>
+<li><code><a title="wordpress.WordPress.post_content_block_setting_text_align" href="#wordpress.WordPress.post_content_block_setting_text_align">post_content_block_setting_text_align</a></code></li>
+<li><code><a title="wordpress.WordPress.post_content_from_file" href="#wordpress.WordPress.post_content_from_file">post_content_from_file</a></code></li>
+<li><code><a title="wordpress.WordPress.post_content_use_default_editor" href="#wordpress.WordPress.post_content_use_default_editor">post_content_use_default_editor</a></code></li>
+<li><code><a title="wordpress.WordPress.post_discussion" href="#wordpress.WordPress.post_discussion">post_discussion</a></code></li>
+<li><code><a title="wordpress.WordPress.post_document_setting_open" href="#wordpress.WordPress.post_document_setting_open">post_document_setting_open</a></code></li>
+<li><code><a title="wordpress.WordPress.post_excerpt" href="#wordpress.WordPress.post_excerpt">post_excerpt</a></code></li>
+<li><code><a title="wordpress.WordPress.post_format" href="#wordpress.WordPress.post_format">post_format</a></code></li>
+<li><code><a title="wordpress.WordPress.post_image" href="#wordpress.WordPress.post_image">post_image</a></code></li>
+<li><code><a title="wordpress.WordPress.post_new" href="#wordpress.WordPress.post_new">post_new</a></code></li>
+<li><code><a title="wordpress.WordPress.post_publish" href="#wordpress.WordPress.post_publish">post_publish</a></code></li>
+<li><code><a title="wordpress.WordPress.post_save_draft" href="#wordpress.WordPress.post_save_draft">post_save_draft</a></code></li>
+<li><code><a title="wordpress.WordPress.post_status" href="#wordpress.WordPress.post_status">post_status</a></code></li>
+<li><code><a title="wordpress.WordPress.post_switch_to_draft" href="#wordpress.WordPress.post_switch_to_draft">post_switch_to_draft</a></code></li>
+<li><code><a title="wordpress.WordPress.post_tag" href="#wordpress.WordPress.post_tag">post_tag</a></code></li>
+<li><code><a title="wordpress.WordPress.post_title" href="#wordpress.WordPress.post_title">post_title</a></code></li>
+<li><code><a title="wordpress.WordPress.post_update" href="#wordpress.WordPress.post_update">post_update</a></code></li>
+<li><code><a title="wordpress.WordPress.post_url" href="#wordpress.WordPress.post_url">post_url</a></code></li>
+<li><code><a title="wordpress.WordPress.read_html" href="#wordpress.WordPress.read_html">read_html</a></code></li>
+<li><code><a title="wordpress.WordPress.send_backspace_by_xpath" href="#wordpress.WordPress.send_backspace_by_xpath">send_backspace_by_xpath</a></code></li>
+<li><code><a title="wordpress.WordPress.send_keys_select_all" href="#wordpress.WordPress.send_keys_select_all">send_keys_select_all</a></code></li>
+<li><code><a title="wordpress.WordPress.send_text_exists_by_id" href="#wordpress.WordPress.send_text_exists_by_id">send_text_exists_by_id</a></code></li>
+<li><code><a title="wordpress.WordPress.send_text_exists_by_xpath" href="#wordpress.WordPress.send_text_exists_by_xpath">send_text_exists_by_xpath</a></code></li>
+<li><code><a title="wordpress.WordPress.send_text_in_browser" href="#wordpress.WordPress.send_text_in_browser">send_text_in_browser</a></code></li>
+<li><code><a title="wordpress.WordPress.sleep_time_page_load" href="#wordpress.WordPress.sleep_time_page_load">sleep_time_page_load</a></code></li>
+<li><code><a title="wordpress.WordPress.success" href="#wordpress.WordPress.success">success</a></code></li>
+<li><code><a title="wordpress.WordPress.wp_login" href="#wordpress.WordPress.wp_login">wp_login</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.8.1</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>
