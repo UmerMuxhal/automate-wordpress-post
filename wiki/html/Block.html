@@ -1,0 +1,147 @@
+<h2 id="heading">Heading</h2>
+<p>Add heading block and customize it.</p>
+<p><code>post_content_block_heading(heading, style='default', align='left', text_color=None)</code></p>
+<h3 id="type">Type</h3>
+<ul>
+<li>:type heading: str<br /></li>
+<li>:type style: str<br /></li>
+<li>:type align: str<br /></li>
+<li>:type text_color: str</li>
+</ul>
+<h3 id="description">Description</h3>
+<ul>
+<li>:param heading: Heading text<br /></li>
+<li>:param style: Style of heading tag. Allowed: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']<br /></li>
+<li>:param align: Heading alignment (default=&quot;left&quot;). Allowed: ['left', 'center', 'right'] (optional)<br /></li>
+<li>:param text_color: hex color code for heading's text color. (optional)</li>
+</ul>
+<h3 id="example">Example</h3>
+<p>Simple</p>
+<p><code>wp.post_content_block_heading(&quot;Heading 1&quot;)</code></p>
+<p>Customized</p>
+<p><code>wp.post_content_block_heading(&quot;Heading 1&quot;, 'h1', 'center', '#1bbafe')</code></p>
+<hr />
+<h2 id="paragraph">Paragraph</h2>
+<p>Add paragraph block and customize it.</p>
+<p><code>post_content_block_paragraph(paragraph, align='left', size=None, custom_size=None, drop_cap=False, text_color=None, bg_color=None)</code></p>
+<h3 id="type-1">Type</h3>
+<ul>
+<li>:type paragraph: str<br /></li>
+<li>:type align: str<br /></li>
+<li>:type size: str<br /></li>
+<li>:type custom_size: int<br /></li>
+<li>:type drop_cap: bool<br /></li>
+<li>:type text_color: str<br /></li>
+<li>:type bg_color: str</li>
+</ul>
+<h3 id="description-1">Description</h3>
+<ul>
+<li>:param paragraph: Paragraph text<br /></li>
+<li>:param align: Paragraph alignment (default=&quot;left&quot;). Allowed: ['left', 'center', 'right'] (optional)<br /></li>
+<li>:param size: choose font size from sizes available in the editor: ['default', 'small', 'normal', 'medium', 'large', 'huge'] (optional)<br /></li>
+<li>:param custom_size: font size (optional)<br /></li>
+<li>:param drop_cap: Set first character of paragraph to capital (optional)<br /></li>
+<li>:param text_color: hex color code for paragraph's text color. (optional)<br /></li>
+<li>:param bg_color: hex color code for paragraph's background color. (optional)</li>
+</ul>
+<h3 id="example-1">Example</h3>
+<p>Simple</p>
+<p><code>wp.post_content_block_paragraph(&quot;This is a paragraph.&quot;)</code></p>
+<p>Customized</p>
+<p><code>wp.post_content_block_paragraph(&quot;This is a paragraph.&quot;, &quot;center&quot;, &quot;normal&quot;, None, True, &quot;#1bbafe&quot;, &quot;#ffffff&quot;)</code></p>
+<hr />
+<h2 id="image">Image</h2>
+<p>Add image block and customize it.<br />For Image block, image can be added either from media library or by using url.</p>
+<p><code>post_content_block_image(image_name=None, caption=None, image_url=None, align='left', round_shape=None, alt_text=None, size=None, width=None, height=None, percentage=None)</code></p>
+<h3 id="type-2">Type</h3>
+<ul>
+<li>:type image_name: str<br /></li>
+<li>:type caption: str<br /></li>
+<li>:type image_url: str<br /></li>
+<li>:type align: str<br /></li>
+<li>:type round_shape: bool<br /></li>
+<li>:type alt_text: str<br /></li>
+<li>:type size: str<br /></li>
+<li>:type width: int<br /></li>
+<li>:type height: int<br /></li>
+<li>:type percentage: int</li>
+</ul>
+<h3 id="description-2">Description</h3>
+<ul>
+<li>:param image_name: Image name in media library. (Full image name is not necessary) (optional) {Image must be in media of WordPress site, for this to work}<br /></li>
+<li>:param caption: Caption for Image (optional)<br /></li>
+<li>:param image_url: Image url (optional)<br /></li>
+<li>:param align: image alignment (default=&quot;left&quot;). Allowed: ['left', 'center', 'right']<br /></li>
+<li>:param round_shape: True, to set round borders. (default=False)<br /></li>
+<li>:param alt_text: Alt text for image (optional)<br /></li>
+<li>:param size: Select size of Image from editor. Allowed: ['thumbnail', 'medium', 'large', 'full'] (optional)<br /></li>
+<li>:param width: Width of image (optional)<br /></li>
+<li>:param height: Height of image (optional)<br /></li>
+<li>:param percentage: Percentage of image. Allowed: [25, 50, 75, 100] (optional)</li>
+</ul>
+<h3 id="example-2">Example</h3>
+<p>Simple</p>
+<p><code>wp.post_content_block_image(&quot;ImageName&quot;)</code></p>
+<p><code>wp.post_content_block_image(None, None, &quot;https://www.example.com/image&quot;)</code></p>
+<p>Customized</p>
+<p><code>wp.post_content_block_image(&quot;ImageName&quot;, &quot;caption&quot;, None, &quot;center&quot;, True, &quot;alt-text&quot;, &quot;thumbnail&quot;, 500, 500, 75)</code><br />***</p>
+<h2 id="list">List</h2>
+<p>Add list block and customize it.</p>
+<p><code>post_content_block_list(list_text, ordered=False, start=None, reverse=False, separator='.')</code></p>
+<h3 id="type-3">Type</h3>
+<ul>
+<li>:type list_text: str<br /></li>
+<li>:type ordered: bool<br /></li>
+<li>:type start: int<br /></li>
+<li>:type reverse: bool<br /></li>
+<li>:type separator: str</li>
+</ul>
+<h3 id="description-3">Description</h3>
+<ul>
+<li>:param list_text: List<br /></li>
+<li>:param ordered: True, for numbering. (optional)<br /></li>
+<li>:param start: Number from where to start the list. (optional)<br /></li>
+<li>:param reverse: Reverse the numbering of list. (optional)<br /></li>
+<li>:param separator: Separator before new item in the list. (default=&quot;.&quot;) Example: &quot;Line 1. Line 2&quot; -- Here &quot;.&quot; is the separator between list items.</li>
+</ul>
+<h3 id="example-3">Example</h3>
+<p>Un-ordered List</p>
+<p><code>wp.post_content_block_list(&quot;Line 1. Line 2&quot;)</code></p>
+<p>Ordered List</p>
+<p><code>wp.post_content_block_list(&quot;Line 1. Line 2&quot;, True, 50, True)</code></p>
+<p>Using separator</p>
+<p><code>wp.post_content_block_list(&quot;Line 1, Line 2&quot;, True, 50, True, &quot;,&quot;)</code></p>
+<hr />
+<h2 id="html">Html</h2>
+<p>Add html block.</p>
+<p><code>post_content_block_html(html)</code></p>
+<h3 id="type-4">Type</h3>
+<ul>
+<li>:type html: str</li>
+</ul>
+<h3 id="description-4">Description</h3>
+<ul>
+<li>:param html: html code for html block</li>
+</ul>
+<h3 id="example-4">Example</h3>
+<p><code>wp.post_content_block_html(&quot;&lt;div&gt;&lt;h5&gt;Heading&lt;/h5&gt;&lt;/div&gt;&quot;)</code></p>
+<hr />
+<h2 id="docxhtml-file">Docx/Html File</h2>
+<p>Add a block using docx or html file.</p>
+<p><code>post_content_from_file(file_path='', typing_effect=False)</code></p>
+<h3 id="type-5">Type</h3>
+<ul>
+<li>:type file_path: str<br /></li>
+<li>:type typing_effect: bool</li>
+</ul>
+<h3 id="description-5">Description</h3>
+<ul>
+<li>:param file_path: path to docx or html file on computer.<br /></li>
+<li>:param typing_effect: True if keyboard typing effect is required. (optional) (default=False)</li>
+</ul>
+<h3 id="example-5">Example</h3>
+<p>Docx file</p>
+<p><code>wp.post_content_from_file(&quot;C\\Path\\To\\File.docx&quot;)</code></p>
+<p>Html file with typing effect</p>
+<p><code>wp.post_content_from_file(&quot;C\\Path\\To\\File.html&quot;, True)</code></p>
+<hr />

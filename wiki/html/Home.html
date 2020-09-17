@@ -1,0 +1,76 @@
+<h2 id="install">Install</h2>
+<p>Use the package manager <a href="https://pip.pypa.io/en/stable/">pip</a> to install <a href="https://pypi.org/project/automateWordPressPost/0.1/">Automate-WordPress-Post</a>.</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">pip</span> install automateWordPressPost</code></pre>
+<h2 id="usage">Usage</h2>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">from</span> automateWordPressPost.wordpress <span class="ch">import</span> WordPress
+wp = WordPress(<span class="st">&#39;mysite.com&#39;</span>, <span class="st">&#39;mysite.com/wp-admin&#39;</span>, <span class="st">&#39;path-to-chromedriver&#39;</span>)
+wp.wp_login(<span class="st">&#39;email&#39;</span>, <span class="st">&#39;password&#39;</span>)</code></pre>
+<h2 id="sample">Sample</h2>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">from</span> automateWordPressPost.wordpress <span class="ch">import</span> WordPress
+
+<span class="co"># Create instance for WordPress site</span>
+wp = WordPress(<span class="st">&quot;mysite.com&quot;</span>, <span class="st">&quot;mysite.com/wp-admin&quot;</span>, <span class="st">&quot;path-to-chromedriver&quot;</span>)
+
+<span class="co"># Login</span>
+wp.wp_login(<span class="st">&quot;email&quot;</span>, <span class="st">&quot;password&quot;</span>)
+
+<span class="co"># Maximize Window</span>
+wp.maximize_window()
+
+<span class="co"># Add new post</span>
+wp.post_new(<span class="st">&quot;Post Title&quot;</span>, <span class="st">&quot;Technology&quot;</span>, <span class="st">&quot;tech&quot;</span>, <span class="st">&quot;featured&quot;</span>, <span class="st">&quot;This is excerpt for this post&quot;</span>)
+
+<span class="co"># Add a heading block</span>
+wp.post_content_block_heading(<span class="st">&quot;Heading 1&quot;</span>, <span class="st">&quot;h1&quot;</span>, <span class="st">&quot;#1bbafe&quot;</span>)
+
+<span class="co"># Add a paragraph block</span>
+paragraph = <span class="st">&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et &quot;</span> \
+            <span class="co">&quot;dolore magna aliqua. Diam maecenas sed enim ut. Suspendisse interdum consectetur libero id faucibus &quot;</span> \
+            <span class="co">&quot;nisl tincidunt eget. Sagittis orci a scelerisque purus semper eget duis at tellus. Vitae ultricies leo &quot;</span> \
+            <span class="co">&quot;integer malesuada nunc. Pharetra magna ac placerat vestibulum lectus mauris ultrices eros. Auctor augue &quot;</span> \
+            <span class="co">&quot;mauris augue neque gravida in fermentum et. Orci ac auctor augue mauris augue neque gravida in &quot;</span> \
+            <span class="co">&quot;fermentum. Maecenas accumsan lacus vel facilisis volutpat. Enim neque volutpat ac tincidunt vitae &quot;</span> \
+            <span class="co">&quot;semper quis lectus nulla. Sed turpis tincidunt id aliquet risus feugiat. Quis risus sed vulputate odio &quot;</span> \
+            <span class="co">&quot;ut enim blandit volutpat.&quot;</span>
+wp.post_content_block_paragraph(paragraph, <span class="st">&#39;right&#39;</span>, <span class="ot">None</span>, <span class="dv">10</span>, <span class="ot">False</span>, <span class="st">&#39;#1bbafe&#39;</span>, <span class="st">&#39;#00a337&#39;</span>)
+
+<span class="co"># Add an image block</span>
+wp.post_content_block_image(<span class="st">&quot;tech&quot;</span>, <span class="st">&quot;caption&quot;</span>, <span class="ot">None</span>, <span class="st">&#39;center&#39;</span>, <span class="ot">True</span>, <span class="st">&quot;alt-text&quot;</span>, <span class="st">&quot;full&quot;</span>, <span class="dv">400</span>, <span class="dv">400</span>, <span class="dv">75</span>)
+
+<span class="co"># Add a list block</span>
+wp.post_content_block_list(paragraph)
+
+<span class="co"># Add a html block</span>
+html = <span class="st">&#39;&lt;a href=&quot;https://example.com/home&quot;&gt;Home&lt;/a&gt;&#39;</span>
+wp.post_content_block_html(html)
+
+<span class="co"># Publish post</span>
+wp.post_publish()
+
+<span class="co"># Print errors</span>
+<span class="dt">print</span>(wp.get_errors)
+
+<span class="co"># Close browser</span>
+wp.close()</code></pre>
+<hr />
+<h1 id="class-wordpress">Class WordPress</h1>
+<p>This class opens a chrome window and use it for automating post on a WordPress site.<br />Automate WordPress Block Editor. Blocks that can be used are: Heading, Paragraph, Image, List and Custom HTML.<br />Each block can be customized.<br />Add post using docx file or html file.</p>
+<h2 id="constructor">Constructor</h2>
+<p>Creates a new instance of chrome for a WordPress site</p>
+<p><code>class WordPress(site_url, login_url, chrome_driver_path, sleep_time=2, user_agent=False)</code></p>
+<h3 id="type">Type</h3>
+<ul>
+<li>:type site_url: str<br /></li>
+<li>:type login_url: str<br /></li>
+<li>:type chrome_driver_path: str<br /></li>
+<li>:type sleep_time: int<br /></li>
+<li><p>:type user_agent: bool</p>
+<h3>Description</h3></li>
+<li>:param site_url: Home address of WordPress site.<br /></li>
+<li>:param login_url: Login address of WordPress site.<br /></li>
+<li>:param chrome_driver_path: Path of chrome webdriver for selenium<br /></li>
+<li>:param sleep_time: Wait time (seconds) between execution of different tasks (default is 2)<br /></li>
+<li><p>:param user_agent: Use random User-Agent for chrome (default is False)</p>
+<h3>Example</h3>
+<p>wp = WordPress('mysite.com', 'mysite.com/wp-admin', 'path-to-chromedriver', 3, True)</p></li>
+</ul>

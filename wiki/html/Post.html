@@ -1,0 +1,199 @@
+<p>Add new post on WordPress site. Following tasks can be performed:</p>
+<h2 id="new-post">New Post</h2>
+<p>Add new post on WordPress site.</p>
+<p><code>post_new(title, category=None, tag=None, featured_image=None, excerpt=None, file_path=None)</code></p>
+<h3 id="type">Type</h3>
+<ul>
+<li>:type title: str</li>
+<li>:type category: str</li>
+<li>:type tag: str</li>
+<li>:type featured_image: str</li>
+<li>:type excerpt: str</li>
+<li>:type file_path: str</li>
+</ul>
+<h3 id="description">Description</h3>
+<ul>
+<li>:param title: title of the post.</li>
+<li>:param category: category name of the post. (optional)</li>
+<li>:param tag: tag of the post. (optional)</li>
+<li>:param featured_image: name of the Image in media library to set as featured image. (optional)</li>
+<li>:param excerpt: excerpt of the post. (optional)</li>
+<li>:param file_path: path of docx or html file for post content. (optional)</li>
+</ul>
+<h3 id="example">Example</h3>
+<p>Post with just a title</p>
+<p><code>wp.post_new(&quot;Post Title&quot;)</code></p>
+<p>Post with title, category, tag, featured image and excerpt</p>
+<p><code>wp.post_new(&quot;Post Title&quot;, &quot;Technology&quot;, &quot;tech&quot;, &quot;featured&quot;, &quot;This is excerpt for this post&quot;)</code></p>
+<p>Post with title, category, tag, featured image, excerpt and a file to post from</p>
+<p><code>wp.post_new(&quot;Post Title&quot;, &quot;Technology&quot;, &quot;tech&quot;, &quot;featured&quot;, &quot;This is excerpt for this post&quot;, &quot;docx/html-file-path&quot;)</code></p>
+<hr />
+<h2 id="title">Title</h2>
+<p>Set Post Title.</p>
+<p><code>post_title(title)</code></p>
+<h3 id="type-1">Type</h3>
+<ul>
+<li>:type title: str</li>
+</ul>
+<h3 id="description-1">Description</h3>
+<ul>
+<li>:param title: title of the post</li>
+</ul>
+<h3 id="example-1">Example</h3>
+<p><code>wp.post_title(&quot;Post Title&quot;)</code></p>
+<hr />
+<h2 id="status">Status</h2>
+<p>Configure Post Status Settings.</p>
+<p><code>post_status(visibility='public', password=None, stick_top=False, pending_review=False)</code></p>
+<h3 id="type-2">Type</h3>
+<ul>
+<li>:type visibility: str</li>
+<li>:type password: str</li>
+<li>:type stick_top: bool</li>
+<li>:type pending_review: bool</li>
+</ul>
+<h3 id="description-2">Description</h3>
+<ul>
+<li>:param visibility: Visibility of Post. Allowed: ['public', 'private, 'password'] (optional)</li>
+<li>:param password: Password for post if visibility set to password protected.</li>
+<li>:param stick_top: True to stick post on top on the blog page. (optional)</li>
+<li>:param pending_review: True to add post in pending</li>
+</ul>
+<h3 id="example-2">Example</h3>
+<p>Public post</p>
+<p><code>wp.post_status('public', password=None, True, True)</code></p>
+<p>Private post</p>
+<p><code>wp.post_status('private')</code></p>
+<p>Password protected post</p>
+<p><code>wp.post_status('password', &quot;your-password-here&quot;)</code></p>
+<hr />
+<h2 id="category">Category</h2>
+<p>Choose category if category name exists otherwise create new category.</p>
+<p><code>post_category(category)</code></p>
+<h3 id="type-3">Type</h3>
+<ul>
+<li>:type category: str</li>
+</ul>
+<h3 id="description-3">Description</h3>
+<ul>
+<li>:param category: Post category name</li>
+</ul>
+<h3 id="example-3">Example</h3>
+<p><code>wp.post_category(&quot;category-name&quot;)</code></p>
+<hr />
+<h2 id="tag">Tag</h2>
+<p>Choose tag if tag name exists otherwise create new tag.</p>
+<p><code>post_tag(tag)</code></p>
+<h3 id="type-4">Type</h3>
+<ul>
+<li>:type tag: str</li>
+</ul>
+<h3 id="description-4">Description</h3>
+<ul>
+<li>:param tag: tag name of the post</li>
+</ul>
+<h3 id="example-4">Example</h3>
+<p><code>wp.post_tag(&quot;tag-name&quot;)</code></p>
+<hr />
+<h2 id="featured-image">Featured Image</h2>
+<p>Set Featured Image for Post from media library.</p>
+<p><code>post_image(image_name)</code></p>
+<h3 id="type-5">Type</h3>
+<ul>
+<li>:type image_name: str</li>
+</ul>
+<h3 id="description-5">Description</h3>
+<ul>
+<li>:param image_name: Name of the Image in media library.</li>
+</ul>
+<h3 id="example-5">Example</h3>
+<p><code>wp.post_image(&quot;featured-image-name&quot;)</code></p>
+<hr />
+<h2 id="excerpt">Excerpt</h2>
+<p>Set Post excerpt.</p>
+<p><code>post_excerpt(excerpt)</code></p>
+<h3 id="type-6">Type</h3>
+<ul>
+<li>:type excerpt: str</li>
+</ul>
+<h3 id="description-6">Description</h3>
+<ul>
+<li>:param excerpt: excerpt of the post.</li>
+</ul>
+<h3 id="example-6">Example</h3>
+<p><code>wp.post_excerpt(&quot;excerpt-text&quot;)</code></p>
+<hr />
+<h2 id="discussion">Discussion</h2>
+<p>Configure Discussion settings for post.</p>
+<p><code>post_discussion(comments=True, traceback=True)</code></p>
+<h3 id="type-7">Type</h3>
+<ul>
+<li>:type comments: bool</li>
+<li>:type traceback: bool</li>
+</ul>
+<h3 id="description-7">Description</h3>
+<ul>
+<li>:param comments: False to Disable comments on post. (Default = True)</li>
+<li>:param traceback: False to Disable pingbacks &amp; trackbacks. (Default = True)</li>
+</ul>
+<h3 id="example-7">Example</h3>
+<p><code>wp.post_discussion(False, False)</code></p>
+<hr />
+<h2 id="format">Format</h2>
+<p>Set Post Format.</p>
+<p><code>post_format(formatting='standard')</code></p>
+<h3 id="type-8">Type</h3>
+<ul>
+<li>:type formatting: str</li>
+</ul>
+<h3 id="description-8">Description</h3>
+<ul>
+<li>:param formatting: Post display format. Allowed: ['standard', 'gallery', 'link', 'quote', 'video', 'audio']</li>
+</ul>
+<h3 id="example-8">Example</h3>
+<p><code>wp.post_format('gallery')</code></p>
+<hr />
+<h2 id="save-draft">Save Draft</h2>
+<p>Save Post as Draft.</p>
+<p><code>post_save_draft()</code></p>
+<h3 id="example-9">Example</h3>
+<p><code>wp.post_save_draft()</code></p>
+<hr />
+<h2 id="publish">Publish</h2>
+<p>Publish Post.</p>
+<p><code>post_publish()</code></p>
+<h3 id="example-10">Example</h3>
+<p><code>wp.post_publish()</code></p>
+<hr />
+<h2 id="update">Update</h2>
+<p>Update Post.</p>
+<p><code>post_update()</code></p>
+<h3 id="example-11">Example</h3>
+<p><code>wp.post_update()</code></p>
+<hr />
+<h2 id="switch-to-draft">Switch to Draft</h2>
+<p>Switch Post from Published to Draft.</p>
+<p><code>post_switch_to_draft()</code></p>
+<h3 id="example-12">Example</h3>
+<p><code>wp.post_switch_to_draft()</code></p>
+<hr />
+<h2 id="url">Url</h2>
+<p>Set Post Url. Applicable after publishing post.</p>
+<p><code>post_url(url)</code></p>
+<h3 id="type-9">Type</h3>
+<ul>
+<li>:type url: str</li>
+</ul>
+<h3 id="description-9">Description</h3>
+<ul>
+<li>:param url: title of the post</li>
+</ul>
+<h3 id="example-13">Example</h3>
+<p><code>wp.post_url('post-url-here')</code></p>
+<hr />
+<h2 id="open-document-setting">Open Document Setting</h2>
+<p>Open or switch to DOCUMENT SETTING Panel on the right.</p>
+<p><code>post_document_setting_open()</code></p>
+<h3 id="example-14">Example</h3>
+<p><code>wp.post_document_setting_open()</code></p>
+<hr />

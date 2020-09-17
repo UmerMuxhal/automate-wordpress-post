@@ -16,8 +16,7 @@ from selenium.webdriver.common.keys import Keys
 class WordPress:
     """ This class opens a chrome window and use it for automating post on a WordPress site.
     Automate WordPress Block Editor. Blocks that can be used are: Heading, Paragraph, Image, List and Custom HTML.
-    Each block can be customized.
-    Add post using docx file or html file.
+    Each block can be customized. Add post using docx file or html file.
 
     """
 
@@ -27,7 +26,7 @@ class WordPress:
     sleep_time_page_load = 5
 
     def __init__(self, site_url, login_url, chrome_driver_path, sleep_time=2, user_agent=False):
-        """Creates a new instance of chrome for a WordPress site
+        """ Creates a new instance of chrome for a WordPress site.
 
         :type site_url: str
         :type login_url: str
@@ -36,13 +35,14 @@ class WordPress:
         :type user_agent: bool
         :param site_url: Home address of WordPress site.
         :param login_url: Login address of WordPress site.
-        :param chrome_driver_path: Path of chrome webdriver for selenium
-        :param sleep_time: Wait time (seconds) between execution of different tasks (default is 2)
-        :param user_agent: Use random User-Agent for chrome (default is False)
+        :param chrome_driver_path: Path of chrome webdriver for selenium.
+        :param sleep_time: Wait time (seconds) between execution of different tasks. (default is 2)
+        :param user_agent: Use random User-Agent for chrome. (default is False)
 
         Example
         ----
         wp = WordPress('mysite.com', 'mysite.com/wp-admin', 'path-to-chromedriver', 3, True)
+
         """
 
         self.site_url = site_url
@@ -55,8 +55,8 @@ class WordPress:
         self.browser = webdriver.Chrome(executable_path=chrome_driver_path, chrome_options=self.chrome_options)
         self.sleep_time = sleep_time
 
-    def chrome_options_edit(self, window_size=None, gpu=False, user_agent=True, info_bars=False, extensions=False,
-                            notification=False):
+    def __chrome_options_edit(self, window_size=None, gpu=False, user_agent=True, info_bars=False, extensions=False,
+                              notification=False):
         if window_size:
             self.chrome_options.add_argument(f'--window-size={window_size[0]},{window_size[1]}')
         if not gpu:
@@ -79,26 +79,6 @@ class WordPress:
         operating_systems = [OperatingSystem.WINDOWS.value, OperatingSystem.LINUX.value]
         user_agent_rotate = UserAgent(software_names=software_names, operating_systems=operating_systems, limit=100)
         return user_agent_rotate.get_random_user_agent()
-
-    def maximize_window(self):
-        """ Maximize Chrome window.
-
-        Example
-        ----
-        wp.maximize_window()
-        """
-
-        self.browser.maximize_window()
-
-    def close(self):
-        """ Close Chrome window.
-
-        Example
-        ----
-        wp.close()
-        """
-
-        self.browser.close()
 
     def __set_error(self, error):
         self.error += "ERROR: " + error + "\r\n"
@@ -416,7 +396,7 @@ class WordPress:
             sleep(self.sleep_time)
 
     def wp_login(self, email, password):
-        """ Login to WordPress site
+        """ Login to WordPress site.
 
         :type email: str
         :type password: str
@@ -437,16 +417,36 @@ class WordPress:
         self.browser.find_element_by_id('wp-submit').click()
 
     def open_page_posts(self):
-        """ Open All Posts Page
+        """ Open All Posts Page.
         """
 
         self.browser.get(self.site_url + "/wp-admin/edit.php")
 
+    def maximize_window(self):
+        """ Maximize Chrome window.
+
+        Example
+        ----
+        wp.maximize_window()
+        """
+
+        self.browser.maximize_window()
+
+    def close(self):
+        """ Close Chrome window.
+
+        Example
+        ----
+        wp.close()
+        """
+
+        self.browser.close()
+
     def post_title(self, title):
-        """ Set Post Title
+        """ Set Post Title.
 
         :type title: str
-        :param title: title of the post
+        :param title: title of the post.
 
         Example
         ----
@@ -459,13 +459,288 @@ class WordPress:
         else:
             self.__set_error("Unable to type post title!")
 
+    def post_status(self, visibility='public', password=None, stick_top=False, pending_review=False):
+        """ Configure Post Status Settings.
+
+        :type visibility: str
+        :type password: str
+        :type stick_top: bool
+        :type pending_review: bool
+        :param visibility: Visibility of Post. Allowed: ['public', 'private, 'password'] (optional)
+        :param password: Password for post if visibility set to password protected.
+        :param stick_top: True to stick post on top on the blog page. (optional)
+        :param pending_review: True to add post in pending.
+
+        Example
+        ----
+        Public post:
+
+        wp.post_status('public', password=None, True, True)
+
+        Private post:
+
+        wp.post_status('private')
+
+        Password protected post:
+
+        wp.post_status('password', "your-password-here")
+
+        """
+
+        element_discus = '//span[text()="Visibility"]'
+        if not self.__check_exists_by_xpath(element_discus):
+            # Expand Excerpt
+            self.browser.find_element_by_xpath('//button[text()="Status & Visibility"]').click()
+            sleep(self.sleep_time)
+
+        # Check stick on top
+        if stick_top:
+            element_discus = '//label[text()="Stick to the top of the blog"]/preceding-sibling::span/input[@type="checkbox"]'
+            err = 'Unable to interact with Stick on Top of the blog(Status & Visibility)!'
+            self.__click_exists_by_xpath(element_discus, err)
+
+        # Check pending review
+        if pending_review:
+            element_discus = '//label[text()="Pending review"]/preceding-sibling::span/input[@type="checkbox"]'
+            err = 'Unable to interact with Pending Review(Status & Visibility)!'
+            self.__click_exists_by_xpath(element_discus, err)
+
+        if visibility:
+            check = True
+            err = 'Unable to interact with Visibility(Status & Visibility)!'
+            if not self.__click_exists_by_xpath('//button[text()="Public"]'):
+                if not self.__click_exists_by_xpath('//button[text()="Private"]'):
+                    check = self.__click_exists_by_xpath('//button[text()="Password Protected"]', err)
+
+            if check:
+                sleep(self.sleep_time)
+                if visibility.lower() == 'public':
+                    self.__click_exists_by_xpath('//input[@type="radio" and @value="public"]')
+                elif visibility.lower() == 'private':
+                    self.__click_exists_by_xpath('//input[@type="radio" and @value="private"]')
+                    sleep(self.sleep_time)
+                    alert_obj = self.browser.switch_to.alert
+                    alert_obj.accept()
+                    self.browser.switch_to.default_content()
+                    sleep(self.sleep_time)
+                elif password and visibility.lower() == 'password':
+                    self.__click_exists_by_xpath('//input[@type="radio" and @value="password"]')
+                    xpath_pass = '//input[@type="text" and @placeholder="Use a secure password"]'
+                    err = 'Unable to type password(Status & Visibility)!'
+                    self.__send_text_exists_by_xpath(xpath_pass, password, err)
+                    sleep(self.sleep_time)
+
+    def post_category(self, category):
+        """ Choose category if category name exists otherwise create new category.
+
+        :type category: str
+        :param category: Post category name.
+
+        Example
+        ----
+        wp.post_category("category-name")
+
+        """
+
+        err = 'Unable to expand Categories Panel(Categories)!'
+        if self.__click_exists_by_xpath('//button[text()="Categories"]', err):
+            # Expand Categories
+            sleep(self.sleep_time)
+
+        check_cat = "//label[text()='" + category + "']"
+        if not self.__check_exists_by_xpath(check_cat):
+            # Add if category does not exist
+            err = "Unable to click Add New Category 1"
+            self.__click_exists_by_xpath('//button[text()="Add New Category"]', err)
+
+            err = "Unable to type Category name"
+            self.__send_text_exists_by_xpath("//*[@id='editor-post-taxonomies__hierarchical-terms-input-0']", category,
+                                             err)
+
+            err = "Unable to click Add New Category 2"
+            self.__click_exists_by_xpath('//button[@type="submit" and text()="Add New Category"]', err)
+        else:
+            # Select category
+            err = "Unable to Select category"
+            self.__click_exists_by_xpath(check_cat, err)
+
+    def post_tag(self, tag):
+        """ Choose tag if tag name exists otherwise create new tag.
+
+        :type tag: str
+        :param tag: tag name of the post.
+
+        Example
+        ----
+        wp.post_tag("tag-name")
+        """
+
+        check_tag = '//label[text()="Add New Tag"]/following-sibling::div/child::input'
+        if not self.__check_exists_by_xpath(check_tag):
+            # Expand Tags
+            err = "Unable to Expand Tags"
+            self.__click_exists_by_xpath('//button[text()="Tags"]', err, wait=True)
+
+        # Add Tag
+        tag_input = self.browser.find_element_by_xpath(check_tag)
+        tag_input.send_keys(tag + Keys.RETURN)
+
+    def post_image(self, image_name):
+        """ Set Featured Image for Post from media library.
+
+        :type image_name: str
+        :param image_name: Name of the Image in media library.
+
+        Example
+        ----
+        wp.post_image("featured-image-name")
+
+        """
+
+        featured_img = '//button[text()="Set featured image"]'
+        if not self.__check_exists_by_xpath(featured_img):
+            # Expand Featured Image
+            err = "Unable to Expand Featured Image"
+            self.__click_exists_by_xpath('//button[text()="Featured image"]', err)
+
+        err = "Unable to click Set featured image"
+        self.__click_exists_by_xpath('//button[text()="Set featured image"]', err, wait=True)
+        self.__media_search_and_select(image_name, "Set featured image")
+
+    def post_excerpt(self, excerpt):
+        """ Set Post excerpt.
+
+        :type excerpt: str
+        :param excerpt: excerpt of the post.
+
+        Example
+        ----
+        wp.post_excerpt("excerpt-text")
+
+        """
+
+        check_excerpt = '//label[text()="Write an excerpt (optional)"]/following-sibling::textarea'
+        if not self.__check_exists_by_xpath(check_excerpt):
+            # Expand Excerpt
+            err = "Unable to Expand Excerpt Setting"
+            self.__click_exists_by_xpath('//button[text()="Excerpt"]', err, wait=True)
+
+        # Add Excerpt
+        self.browser.find_element_by_xpath(check_excerpt).send_keys(excerpt)
+
+    def post_discussion(self, comments=True, traceback=True):
+        """ Configure Discussion settings for post.
+
+        :type comments: bool
+        :type traceback: bool
+        :param comments: False to Disable comments on post. (Default is True)
+        :param traceback: False to Disable pingbacks & trackbacks. (Default is True)
+
+        Example
+        ----
+        wp.post_discussion(False, False)
+
+        """
+
+        element_discus = '//label[text()="Allow comments"]'
+        if not self.__check_exists_by_xpath(element_discus):
+            # Expand Discussion
+            err = "Unable to Expand Discussion"
+            self.__click_exists_by_xpath('//button[text()="Discussion"]', err)
+
+        # Uncheck comments
+        if not comments:
+            err = "Unable to Disable comments"
+            self.__click_exists_by_xpath(element_discus, err)
+        # Uncheck traceback
+        if not traceback:
+            element_discus = '//label[text()="Allow pingbacks & trackbacks"]'
+            err = "Unable to Disable pingbacks & trackbacks"
+            self.__click_exists_by_xpath(element_discus, err)
+
+    def post_save_draft(self):
+        """ Save Post as Draft.
+
+        Example
+        ----
+        wp.post_save_draft()
+
+        """
+
+        xpath_save = '//button[text()="Publish…" and @aria-disabled="true"]'
+        if self.__check_exists_by_xpath(xpath_save):
+            sleep(self.sleep_time)
+        xpath_save = '//button[text()="Save Draft"]'
+        if not self.__check_exists_by_xpath(xpath_save):
+            xpath_save = '//button[text()="Save as Pending"]'
+            err = "Unable to click Save as Pending Button"
+            self.__click_exists_by_xpath(xpath_save, err, wait=True)
+            sleep(self.sleep_time)
+        else:
+            err = "Unable to click Save Draft Button"
+            if self.__click_exists_by_xpath(xpath_save, err, wait=True):
+                sleep(self.sleep_time)
+
+    def post_publish(self):
+        """ Publish Post.
+
+        Example
+        ----
+        wp.post_publish()
+
+        """
+
+        xpath_p = '//button[text()="Publish…" and @aria-disabled="true"]'
+        if self.__check_exists_by_xpath(xpath_p):
+            sleep(self.sleep_time)
+        xpath_p = '//button[text()="Publish…"]'
+        err = "Unable to click Publish… Button (1)"
+        if self.__click_exists_by_xpath(xpath_p, err, wait=True):
+            xpath_p = '//button[text()="Publish"]'
+            err = "Unable to click Publish Button (2)"
+            if self.__click_exists_by_xpath(xpath_p, err, wait=True):
+                err = "Unable to close panel after Publish"
+                xpath_p = '//button[@aria-label="Close panel" and @type="button"]'
+                self.__click_exists_by_xpath(xpath_p, err, wait=True)
+
+    def post_update(self):
+        """ Update Post.
+
+        Example
+        ----
+        wp.post_update()
+
+        """
+
+        xpath_u = '//button[text()="Update"]'
+        err = "Unable to click Update Button"
+        if self.__click_exists_by_xpath(xpath_u, err, wait=True):
+            sleep(self.sleep_time)
+
+    def post_switch_to_draft(self):
+        """ Switch Post from Published to Draft.
+
+        Example
+        ----
+        wp.post_switch_to_draft()
+        """
+
+        xpath_d = '//button[text()="Switch to draft"]'
+        err = "Unable to click Switch to Draft Button"
+        sleep(self.sleep_time)
+        if self.__click_exists_by_xpath(xpath_d, err, wait=True):
+            alert_obj = self.browser.switch_to.alert
+            alert_obj.accept()
+            self.browser.switch_to.default_content()
+            sleep(self.sleep_time)
+
     # After post published
     def post_url(self, url):
         """ Set Post Url.
         Applicable after publishing post.
 
         :type url: str
-        :param url: title of the post
+        :param url: url of the post.
 
         Example
         ----
@@ -481,6 +756,43 @@ class WordPress:
             self.__click_exists_by_xpath('//button[@type="button" and text()="Permalink"]', err, wait=True)
         err = "Unable to type post url"
         self.__send_text_exists_by_xpath(xpath_u, url, err, wait=True)
+
+    # After post published
+    def post_format(self, formatting='standard'):
+        """ Set Post Format.
+
+        :type formatting: str
+        :param formatting: Post display format. Allowed: ['standard', 'gallery', 'link', 'quote', 'video', 'audio']
+
+        ### Example
+        ----
+        wp.post_format('gallery')
+
+        """
+
+        self.post_document_setting_open()
+        format_list = ['standard', 'gallery', 'link', 'quote', 'video', 'audio']
+        if formatting.lower() in format_list:
+            xpath_ = '//label[text()="Post Format"]/following-sibling::div//select/option[@value="' + formatting + '"]'
+            err = "Unable to select post format"
+            self.__click_exists_by_xpath(xpath_, err, wait=True)
+
+    def post_document_setting_open(self):
+        """ Open or switch to DOCUMENT SETTING Panel on the right.
+
+        Example
+        ----
+        wp.post_document_setting_open()
+
+        """
+
+        xpath = '//button[@type="button" and @aria-label="Document (selected)"]'
+        if self.__check_exists_by_xpath(xpath):
+            return True
+
+        xpath = '//button[@type="button" and @aria-label="Document"]'
+        err = "Unable to open Document setting"
+        self.__click_exists_by_xpath(xpath, err, wait=True)
 
     def __post_content_use_default_editor(self, xpath='//button[text()="Use Default Editor"]'):
         """ If the WordPress site has an active theme with page builder or a page builder plugin installed,
@@ -513,11 +825,11 @@ class WordPress:
         self.__click_exists_by_xpath(xpath, err, wait=True)
 
     def post_content_block_add(self, block_name):
-        """ Add a block in the editor
+        """ Add a block in the editor.
         Available blocks are: Heading, Paragraph, List, Image, Custom HTML
 
         :type block_name: str
-        :param block_name: block name to be added (case insensitive) ['heading', 'paragraph', 'list', 'image', 'html']
+        :param block_name: block name to be added. (case insensitive) ['heading', 'paragraph', 'list', 'image', 'html']
 
         Example
         ----
@@ -559,7 +871,7 @@ class WordPress:
                     return True
 
     # Block edit as html
-    def post_content_block_edit_as_html(self, html=False):
+    def __post_content_block_edit_as_html(self, html=False):
         """ Click on Edit as HTML Button of Editor Block
 
         :type html: bool
@@ -623,18 +935,18 @@ class WordPress:
         :type drop_cap: bool
         :param size: choose font size from sizes available in the editor:
         ['default', 'small', 'normal', 'medium', 'large', 'huge'] (optional)
-        :param custom_size: font size (optional)
-        :param drop_cap: Set first character of paragraph to capital (optional)
+        :param custom_size: font size. (optional)
+        :param drop_cap: Set first character of paragraph to capital. (optional)
 
         Example
         ----
-        # Using editor's font size
+        # Using editor's font size:
         wp.post_content_block_setting_text("normal")
 
-        # Using custom font size
+        # Using custom font size:
         wp.post_content_block_setting_text(None, 54)
 
-        # Set First character capital of Text
+        # Set First character capital of Text:
         wp.post_content_block_setting_text("small", None, True)
 
         """
@@ -675,7 +987,7 @@ class WordPress:
         Available alignments are: left, center, right
 
         :type align: str
-        :param align: text alignment (default="left"). Allowed: ['left', 'center', 'right']
+        :param align: text alignment. Allowed: ['left', 'center', 'right'] (default is "left")
 
         Example
         ----
@@ -720,7 +1032,8 @@ class WordPress:
         if not self.__check_exists_by_xpath(xpath_color):
             # Expand Color Settings
             err = "Unable to expand Color Settings"
-            self.__click_exists_by_xpath('//span[text()="Color settings"]/parent::button[@type="button"]', err, wait=True)
+            self.__click_exists_by_xpath('//span[text()="Color settings"]/parent::button[@type="button"]', err,
+                                         wait=True)
 
         if text_color:
             err = "Unable to set text color"
@@ -746,7 +1059,7 @@ class WordPress:
         """ Set style for Image Border.
 
         :type round_shape: bool
-        :param round_shape: True, to set round borders. (default=False)
+        :param round_shape: True, to set round borders. (default is False)
 
         Example
         ----
@@ -776,10 +1089,10 @@ class WordPress:
         :type width: int
         :type height: int
         :type percentage: int
-        :param alt_text: Alt text for image (optional)
+        :param alt_text: Alt text for image. (optional)
         :param size: Select size of Image from editor. Allowed: ['thumbnail', 'medium', 'large', 'full'] (optional)
-        :param width: Width of image (optional)
-        :param height: Height of image (optional)
+        :param width: Width of image. (optional)
+        :param height: Height of image. (optional)
         :param percentage: Percentage of image. Allowed: [25, 50, 75, 100] (optional)
 
         Example
@@ -835,11 +1148,11 @@ class WordPress:
 
     # Image Block Setting
     def post_content_block_setting_image_align(self, align="left"):
-        """ Select image alignment
+        """ Select image alignment.
         Available alignments are: left, center, right
 
         :type align: str
-        :param align: image alignment (default="left"). Allowed: ['left', 'center', 'right']
+        :param align: image alignment. Allowed: ['left', 'center', 'right'] (default="left")
 
         Example
         ----
@@ -905,10 +1218,10 @@ class WordPress:
 
         Example
         ----
-        # Simple
+        # Simple:
         wp.post_content_block_heading("Heading 1")
 
-        # Customized
+        # Customized:
         wp.post_content_block_heading("Heading 1", 'h1', 'center', '#1bbafe')
 
         """
@@ -933,21 +1246,21 @@ class WordPress:
         :type drop_cap: bool
         :type text_color: str or None
         :type bg_color: str or None
-        :param paragraph: Paragraph text
-        :param align: Paragraph alignment (default="left"). Allowed: ['left', 'center', 'right'] (optional)
+        :param paragraph: Paragraph text.
+        :param align: Paragraph alignment. Allowed: ['left', 'center', 'right'] (default is "left") (optional)
         :param size: choose font size from sizes available in the editor:
         ['default', 'small', 'normal', 'medium', 'large', 'huge'] (optional)
-        :param custom_size: font size (optional)
-        :param drop_cap: Set first character of paragraph to capital (optional)
+        :param custom_size: font size. (optional)
+        :param drop_cap: Set first character of paragraph to capital. (optional)
         :param text_color: hex color code for paragraph's text color. (optional)
         :param bg_color: hex color code for paragraph's background color. (optional)
 
         Example
         ----
-        # Simple
+        # Simple:
         wp.post_content_block_paragraph("This is a paragraph.")
 
-        # Customized
+        # Customized:
         wp.post_content_block_paragraph("This is a paragraph.", "center", "normal", None, True, "#1bbafe", "#ffffff")
 
         """
@@ -980,24 +1293,25 @@ class WordPress:
         :type percentage: int
         :param image_name: Image name in media library. (Full image name is not necessary) (optional)
         {Image must be in media of WordPress site, for this to work}
-        :param caption: Caption for Image (optional)
+        :param caption: Caption for Image. (optional)
         :param image_url: Image url (optional)
         :param align: image alignment (default="left"). Allowed: ['left', 'center', 'right']
         :param round_shape: True, to set round borders. (default=False)
-        :param alt_text: Alt text for image (optional)
+        :param alt_text: Alt text for image. (optional)
         :param size: Select size of Image from editor. Allowed: ['thumbnail', 'medium', 'large', 'full'] (optional)
-        :param width: Width of image (optional)
-        :param height: Height of image (optional)
+        :param width: Width of image. (optional)
+        :param height: Height of image. (optional)
         :param percentage: Percentage of image. Allowed: [25, 50, 75, 100] (optional)
 
         Example
         ----
-        # Simple
+        # Simple:
 
         wp.post_content_block_image("ImageName")
+
         wp.post_content_block_image(None, None, "https://www.example.com/image")
 
-        # Customized
+        # Customized:
 
         wp.post_content_block_image("ImageName", "caption", None, "center", True, "alt-text", "thumbnail", 500, 500, 75)
 
@@ -1046,18 +1360,18 @@ class WordPress:
         :param ordered: True, for numbering. (optional)
         :param start: Number from where to start the list. (optional)
         :param reverse: Reverse the numbering of list. (optional)
-        :param separator: Separator before new item in the list. (default=".")
+        :param separator: Separator before new item in the list. (default is ".")
         Example: "Line 1. Line 2" -- Here "." is the separator between list items.
 
         Example
         ----
-        # Un-ordered List
+        # Un-ordered List:
         wp.post_content_block_list("Line 1. Line 2")
 
-        # Ordered List
+        # Ordered List:
         wp.post_content_block_list("Line 1. Line 2", True, 50, True)
 
-        # Using separator
+        # Using separator:
         wp.post_content_block_list("Line 1, Line 2", True, 50, True, ",")
 
         """
@@ -1086,7 +1400,7 @@ class WordPress:
         """ Add html block.
 
         :type html: str
-        :param html: html code for html block
+        :param html: html code for html block.
 
         Example
         ----
@@ -1103,14 +1417,14 @@ class WordPress:
         :type file_path: str
         :type typing_effect: bool
         :param file_path: path to docx or html file on computer.
-        :param typing_effect: True if keyboard typing effect is required. (optional) (default=False)
+        :param typing_effect: True if keyboard typing effect is required. (default is False) (optional)
 
         Example
         ----
-        # Docx file
+        # Docx file:
         wp.post_content_from_file("C\\Path\\To\\File.docx")
 
-        # Html file with typing effect
+        # Html file with typing effect:
         wp.post_content_from_file("C\\Path\\To\\File.html", True)
 
         """
@@ -1135,175 +1449,14 @@ class WordPress:
         else:
             self.__set_error("Invalid File Type")
 
-    def post_document_setting_open(self):
-        """ Switch to DOCUMENT SETTING Panel on the right.
-
-        Example
-        ----
-        wp.post_document_setting_open()
-
-        """
-
-        xpath = '//button[@type="button" and @aria-label="Document (selected)"]'
-        if self.__check_exists_by_xpath(xpath):
-            return True
-
-        xpath = '//button[@type="button" and @aria-label="Document"]'
-        err = "Unable to open Document setting"
-        self.__click_exists_by_xpath(xpath, err, wait=True)
-
-    def post_status(self, visibility='public', password=None, stick_top=False, pending_review=False):
-        """ Configure Post Status Settings
-
-        :type visibility: str
-        :type password: str
-        :type stick_top: bool
-        :type pending_review: bool
-        :param visibility: Visibility of Post. Allowed: ['public', 'private, 'password'] (optional)
-        :param password: Password for post if visibility set to password protected.
-        :param stick_top: True to stick post on top on the blog page. (optional)
-        :param pending_review: True to add post in pending
-
-        Example
-        ----
-        Public post
-
-        wp.post_status('public', password=None, True, True)
-
-        Private post
-
-        wp.post_status('private')
-
-        Password protected post
-
-        wp.post_status('password', "your-password-here")
-        """
-
-        element_discus = '//span[text()="Visibility"]'
-        if not self.__check_exists_by_xpath(element_discus):
-            # Expand Excerpt
-            self.browser.find_element_by_xpath('//button[text()="Status & Visibility"]').click()
-            sleep(self.sleep_time)
-
-        # Check stick on top
-        if stick_top:
-            element_discus = '//label[text()="Stick to the top of the blog"]/preceding-sibling::span/input[@type="checkbox"]'
-            err = 'Unable to interact with Stick on Top of the blog(Status & Visibility)!'
-            self.__click_exists_by_xpath(element_discus, err)
-
-        # Check pending review
-        if pending_review:
-            element_discus = '//label[text()="Pending review"]/preceding-sibling::span/input[@type="checkbox"]'
-            err = 'Unable to interact with Pending Review(Status & Visibility)!'
-            self.__click_exists_by_xpath(element_discus, err)
-
-        if visibility:
-            check = True
-            err = 'Unable to interact with Visibility(Status & Visibility)!'
-            if not self.__click_exists_by_xpath('//button[text()="Public"]'):
-                if not self.__click_exists_by_xpath('//button[text()="Private"]'):
-                    check = self.__click_exists_by_xpath('//button[text()="Password Protected"]', err)
-
-            if check:
-                sleep(self.sleep_time)
-                if visibility.lower() == 'public':
-                    self.__click_exists_by_xpath('//input[@type="radio" and @value="public"]')
-                elif visibility.lower() == 'private':
-                    self.__click_exists_by_xpath('//input[@type="radio" and @value="private"]')
-                    sleep(self.sleep_time)
-                    alert_obj = self.browser.switch_to.alert
-                    alert_obj.accept()
-                    self.browser.switch_to.default_content()
-                    sleep(self.sleep_time)
-                elif password and visibility.lower() == 'password':
-                    self.__click_exists_by_xpath('//input[@type="radio" and @value="password"]')
-                    xpath_pass = '//input[@type="text" and @placeholder="Use a secure password"]'
-                    err = 'Unable to type password(Status & Visibility)!'
-                    self.__send_text_exists_by_xpath(xpath_pass, password, err)
-                    sleep(self.sleep_time)
-
-    # After post published
-    def post_format(self, formatting='standard'):
-        """ Set Post Format.
-
-        :type formatting: str
-        :param formatting: Post display format. Allowed: ['standard', 'gallery', 'link', 'quote', 'video', 'audio']
-
-        ### Example
-        ----
-        wp.post_format('gallery')
-
-        """
-
-        self.post_document_setting_open()
-        format_list = ['standard', 'gallery', 'link', 'quote', 'video', 'audio']
-        if formatting.lower() in format_list:
-            xpath_ = '//label[text()="Post Format"]/following-sibling::div//select/option[@value="' + formatting + '"]'
-            err = "Unable to select post format"
-            self.__click_exists_by_xpath(xpath_, err, wait=True)
-
-    def post_category(self, category):
-        """ Choose category if category name exists otherwise create new category.
-
-        :type category: str
-        :param category: Post category name
-
-        Example
-        ----
-        wp.post_category("category-name")
-
-        """
-
-        err = 'Unable to expand Categories Panel(Categories)!'
-        if self.__click_exists_by_xpath('//button[text()="Categories"]', err):
-            # Expand Categories
-            sleep(self.sleep_time)
-
-        check_cat = "//label[text()='" + category + "']"
-        if not self.__check_exists_by_xpath(check_cat):
-            # Add if category does not exist
-            err = "Unable to click Add New Category 1"
-            self.__click_exists_by_xpath('//button[text()="Add New Category"]', err)
-
-            err = "Unable to type Category name"
-            self.__send_text_exists_by_xpath("//*[@id='editor-post-taxonomies__hierarchical-terms-input-0']", category,
-                                             err)
-
-            err = "Unable to click Add New Category 2"
-            self.__click_exists_by_xpath('//button[@type="submit" and text()="Add New Category"]', err)
-        else:
-            # Select category
-            err = "Unable to Select category"
-            self.__click_exists_by_xpath(check_cat, err)
-
-    def post_tag(self, tag):
-        """ Choose tag if tag name exists otherwise create new tag.
-
-        :type tag: str
-        :param tag: tag name of the post
-
-        Example
-        ----
-        wp.post_tag("tag-name")
-        """
-
-        check_tag = '//label[text()="Add New Tag"]/following-sibling::div/child::input'
-        if not self.__check_exists_by_xpath(check_tag):
-            # Expand Tags
-            err = "Unable to Expand Tags"
-            self.__click_exists_by_xpath('//button[text()="Tags"]', err, wait=True)
-
-        # Add Tag
-        tag_input = self.browser.find_element_by_xpath(check_tag)
-        tag_input.send_keys(tag + Keys.RETURN)
-
     def __media_search_and_select(self, image_name, image_type="Select"):
-        """ Search and select image from media library of WordPress site
+        """ Search and select image from media library of WordPress site.
 
         :type image_name: str
         :type image_type: str
-        :param image_name: Name of the Image in media library
-        :param image_type: Select or Set featured image
+        :param image_name: Name of the Image in media library.
+        :param image_type: Select or Set featured image.
+
         """
 
         err = "Unable to type image name"
@@ -1335,155 +1488,6 @@ class WordPress:
             if self.__click_exists_by_xpath(
                     '//button[contains(@class, "media-button-select") and text()="' + image_type + '"]', err):
                 return True
-
-    def post_image(self, image_name):
-        """ Set Featured Image for Post from media library.
-
-        :type image_name: str
-        :param image_name: Name of the Image in media library.
-
-        Example
-        ----
-        wp.post_image("featured-image-name")
-
-        """
-
-        featured_img = '//button[text()="Set featured image"]'
-        if not self.__check_exists_by_xpath(featured_img):
-            # Expand Featured Image
-            err = "Unable to Expand Featured Image"
-            self.__click_exists_by_xpath('//button[text()="Featured image"]', err)
-
-        err = "Unable to click Set featured image"
-        self.__click_exists_by_xpath('//button[text()="Set featured image"]', err, wait=True)
-        self.__media_search_and_select(image_name, "Set featured image")
-
-    def post_excerpt(self, excerpt):
-        """ Set Post excerpt.
-
-        :type excerpt: str
-        :param excerpt: excerpt of the post.
-
-        Example
-        ----
-        wp.post_excerpt("excerpt-text")
-
-        """
-
-        check_excerpt = '//label[text()="Write an excerpt (optional)"]/following-sibling::textarea'
-        if not self.__check_exists_by_xpath(check_excerpt):
-            # Expand Excerpt
-            err = "Unable to Expand Excerpt Setting"
-            self.__click_exists_by_xpath('//button[text()="Excerpt"]', err, wait=True)
-
-        # Add Excerpt
-        self.browser.find_element_by_xpath(check_excerpt).send_keys(excerpt)
-
-    def post_discussion(self, comments=True, traceback=True):
-        """ Configure Discussion settings for post.
-
-        :type comments: bool
-        :type traceback: bool
-        :param comments: False to Disable comments on post.
-        :param traceback: False to Disable pingbacks & trackbacks.
-
-        Example
-        ----
-        wp.post_discussion(False, False)
-
-        """
-
-        element_discus = '//label[text()="Allow comments"]'
-        if not self.__check_exists_by_xpath(element_discus):
-            # Expand Discussion
-            err = "Unable to Expand Discussion"
-            self.__click_exists_by_xpath('//button[text()="Discussion"]', err)
-
-        # Uncheck comments
-        if not comments:
-            err = "Unable to Disable comments"
-            self.__click_exists_by_xpath(element_discus, err)
-        # Uncheck traceback
-        if not traceback:
-            element_discus = '//label[text()="Allow pingbacks & trackbacks"]'
-            err = "Unable to Disable pingbacks & trackbacks"
-            self.__click_exists_by_xpath(element_discus, err)
-
-    def post_save_draft(self):
-        """ Save Post as Draft.
-
-        Example
-        ----
-        wp.post_save_draft()
-
-        """
-
-        xpath_save = '//button[text()="Publish…" and @aria-disabled="true"]'
-        if self.__check_exists_by_xpath(xpath_save):
-            sleep(self.sleep_time)
-        xpath_save = '//button[text()="Save Draft"]'
-        if not self.__check_exists_by_xpath(xpath_save):
-            xpath_save = '//button[text()="Save as Pending"]'
-            err = "Unable to click Save as Pending Button"
-            self.__click_exists_by_xpath(xpath_save, err, wait=True)
-            sleep(self.sleep_time)
-        else:
-            err = "Unable to click Save Draft Button"
-            if self.__click_exists_by_xpath(xpath_save, err, wait=True):
-                sleep(self.sleep_time)
-
-    def post_switch_to_draft(self):
-        """ Switch Post from Published to Draft.
-
-        Example
-        ----
-        wp.post_switch_to_draft()
-        """
-
-        xpath_d = '//button[text()="Switch to draft"]'
-        err = "Unable to click Switch to Draft Button"
-        sleep(self.sleep_time)
-        if self.__click_exists_by_xpath(xpath_d, err, wait=True):
-            alert_obj = self.browser.switch_to.alert
-            alert_obj.accept()
-            self.browser.switch_to.default_content()
-            sleep(self.sleep_time)
-
-    def post_publish(self):
-        """ Publish Post.
-
-        Example
-        ----
-        wp.post_publish()
-
-        """
-
-        xpath_p = '//button[text()="Publish…" and @aria-disabled="true"]'
-        if self.__check_exists_by_xpath(xpath_p):
-            sleep(self.sleep_time)
-        xpath_p = '//button[text()="Publish…"]'
-        err = "Unable to click Publish… Button (1)"
-        if self.__click_exists_by_xpath(xpath_p, err, wait=True):
-            xpath_p = '//button[text()="Publish"]'
-            err = "Unable to click Publish Button (2)"
-            if self.__click_exists_by_xpath(xpath_p, err, wait=True):
-                err = "Unable to close panel after Publish"
-                xpath_p = '//button[@aria-label="Close panel" and @type="button"]'
-                self.__click_exists_by_xpath(xpath_p, err, wait=True)
-
-    def post_update(self):
-        """ Update Post.
-
-        Example
-        ----
-        wp.post_update()
-
-        """
-
-        xpath_u = '//button[text()="Update"]'
-        err = "Unable to click Update Button"
-        if self.__click_exists_by_xpath(xpath_u, err, wait=True):
-            sleep(self.sleep_time)
 
     @staticmethod
     def read_html(html_path, full=False):

@@ -1,0 +1,131 @@
+<h2 id="open-block-setting">Open Block Setting</h2>
+<p>Open or switch to BLOCK SETTING Panel on the right.</p>
+<p><code>post_content_block_setting_open()</code></p>
+<h3 id="example">Example</h3>
+<p><code>wp.post_content_block_setting_open()</code></p>
+<hr />
+<h2 id="heading">Heading</h2>
+<p>Select Heading style. Available styles are: h1, h2, h3, h4, h5, h6</p>
+<p><code>post_content_block_setting_heading(style)</code></p>
+<h3 id="type">Type</h3>
+<ul>
+<li>:type style: str</li>
+</ul>
+<h3 id="description">Description</h3>
+<ul>
+<li>:param style: Style of heading tag. Allowed: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']</li>
+</ul>
+<h3 id="example-1">Example</h3>
+<p><code>wp.post_content_block_setting_heading('h1')</code></p>
+<hr />
+<h2 id="color">Color</h2>
+<p>Set color of text and background.</p>
+<p><code>post_content_block_setting_color(text_color=None, bg_color=None)</code></p>
+<h3 id="type-1">Type</h3>
+<ul>
+<li>:type text_color: str<br /></li>
+<li>:type bg_color: str</li>
+</ul>
+<h3 id="description-1">Description</h3>
+<ul>
+<li>:param text_color: hex color code. (optional)<br /></li>
+<li>:param bg_color: hex color code. (optional)</li>
+</ul>
+<h3 id="example-2">Example</h3>
+<p><code>wp.post_content_block_setting_color('#1bbafe', '#ffffff')</code></p>
+<hr />
+<h2 id="image">Image</h2>
+<p>Set image block style.</p>
+<p><code>post_content_block_setting_image(alt_text=None, size=None, width=None, height=None, percentage=None)</code></p>
+<h3 id="type-2">Type</h3>
+<ul>
+<li>:type alt_text: str<br /></li>
+<li>:type size: str<br /></li>
+<li>:type width: int<br /></li>
+<li>:type height: int<br /></li>
+<li>:type percentage: int</li>
+</ul>
+<h3 id="description-2">Description</h3>
+<p>:param alt_text: Alt text for image (optional)<br />:param size: Select size of Image from editor. Allowed: ['thumbnail', 'medium', 'large', 'full'] (optional)<br />:param width: Width of image (optional)<br />:param height: Height of image (optional)<br />:param percentage: Percentage of image. Allowed: [25, 50, 75, 100] (optional)</p>
+<h3 id="example-3">Example</h3>
+<p><code>wp.post_content_block_setting_image(&quot;Image 1&quot;, &quot;full&quot;, 500, 500, 75%)</code></p>
+<h2 id="image-align">Image Align</h2>
+<p>Set Image Border's style.</p>
+<p><code>post_content_block_setting_image_align(align=&quot;left&quot;)</code></p>
+<h3 id="type-3">Type</h3>
+<ul>
+<li>:type align: str</li>
+</ul>
+<h3 id="description-3">Description</h3>
+<ul>
+<li>:param align: image alignment (default=&quot;left&quot;). Allowed: ['left', 'center', 'right']</li>
+</ul>
+<h3 id="example-4">Example</h3>
+<p><code>wp.post_content_block_setting_image_align(&quot;center&quot;)</code></p>
+<hr />
+<h2 id="image-border">Image Border</h2>
+<p>Set style for Image Border.</p>
+<p><code>post_content_block_setting_image_border(round_shape=False)</code></p>
+<h3 id="type-4">Type</h3>
+<ul>
+<li>:type round_shape: bool</li>
+</ul>
+<h3 id="description-4">Description</h3>
+<ul>
+<li>:param round_shape: True, to set round borders. (default=False)</li>
+</ul>
+<h3 id="example-5">Example</h3>
+<p><code>wp.post_content_block_setting_image_border(True)</code></p>
+<h2 id="list">List</h2>
+<p>Customize List block style.</p>
+<p><code>post_content_block_setting_ordered_list(start=None, reverse=False)</code></p>
+<h3 id="type-5">Type</h3>
+<ul>
+<li>:type start: int<br /></li>
+<li>:type reverse: bool</li>
+</ul>
+<h3 id="description-5">Description</h3>
+<ul>
+<li>:param start: Number from where to start the list. (optional)<br /></li>
+<li>:param reverse: Reverse the numbering of list. (optional)</li>
+</ul>
+<h3 id="example-6">Example</h3>
+<p><code>wp.post_content_block_setting_ordered_list(10, True)</code></p>
+<hr />
+<h2 id="text">Text</h2>
+<p>Set Paragraph block settings.</p>
+<p><code>post_content_block_setting_text(size=None, custom_size=None, drop_cap=False)</code></p>
+<h3 id="type-6">Type</h3>
+<ul>
+<li>:type size: str<br /></li>
+<li>:type custom_size: int<br /></li>
+<li>:type drop_cap: bool</li>
+</ul>
+<h3 id="description-6">Description</h3>
+<ul>
+<li>:param size: choose font size from sizes available in the editor: ['default', 'small', 'normal', 'medium', 'large', 'huge'] (optional)<br /></li>
+<li>:param custom_size: font size (optional)<br /></li>
+<li>:param drop_cap: Set first character of paragraph to capital (optional)</li>
+</ul>
+<h3 id="example-7">Example</h3>
+<p>Using editor's font size</p>
+<p><code>wp.post_content_block_setting_text(&quot;normal&quot;)</code></p>
+<p>Using custom font size</p>
+<p><code>wp.post_content_block_setting_text(None, 54)</code></p>
+<p>Set First character capital of Text</p>
+<p><code>wp.post_content_block_setting_text(&quot;small&quot;, None, True)</code></p>
+<hr />
+<h2 id="text-align">Text Align</h2>
+<p>Select text alignment.</p>
+<p><code>post_content_block_setting_text_align(align=&quot;left&quot;)</code></p>
+<h3 id="type-7">Type</h3>
+<ul>
+<li>:type align: str</li>
+</ul>
+<h3 id="description-7">Description</h3>
+<ul>
+<li>:param align: text alignment (default=&quot;left&quot;). Allowed: ['left', 'center', 'right']</li>
+</ul>
+<h3 id="example-8">Example</h3>
+<p><code>wp.post_content_block_setting_text_align(&quot;center&quot;)</code></p>
+<hr />
